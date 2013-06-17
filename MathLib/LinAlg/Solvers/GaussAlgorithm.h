@@ -24,10 +24,6 @@ namespace MathLib {
 template <typename MAT_T, typename VEC_T>
 class GaussAlgorithm
 {
-public:
-	GaussAlgorithm(MAT_T &) {}
-	~GaussAlgorithm() {}
-	void execute (VEC_T &) const {}
 };
 
 
@@ -41,8 +37,10 @@ public:
  * right hand side is computed by the method execute().
  */
 template <typename MAT_T>
-class GaussAlgorithm <MAT_T, double*>
+class GaussAlgorithm <MAT_T, typename MAT_T::FP_T*>
 {
+public:
+	typedef typename MAT_T::FP_T FP_T;
 public:
 	/**
 	 * A direct solver for the (dense) linear system \f$A x = b\f$.
@@ -64,7 +62,7 @@ public:
 	 * using forward solve and backward solve
 	 * @param b at the beginning the right hand side, at the end the solution
 	 */
-	void execute (double *b) const;
+	void execute (FP_T *b) const;
 
 private:
 	/**
@@ -72,7 +70,7 @@ private:
 	 * row permutations of the LU factorization
 	 * @param b the entries of the vector b are permuted
 	 */
-	void permuteRHS (double* b) const;
+	void permuteRHS (FP_T* b) const;
 
 	/**
 	 * a reference to the matrix
