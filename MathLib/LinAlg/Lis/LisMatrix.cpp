@@ -46,17 +46,21 @@ void LisMatrix::setZero()
     checkLisError(ierr);
     ierr = lis_matrix_set_size(_AA, 0, _n_rows);
     checkLisError(ierr);
+
+	_is_assembled = false;
 }
 
 int LisMatrix::setValue(std::size_t rowId, std::size_t colId, double v)
 {
     lis_matrix_set_value(LIS_INS_VALUE, rowId, colId, v, _AA);
+	_is_assembled = false;
     return 0;
 }
 
 int LisMatrix::addValue(std::size_t rowId, std::size_t colId, double v)
 {
     lis_matrix_set_value(LIS_ADD_VALUE, rowId, colId, v, _AA);
+	_is_assembled = false;
     return 0;
 }
 
@@ -82,7 +86,7 @@ double LisMatrix::getMaxDiagCoeff()
 	abs_max_entry = std::abs(abs_max_entry);
 	for (std::size_t k(0); k<_n_rows; ++k) {
 		double tmp;
-		ierr = lis_vector_get_value(diag, 0, &tmp);
+		ierr = lis_vector_get_value(diag, k, &tmp);
 		checkLisError(ierr);
 		if (abs_max_entry < std::abs(tmp)) {
 			abs_max_entry = std::abs(tmp);

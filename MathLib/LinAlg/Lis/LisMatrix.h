@@ -95,12 +95,12 @@ public:
     bool isAssembled() const { return _is_assembled; };
 
 private:
-    std::size_t _n_rows;
-    LisOption::MatrixType _mat_type;
+    std::size_t const _n_rows;
+    LisOption::MatrixType const _mat_type;
     LIS_MATRIX _AA;
     bool _is_assembled;
-    int _is;
-    int _ie;
+    int _is;	///< location where the partial matrix _AA starts in global matrix.
+    int _ie;	///< location where the partial matrix _AA ends in global matrix.
 
     // friend function
     friend bool finalizeMatrixAssembly(LisMatrix &mat);
