@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 
 	ProjectData project_data;
 
+	// *** read geometry
 	project_data.setGEOObjects(new GeoLib::GEOObjects);
 //	const std::string schema_file(std::string(SOURCEPATH).append("/FileIO/OpenGeoSysGLI.xsd"));
 //	FileIO::XmlGmlInterface geo_io(&project_data, schema_file);
@@ -73,7 +74,11 @@ int main(int argc, char *argv[])
 		abort();
 	}
 
+	// *** read mesh
 	project_data.addMesh(FileIO::readMeshFromFile(mesh_arg.getValue()));
+
+	// *** read boundary conditions
+
 
 	delete custom_format;
 	delete logog_cout;
