@@ -1,0 +1,33 @@
+IF (WIN32)
+	SET ( ADDITIONAL_LIBS Winmm.lib )
+ENDIF()
+
+INCLUDE_DIRECTORIES(
+	.
+	${CMAKE_SOURCE_DIR}/BaseLib/
+	${CMAKE_BINARY_DIR}/BaseLib/
+	${CMAKE_SOURCE_DIR}/FileIO/
+	${CMAKE_SOURCE_DIR}/GeoLib/
+	${CMAKE_SOURCE_DIR}/MathLib/
+	${CMAKE_SOURCE_DIR}/MeshLib/
+	${CMAKE_SOURCE_DIR}/OGS/
+)
+
+ADD_EXECUTABLE(SimpleGroundWaterFlow
+	SimpleGroundWaterFlow.cpp
+	${SOURCES}
+	${HEADERS}
+)
+
+TARGET_LINK_LIBRARIES (SimpleGroundWaterFlow
+	MeshLib
+	FileIO
+	MathLib
+	BaseLib
+	GeoLib
+	OgsLib
+	logog
+	zlib
+	${ADDITIONAL_LIBS}
+	${BOOST_LIBRARIES}
+)
