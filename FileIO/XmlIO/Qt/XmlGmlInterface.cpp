@@ -29,11 +29,6 @@ XmlGmlInterface::XmlGmlInterface(GeoLib::GEOObjects& geo_objs) :
 {
 }
 
-int XmlGmlInterface::readFile(std::string const & fname)
-{
-	return readFile(QString(fname.c_str()));
-}
-
 int XmlGmlInterface::readFile(const QString &fileName)
 {
 	if(XMLQtInterface::readFile(fileName) == 0)
