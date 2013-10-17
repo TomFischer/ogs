@@ -104,7 +104,7 @@ int XmlGspInterface::writeToFile(std::string filename)
 	return FileIO::Writer::writeToFile(filename);
 }
 
-int XmlGspInterface::write(std::ostream& stream)
+bool XmlGspInterface::write(std::ostream& stream)
 {
 	GeoLib::GEOObjects* geoObjects = _project->getGEOObjects();
 	QFileInfo fi(QString::fromStdString(_filename));
@@ -193,6 +193,6 @@ int XmlGspInterface::write(std::ostream& stream)
 
 	std::string xml = doc.toString().toStdString();
 	stream << xml;
-	return 1;
+	return true;
 }
 }

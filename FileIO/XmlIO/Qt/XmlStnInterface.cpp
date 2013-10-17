@@ -198,7 +198,7 @@ void XmlStnInterface::readStratigraphy( const QDomNode &stratRoot,
 	}
 }
 
-int XmlStnInterface::write(std::ostream& stream)
+bool XmlStnInterface::write(std::ostream& stream)
 {
 	if (this->_exportName.empty())
 	{
@@ -275,7 +275,7 @@ int XmlStnInterface::write(std::ostream& stream)
 
 	std::string xml = doc.toString().toStdString();
 	stream << xml;
-	return 1;
+	return true;
 }
 
 void XmlStnInterface::writeBoreholeData(QDomDocument &doc,

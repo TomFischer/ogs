@@ -400,7 +400,7 @@ const OptionalPtree BoostVtuInterface::findDataArray(std::string const& array_na
 	return OptionalPtree();
 }
 
-int BoostVtuInterface::write(std::ostream& stream)
+bool BoostVtuInterface::write(std::ostream& stream)
 {
 	//if (this->_export_name.empty())
 	if (!_mesh)
@@ -493,7 +493,7 @@ int BoostVtuInterface::write(std::ostream& stream)
 
 	property_tree::xml_writer_settings<char> settings('\t', 1);
 	write_xml(stream, doc, settings);
-	return 1;
+	return true;
 }
 
 unsigned BoostVtuInterface::getVTKElementID(MeshElemType type) const

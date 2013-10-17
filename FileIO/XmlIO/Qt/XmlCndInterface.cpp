@@ -163,7 +163,7 @@ void XmlCndInterface::readConditions(const QDomNode &listRoot,
 	}
 }
 
-int XmlCndInterface::write(std::ostream& stream)
+bool XmlCndInterface::write(std::ostream& stream)
 {
 	stream << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"; // xml definition
 	stream << "<?xml-stylesheet type=\"text/xsl\" href=\"OpenGeoSysCND.xsl\"?>\n\n"; // stylefile definition
@@ -223,7 +223,7 @@ int XmlCndInterface::write(std::ostream& stream)
 	std::string xml = doc.toString().toStdString();
 	stream << xml;
 
-	return 1;
+	return true;
 }
 
 void XmlCndInterface::writeCondition(QDomDocument doc, QDomElement &listTag,

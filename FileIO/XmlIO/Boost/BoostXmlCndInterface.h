@@ -38,7 +38,8 @@ public:
 	bool readFile(const std::string &fname);
 
 protected:
-	int write(std::ostream& stream);
+	/// @return true on success, else false
+	bool write(std::ostream& stream);
 
 private:
 	void readBoundaryConditions(boost::property_tree::ptree const& boundary_condition_nodes);
