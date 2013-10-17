@@ -25,7 +25,7 @@
 #include "Configure.h"
 
 // FileIO
-//#include "XmlIO/XmlGmlInterface.h"
+#include "XmlIO/Boost/BoostXmlCndInterface.h"
 #include "Legacy/OGSIOVer4.h"
 #include "readMeshFromFile.h"
 
@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
 	ProjectData project_data;
 
 	// *** read geometry
-	project_data.setGEOObjects(new GeoLib::GEOObjects);
 //	const std::string schema_file(std::string(SOURCEPATH).append("/FileIO/OpenGeoSysGLI.xsd"));
 //	FileIO::XmlGmlInterface geo_io(&project_data, schema_file);
 //	geo_io.readFile(geometry_arg.getValue());
@@ -78,7 +77,8 @@ int main(int argc, char *argv[])
 	project_data.addMesh(FileIO::readMeshFromFile(mesh_arg.getValue()));
 
 	// *** read boundary conditions
-
+	FileIO::BoostXmlCndInterface xml_io(&project_data);
+	xml_io.readFile(bc_arg.getValue());
 
 	delete custom_format;
 	delete logog_cout;
