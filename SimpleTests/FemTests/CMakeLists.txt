@@ -10,6 +10,7 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}/GeoLib/
 	${CMAKE_SOURCE_DIR}/MathLib/
 	${CMAKE_SOURCE_DIR}/MeshLib/
+	${CMAKE_SOURCE_DIR}/MeshGeoToolsLib/
 	${CMAKE_SOURCE_DIR}/OGS/
 )
 
@@ -25,6 +26,7 @@ TARGET_LINK_LIBRARIES (SimpleGroundWaterFlow
 	MathLib
 	BaseLib
 	GeoLib
+	MeshGeoToolsLib
 	OgsLib
 	logog
 	zlib
