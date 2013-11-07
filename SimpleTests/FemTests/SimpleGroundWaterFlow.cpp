@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	project_data.addMesh(FileIO::readMeshFromFile(mesh_arg.getValue()));
 
 	// *** read boundary conditions
-	FileIO::BoostXmlCndInterface xml_io(&project_data);
+	FileIO::BoostXmlCndInterface xml_io(project_data);
 	xml_io.readFile(bc_arg.getValue());
 
 	std::vector<FEMCondition*> bcs (project_data.getConditions(
