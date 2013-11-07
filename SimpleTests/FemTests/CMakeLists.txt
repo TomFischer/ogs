@@ -33,3 +33,12 @@ TARGET_LINK_LIBRARIES (SimpleGroundWaterFlow
 	${ADDITIONAL_LIBS}
 	${BOOST_LIBRARIES}
 )
+
+IF(OGS_BUILD_GUI)
+	INCLUDE(${VTK_USE_FILE})
+	TARGET_LINK_LIBRARIES(SimpleGroundWaterFlow
+		QtDataView
+		VtkVis
+		vtkRendering
+	)
+ENDIF()
