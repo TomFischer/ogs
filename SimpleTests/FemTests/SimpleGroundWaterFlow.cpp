@@ -29,6 +29,7 @@
 #include "XmlIO/Boost/BoostXmlCndInterface.h"
 #include "Legacy/OGSIOVer4.h"
 #include "readMeshFromFile.h"
+#include "XmlIO/Qt/XmlGmlInterface.h"
 
 // GeoLib
 #include "GEOObjects.h"
@@ -36,6 +37,7 @@
 
 // MeshGeoToolsLib
 #include "MeshNodeSearcher.h"
+#include "MeshNodesToPoints.h"
 
 // MeshLib
 #include "Mesh.h"
@@ -108,6 +110,15 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	std::string geo_name("bc_as_geo_test");
+	MeshGeoTools::MeshNodesToPoints(*(project_data.getMesh(mesh_name)),
+			mesh_node_ids,
+			*(project_data.getGEOObjects()),
+			geo_name);
+
+	FileIO::XmlGmlInterface xml_out(*(project_data.getGEOObjects()));
+	xml_out.setNameForExport(geo_name);
+	xml_out.writeToFile(geo_name+".gml");
 
 	delete custom_format;
 	delete logog_cout;
