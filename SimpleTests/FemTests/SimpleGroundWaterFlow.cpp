@@ -22,6 +22,7 @@
 
 // BaseLib
 #include "BaseLib/LogogSimpleFormatter.h"
+#include "BaseLib/FileTools.h"
 #include "Configure.h"
 
 // FileIO
@@ -90,10 +91,11 @@ int main(int argc, char *argv[])
 		FEMCondition::BOUNDARY_CONDITION));
 
 	std::vector<std::size_t> mesh_node_ids;
+	const std::string mesh_name(BaseLib::extractBaseNameWithoutExtension(mesh_arg.getValue()));
+	MeshGeoTools::MeshNodeSearcher searcher(* project_data.getMesh(mesh_name));
 	for (auto it (bcs.cbegin()); it != bcs.cend(); it++) {
 		// fetch geometry obj from condition obj
 		GeoLib::GeoObject const* geom_obj((*it)->getGeoObj());
-		MeshGeoTools::MeshNodeSearcher searcher(* project_data.getMesh(mesh_arg.getValue()));
 		if (dynamic_cast<GeoLib::Point const*>(geom_obj) != nullptr) {
 			GeoLib::Point const& pnt(*dynamic_cast<GeoLib::Point const*>(geom_obj));
 			mesh_node_ids.push_back(searcher.getMeshNodeIDForPoint(pnt));
