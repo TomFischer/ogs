@@ -43,7 +43,7 @@ bool BoostXmlCndInterface::readFile(const std::string &fname)
 	// build DOM tree
 	using boost::property_tree::ptree;
 	ptree pt;
-	read_xml(in, pt);
+	read_xml(in, pt, boost::property_tree::xml_parser::trim_whitespace);
 
 	ptree const& root_node = pt.get_child("OpenGeoSysCond");
 
@@ -167,21 +167,60 @@ void BoostXmlCndInterface::readDistributionTag(boost::property_tree::ptree const
 
 bool BoostXmlCndInterface::write(std::ostream& stream)
 {
-	stream << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"; // xml definition
-	stream << "<?xml-stylesheet type=\"text/xsl\" href=\"OpenGeoSysCND.xsl\"?>\n\n"; // stylefile definition
-
 	// create a DOM tree for writing it to file
 	using boost::property_tree::ptree;
-	ptree pt;
+	ptree pt_root;
+	ptree pt_boundary_conditions;
 
-	pt.add("OpenGeoSysCond", "OpenGeoSysCond");
-	pt.put("<xmlattr>.xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-	pt.put("<xmlattr>.xsi:noNamespaceSchemaLocation", "http://www.opengeosys.org/images/xsd/OpenGeoSysCND.xsd");
-	pt.put("<xmlattr>.xmlns:ogs", "http://www.opengeosys.net");
+	std::vector<FEMCondition*> const& conditions(_project_data.getConditions(
+			FiniteElement::INVALID_PROCESS,	"", _type));
 
-	write_xml(stream, pt);
+	ptree pt_bc;
+	for (auto it(conditions.cbegin()); it != conditions.cend(); it++) {
+		ptree & subtree (pt_bc.add_child("BC", createBCNode(*(*it))));
+		subtree.put("<xmlattr>.geometry", (*it)->getAssociatedGeometryName());
+	}
+	pt_boundary_conditions.put_child("BoundaryConditions", pt_bc);
+
+	ptree & subtree (pt_root.put_child("OpenGeoSysCond", pt_boundary_conditions));
+	subtree.put("<xmlattr>.xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+	subtree.put("<xmlattr>.xsi:noNamespaceSchemaLocation",
+			"http://www.opengeosys.org/images/xsd/OpenGeoSysCND.xsd");
+	subtree.put("<xmlattr>.xmlns:ogs", "http://www.opengeosys.net");
+
+	boost::property_tree::xml_writer_settings<char> settings(' ', 1);
+	// writing the header outside of boost because
+	// at the moment boost does not support to insert style file definitions
+	stream << "<?xml version=\"1.0\" encoding=\"" << settings.encoding << "\"?>\n";
+	stream << "<?xml-stylesheet type=\"text/xsl\" href=\"OpenGeoSysCND.xsl\"?>\n";
+	write_xml_element(stream, std::basic_string<ptree::key_type::value_type>(), pt_root, -1, settings);
 
 	return true;
 }
+
+boost::property_tree::ptree BoostXmlCndInterface::createBCNode(FEMCondition const& bc) const
+{
+	boost::property_tree::ptree pt;
+	pt.add_child("Process", createProcessNode(bc));
+	pt.add_child("Geometry", createGeometryNode(bc));
+	return pt;
+}
+
+boost::property_tree::ptree BoostXmlCndInterface::createProcessNode(FEMCondition const& bc) const
+{
+	boost::property_tree::ptree pt;
+	pt.put("Type", FiniteElement::convertProcessTypeToString(bc.getProcessType()));
+	pt.put("Variable", FiniteElement::convertPrimaryVariableToString(bc.getProcessPrimaryVariable()));
+	return pt;
+}
+
+boost::property_tree::ptree BoostXmlCndInterface::createGeometryNode(FEMCondition const& bc) const
+{
+	boost::property_tree::ptree pt;
+	pt.put("Type", GeoLib::convertGeoTypeToString(bc.getGeomType()));
+	pt.put("Name", bc.getGeoName());
+	return pt;
+}
+
 
 } // end namespace FileIO

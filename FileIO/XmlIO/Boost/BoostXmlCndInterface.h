@@ -52,6 +52,10 @@ private:
 	void readDistributionTag(boost::property_tree::ptree const& distribution_tags,
 			FEMCondition * bc) const;
 
+	boost::property_tree::ptree createBCNode(FEMCondition const& bc) const;
+	boost::property_tree::ptree createProcessNode(FEMCondition const& bc) const;
+	boost::property_tree::ptree createGeometryNode(FEMCondition const& bc) const;
+
 	FEMCondition::CondType _type;
 	ProjectData & _project_data;
 };
