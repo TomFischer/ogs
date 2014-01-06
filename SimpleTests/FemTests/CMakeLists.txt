@@ -39,6 +39,6 @@ IF(OGS_BUILD_GUI)
 	TARGET_LINK_LIBRARIES(SimpleGroundWaterFlow
 		QtDataView
 		VtkVis
-		vtkRendering
+		${VTK_LIBRARIES}
 	)
 ENDIF()
