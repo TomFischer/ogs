@@ -21,6 +21,7 @@ ADD_EXECUTABLE(SimpleGroundWaterFlow
 )
 
 TARGET_LINK_LIBRARIES (SimpleGroundWaterFlow
+	AssemblerLib
 	MeshLib
 	FileIO
 	MathLib
