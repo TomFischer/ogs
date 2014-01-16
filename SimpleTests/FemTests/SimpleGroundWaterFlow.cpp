@@ -40,7 +40,8 @@
 #include "MeshNodesToPoints.h"
 
 // MeshLib
-#include "Mesh.h"
+#include "MeshLib/Mesh.h"
+#include "MeshLib/MeshSubsets.h"
 
 // OGS
 #include "BoundaryCondition.h"
@@ -115,11 +116,18 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	std::string geo_name("bc_as_geo_test");
-	MeshGeoTools::MeshNodesToPoints(*(project_data.getMesh(mesh_name)),
-			mesh_node_ids,
-			*(project_data.getGEOObjects()),
-			geo_name);
+	//--------------------------------------------------------------------------
+	// Prepare mesh items where data are assigned
+	//--------------------------------------------------------------------------
+	MeshLib::Mesh const& mesh(*project_data.getMesh(mesh_name));
+	const MeshLib::MeshSubset mesh_items_all_nodes(mesh, mesh.getNodes());
+
+	// define a mesh item composition in a vector
+	std::vector<MeshLib::MeshSubsets*> vec_comp_dis;
+	vec_comp_dis.push_back(new MeshLib::MeshSubsets(&mesh_items_all_nodes));
+	AssemblerLib::MeshComponentMap vec1_composition(vec_comp_dis,
+			AssemblerLib::ComponentOrder::BY_COMPONENT);
+
 
 	FileIO::XmlGmlInterface xml_out(*(project_data.getGEOObjects()));
 	xml_out.setNameForExport(geo_name);
