@@ -50,20 +50,24 @@ int main(int argc, char *argv[])
 {
 	// logog
 	LOGOG_INITIALIZE();
-	BaseLib::LogogSimpleFormatter *custom_format (new BaseLib::LogogSimpleFormatter);
+	BaseLib::LogogSimpleFormatter *custom_format(new BaseLib::LogogSimpleFormatter);
 	logog::Cout *logog_cout(new logog::Cout);
 	logog_cout->SetFormatter(*custom_format);
 
 	// tclap
-	TCLAP::CmdLine cmd("Simple ground water flow test, reading mesh (only 2d quad elements), geometry and bc and simulate ground water flow", ' ', "0.1");
+	TCLAP::CmdLine cmd(
+			"Simple ground water flow test, reading mesh (only 2d quad elements), geometry and bc and simulate ground water flow",
+			' ', "0.1");
 
 	TCLAP::ValueArg<std::string> mesh_arg("m", "mesh", "file name of the mesh", true, "", "string");
 	cmd.add(mesh_arg);
 
-	TCLAP::ValueArg<std::string> geometry_arg("g", "geometry", "file name of the geometry", true, "", "string");
+	TCLAP::ValueArg<std::string> geometry_arg("g", "geometry", "file name of the geometry", true,
+			"", "string");
 	cmd.add(geometry_arg);
 
-	TCLAP::ValueArg<std::string> bc_arg("", "boundary_condition", "file name of the boundary condition", true, "", "string");
+	TCLAP::ValueArg<std::string> bc_arg("", "boundary_condition",
+			"file name of the boundary condition", true, "", "string");
 	cmd.add(bc_arg);
 
 	cmd.parse(argc, argv);
@@ -75,8 +79,9 @@ int main(int argc, char *argv[])
 //	FileIO::XmlGmlInterface geo_io(&project_data, schema_file);
 //	geo_io.readFile(geometry_arg.getValue());
 	std::string unique_name;
-	std::vector<std::string> errors;
-	if (! FileIO::readGLIFileV4(geometry_arg.getValue(), project_data.getGEOObjects(), unique_name, errors)) {
+	std::vector < std::string > errors;
+	if (!FileIO::readGLIFileV4(geometry_arg.getValue(), project_data.getGEOObjects(), unique_name,
+			errors)) {
 		ERR("Could not read geometry file \"%s\".", geometry_arg.getValue().c_str());
 		abort();
 	}
@@ -88,14 +93,14 @@ int main(int argc, char *argv[])
 	FileIO::BoostXmlCndInterface xml_io(project_data);
 	xml_io.readFile(bc_arg.getValue());
 
-	std::vector<FEMCondition*> bcs (project_data.getConditions(
-		FiniteElement::GROUNDWATER_FLOW, unique_name,
-		FEMCondition::BOUNDARY_CONDITION));
+	std::vector<FEMCondition*> bcs(
+			project_data.getConditions(FiniteElement::GROUNDWATER_FLOW, unique_name,
+					FEMCondition::BOUNDARY_CONDITION));
 
-	std::vector<std::size_t> mesh_node_ids;
+	std::vector < std::size_t > mesh_node_ids;
 	const std::string mesh_name(BaseLib::extractBaseNameWithoutExtension(mesh_arg.getValue()));
-	MeshGeoTools::MeshNodeSearcher searcher(* project_data.getMesh(mesh_name));
-	for (auto it (bcs.cbegin()); it != bcs.cend(); it++) {
+	MeshGeoTools::MeshNodeSearcher searcher(*project_data.getMesh(mesh_name));
+	for (auto it(bcs.cbegin()); it != bcs.cend(); it++) {
 		// fetch geometry obj from condition obj
 		GeoLib::GeoObject const* geom_obj((*it)->getGeoObj());
 		if (dynamic_cast<GeoLib::Point const*>(geom_obj) != nullptr) {
