@@ -102,7 +102,7 @@ public:
 			_fe_quad4.computeShapeFunctions(wp.getCoords(), _shape);
 			std::cout << "N = " << _shape.N.transpose() << " J = " << _shape.detJ << std::endl;
 			std::cout << "m_" << ip << " = " << _m << std::endl;
-			_m += _shape.N * _shape.N.transpose() * _shape.detJ * wp.getWeight();
+			_m += _shape.dNdx.transpose() * _shape.dNdx * _shape.detJ * wp.getWeight();
 		}
 
 		std::cout << "ip = " << _m << std::endl;
