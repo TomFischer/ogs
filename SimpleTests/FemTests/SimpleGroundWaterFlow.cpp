@@ -66,44 +66,59 @@
 #include "BoundaryCondition.h"
 #include "ProjectData.h"
 
+const std::size_t NumLib::ShapeQuad4::DIM;
+const std::size_t NumLib::ShapeQuad4::NPOINTS;
+
+template <typename ElemType>
 class LocalGWAssembler
 {
+
+public:
+    typedef Eigen::Matrix<double, ElemType::NPOINTS, ElemType::NPOINTS, Eigen::RowMajor> NodalMatrixType;
+    typedef Eigen::Matrix<double, ElemType::NPOINTS, 1> NodalVectorType;
+    typedef Eigen::Matrix<double, ElemType::DIM, ElemType::NPOINTS, Eigen::RowMajor> DimNodalMatrixType;
+    typedef Eigen::Matrix<double, ElemType::DIM, ElemType::DIM, Eigen::RowMajor> DimMatrixType;
+
 public:
 	LocalGWAssembler() :
-			_m(4, 4)
+			_m(ElemType::NPOINTS, ElemType::NPOINTS),
+			_shape(ElemType::DIM, ElemType::NPOINTS),
+			_integration_method(1)
+	{}
+
+	void operator()(const MeshLib::Element& e, NodalMatrixType &localA,
+			NodalVectorType & /*rhs*/)
 	{
-		_m(0, 0) = 4.0;
-		_m(0, 1) = -1.0;
-		_m(0, 2) = -2.0;
-		_m(0, 3) = -1.0;
-		_m(1, 1) = 4.0;
-		_m(1, 2) = -1.0;
-		_m(1, 3) = -2.0;
-		_m(2, 2) = 4.0;
-		_m(2, 3) = -1.0;
-		_m(3, 3) = 4.0;
+		_m.setZero();
 
-		// copy upper triangle to lower to make symmetric
-		for (std::size_t i = 0; i < 4; i++)
-			for (std::size_t j = 0; j < i; j++)
-				_m(i, j) = _m(j, i);
+		// init FeQUAD4
+		_fe_quad4.setMeshElement(*static_cast<const MeshLib::Quad*>(&e));
 
-		//_m *= 1.e-11/6.0;
-		for (std::size_t i = 0; i < 4; i++)
-			for (std::size_t j = 0; j < 4; j++)
-				_m(i, j) *= 1.0;
-	}
+		for (std::size_t ip(0); ip < _integration_method.getNPoints(); ip++) { // ip == number of gauss point
+			std::cout << ip << " (r,s) = " << _integration_method.getWeightedPoint(ip) << " w = " << _integration_method.getWeightedPoint(ip).getWeight() << "\n";
 
-	void operator()(const MeshLib::Element & /*e*/, MathLib::DenseMatrix<double> &localA,
-			MathLib::DenseVector<double> & /*rhs*/)
-	{
-		for (std::size_t i = 0; i < 4; i++)
-			for (std::size_t j = 0; j < 4; j++)
+			_shape.setZero();
+			MathLib::WeightedPoint2D const& wp = _integration_method.getWeightedPoint(ip);
+			_fe_quad4.computeShapeFunctions(wp.getCoords(), _shape);
+			std::cout << "N = " << _shape.N.transpose() << " J = " << _shape.detJ << std::endl;
+			std::cout << "m_" << ip << " = " << _m << std::endl;
+			_m += _shape.N * _shape.N.transpose() * _shape.detJ * wp.getWeight();
+		}
+
+		std::cout << "ip = " << _m << std::endl;
+
+		for (std::size_t i = 0; i < _integration_method.getNPoints(); i++)
+			for (std::size_t j = 0; j < _integration_method.getNPoints(); j++)
 				localA(i, j) = _m(i, j);
 	}
 
 private:
-	MathLib::DenseMatrix<double> _m;
+	NodalMatrixType _m;
+	typedef typename NumLib::FeQUAD4<NodalVectorType, DimNodalMatrixType, DimMatrixType>::type FeQuad4;
+	typename FeQuad4::ShapeMatricesType _shape;
+	typename FeQuad4::IntegrationMethod _integration_method;
+
+	FeQuad4 _fe_quad4;
 };
 
 
