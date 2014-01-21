@@ -26,43 +26,43 @@ IntegrationGaussRegular<1>::getPositionIndices(std::size_t /*order*/, std::size_
 
 template <>
 inline std::array<std::size_t, 2>
-IntegrationGaussRegular<2>::getPositionIndices(std::size_t order, std::size_t igp)
+IntegrationGaussRegular<2>::getPositionIndices(std::size_t n_points, std::size_t igp)
 {
-    assert(igp < order*order);
+    assert(igp < n_points*n_points);
     std::array<std::size_t, 2> result;
-    result[0] = igp / order;
-    result[1] = igp % order;
+    result[0] = igp / n_points;
+    result[1] = igp % n_points;
     return result;
 }
 
 template <>
 inline std::array<std::size_t, 3>
-IntegrationGaussRegular<3>::getPositionIndices(std::size_t order, std::size_t igp)
+IntegrationGaussRegular<3>::getPositionIndices(std::size_t n_points, std::size_t igp)
 {
-    assert(igp < order*order*order);
-    std::size_t const gp_r = igp / (order * order);
-    std::size_t const gp_s = igp % (order * order);
+    assert(igp < n_points*n_points*n_points);
+    std::size_t const gp_r = igp / (n_points * n_points);
+    std::size_t const gp_s = igp % (n_points * n_points);
     std::array<std::size_t, 3> result;
     result[0] = gp_r;
-    result[1] = gp_s / order;
-    result[2] = gp_s % order;
+    result[1] = gp_s / n_points;
+    result[2] = gp_s % n_points;
     return result;
 }
 
 template <std::size_t N_DIM>
 inline
 MathLib::TemplateWeightedPoint<double,double,N_DIM>
-IntegrationGaussRegular<N_DIM>::getWeightedPoint(std::size_t order, std::size_t igp)
+IntegrationGaussRegular<N_DIM>::getWeightedPoint(std::size_t n_points, std::size_t igp)
 {
-    assert(igp < std::pow(order, N_DIM));
-    std::array<std::size_t, N_DIM> const pos = getPositionIndices(order, igp);
+    assert(igp < std::pow(n_points, N_DIM));
+    std::array<std::size_t, N_DIM> const pos = getPositionIndices(n_points, igp);
 
-    switch (order)
+    switch (n_points)
     {
-        case 1: return getWeightedPoint<MathLib::GaussLegendre<1>>(pos);
-        case 2: return getWeightedPoint<MathLib::GaussLegendre<2>>(pos);
-        case 3: return getWeightedPoint<MathLib::GaussLegendre<3>>(pos);
-        case 4: return getWeightedPoint<MathLib::GaussLegendre<4>>(pos);
+        case 1: return getWeightedPoint<MathLib::GaussLegendre<0>>(pos);
+        case 2: return getWeightedPoint<MathLib::GaussLegendre<1>>(pos);
+        case 3: return getWeightedPoint<MathLib::GaussLegendre<2>>(pos);
+        case 4: return getWeightedPoint<MathLib::GaussLegendre<3>>(pos);
     }
 
     return MathLib::TemplateWeightedPoint<double, double, N_DIM>(std::array<double, N_DIM>(), 0);

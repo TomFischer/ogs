@@ -56,7 +56,7 @@ struct WeightedSum
     double
     add(Func const& f)
     {
-        return detail::SUM<Method::Order, Method>::add(f);
+        return detail::SUM<Method::Order + 1, Method>::add(f);
     }
 };
 

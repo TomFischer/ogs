@@ -38,9 +38,9 @@ public:
      * Create IntegrationGaussRegular of the given Gauss-Legendre integration
      * order.
      *
-     * @param order     integration order (default 2)
+     * @param order     integration order (default 1)
      */
-    explicit IntegrationGaussRegular(std::size_t order = 2)
+    explicit IntegrationGaussRegular(std::size_t order = 1)
     : _order(order), _n_sampl_pt(0)
     {
         this->setIntegrationOrder(order);
@@ -49,7 +49,7 @@ public:
     /// Change the integration order.
     void setIntegrationOrder(std::size_t order)
     {
-        this->_n_sampl_pt = std::pow(order, N_DIM);
+        this->_n_sampl_pt = std::pow(order + 1, N_DIM);
         this->_order = order;
     }
 
@@ -68,27 +68,27 @@ public:
     WeightedPoint
     getWeightedPoint(std::size_t igp) const
     {
-        return getWeightedPoint(getIntegrationOrder(), igp);
+        return getWeightedPoint(getIntegrationOrder() + 1, igp);
     }
 
     /**
      * get position indexes in r-s-t axis
      *
-     * @param order    The number of integration points
+     * @param n_points  The number of integration points
      * @param igp       The integration point index
      * @return  a tuple of position indexes
      */
-    static std::array<std::size_t, N_DIM> getPositionIndices(std::size_t order, std::size_t igp);
+    static std::array<std::size_t, N_DIM> getPositionIndices(std::size_t n_points, std::size_t igp);
 
     /**
      * get coordinates of a integration point
      *
-     * @param order    the number of integration points
+     * @param n_points  the number of integration points
      * @param pt_id     the sampling point id
      * @return weight
      */
     static WeightedPoint
-    getWeightedPoint(std::size_t order, std::size_t igp);
+    getWeightedPoint(std::size_t n_points, std::size_t igp);
 
 private:
     /// Computes weighted point using given integration method.

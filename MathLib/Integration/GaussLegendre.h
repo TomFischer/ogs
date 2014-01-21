@@ -25,8 +25,8 @@ namespace MathLib
 template <unsigned ORDER>
 struct GaussLegendre {
     static const unsigned Order = ORDER;
-    static const double X[Order];
-    static const double W[Order];
+    static const double X[Order + 1];
+    static const double W[Order + 1];
 };
 
 }   // namespace MathLib
