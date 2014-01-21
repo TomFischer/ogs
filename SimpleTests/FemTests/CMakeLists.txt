@@ -26,12 +26,12 @@ ADD_EXECUTABLE(SimpleGroundWaterFlow
 
 TARGET_LINK_LIBRARIES (SimpleGroundWaterFlow
 	AssemblerLib
-	MeshLib
-	FileIO
-	MathLib
 	BaseLib
+	FileIO
 	GeoLib
+	MathLib
 	MeshGeoToolsLib
+	MeshLib
 	OgsLib
 	logog
 	zlib
