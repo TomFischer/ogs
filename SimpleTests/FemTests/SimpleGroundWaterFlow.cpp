@@ -241,10 +241,17 @@ int main(int argc, char *argv[])
 	}
 
 	// Local and global assemblers.
-	LocalGWAssembler local_gw_assembler;
+	LocalGWAssembler<NumLib::ShapeQuad4> local_gw_assembler;
+	typedef typename LocalGWAssembler<NumLib::ShapeQuad4>::NodalMatrixType LocalMatrix;
+	typedef typename LocalGWAssembler<NumLib::ShapeQuad4>::NodalVectorType LocalVector;
 
-	typedef AssemblerLib::VectorMatrixAssembler<GlobalMatrix, GlobalVector, MeshLib::Element,
-			LocalGWAssembler, MathLib::DenseMatrix<double>, MathLib::DenseVector<double> > GlobalAssembler;
+	typedef AssemblerLib::VectorMatrixAssembler<
+			GlobalMatrix,
+			GlobalVector,
+			MeshLib::Element,
+			LocalGWAssembler<NumLib::ShapeQuad4>,
+			LocalMatrix,
+			LocalVector > GlobalAssembler;
 
 	GlobalAssembler global_assembler(*A.get(), *rhs.get(), local_gw_assembler,
 			AssemblerLib::LocalToGlobalIndexMap(map_ele_nodes2vec_entries));
