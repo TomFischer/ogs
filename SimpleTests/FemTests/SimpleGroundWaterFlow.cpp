@@ -259,6 +259,9 @@ int main(int argc, char *argv[])
 	// Call global assembler for each mesh element.
 	global_setup.execute(global_assembler, mesh.getElements());
 
+	// apply Dirichlet BC
+//	MathLib::applyKnownSolution(*A, *rhs, ex1.vec_DirichletBC_id,
+//	                                ex1.vec_DirichletBC_value);
 	//--------------------------------------------------------------------------
 	// solve x=A^-1 rhs
 	//--------------------------------------------------------------------------
