@@ -100,7 +100,7 @@ public:
 			_shape.setZero();
 			MathLib::WeightedPoint2D const& wp = _integration_method.getWeightedPoint(ip);
 			_fe_quad4.computeShapeFunctions(wp.getCoords(), _shape);
-			std::cout << "N = " << _shape.N.transpose() << " J = " << _shape.detJ << std::endl;
+			std::cout << "dNdx = " << _shape.dNdx << " J = " << _shape.detJ << std::endl;
 			std::cout << "m_" << ip << " = " << _m << std::endl;
 			_m += _shape.dNdx.transpose() * _shape.dNdx * _shape.detJ * wp.getWeight();
 		}
