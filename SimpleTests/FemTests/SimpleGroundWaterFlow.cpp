@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 			project_data.getConditions(FiniteElement::GROUNDWATER_FLOW, unique_name,
 					FEMCondition::BOUNDARY_CONDITION));
 
-	std::vector < std::size_t > mesh_node_ids;
+	std::vector < std::size_t > bc_mesh_node_ids;
 	const std::string mesh_name(BaseLib::extractBaseNameWithoutExtension(mesh_arg.getValue()));
 	MeshGeoTools::MeshNodeSearcher searcher(*project_data.getMesh(mesh_name));
 	for (auto it(bcs.cbegin()); it != bcs.cend(); it++) {
@@ -154,12 +154,12 @@ int main(int argc, char *argv[])
 		GeoLib::GeoObject const* geom_obj((*it)->getGeoObj());
 		if (dynamic_cast<GeoLib::Point const*>(geom_obj) != nullptr) {
 			GeoLib::Point const& pnt(*dynamic_cast<GeoLib::Point const*>(geom_obj));
-			mesh_node_ids.push_back(searcher.getMeshNodeIDForPoint(pnt));
+			bc_mesh_node_ids.push_back(searcher.getMeshNodeIDForPoint(pnt));
 		} else {
 			if (dynamic_cast<GeoLib::Polyline const*>(geom_obj) != nullptr) {
 				GeoLib::Polyline const& ply(*dynamic_cast<GeoLib::Polyline const*>(geom_obj));
 				std::vector<std::size_t> const& ids(searcher.getMeshNodeIDsAlongPolyline(ply));
-				mesh_node_ids.insert(mesh_node_ids.end(), ids.cbegin(), ids.cend());
+				bc_mesh_node_ids.insert(bc_mesh_node_ids.end(), ids.cbegin(), ids.cend());
 			}
 		}
 	}
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 	std::cout << std::endl;
 //	std::string geo_name("bc_as_geo_test");
 //	MeshGeoTools::MeshNodesToPoints(*(project_data.getMesh(mesh_name)),
-//			mesh_node_ids,
+//			b_mesh_node_ids,
 //			*(project_data.getGEOObjects()),
 //			geo_name);
 //
