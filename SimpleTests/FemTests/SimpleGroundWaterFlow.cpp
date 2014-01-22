@@ -19,7 +19,10 @@
 #endif
 
 // AssemblerLib
-#include "AssemblerLib/SerialDenseSetup.h"
+//#include "AssemblerLib/SerialDenseSetup.h"
+#include "AssemblerLib/GlobalSetup.h"
+#include "AssemblerLib/SerialExecutor.h"
+#include "AssemblerLib/SerialLisVectorMatrixBuilder.h"
 #include "AssemblerLib/VectorMatrixAssembler.h"
 
 // ThirdParty/logog
@@ -44,7 +47,8 @@
 #include "GeoObject.h"
 
 // MathLib
-#include "MathLib/LinAlg/Solvers/GaussAlgorithm.h"
+//#include "MathLib/LinAlg/Solvers/GaussAlgorithm.h"
+#include "MathLib/LinAlg/Lis/LisLinearSolver.h"
 #include "MathLib/TemplateWeightedPoint.h"
 
 // MeshGeoToolsLib
@@ -74,10 +78,16 @@ class LocalGWAssembler
 {
 
 public:
-    typedef Eigen::Matrix<double, ElemType::NPOINTS, ElemType::NPOINTS, Eigen::RowMajor> NodalMatrixType;
+    //typedef Eigen::Matrix<double, ElemType::NPOINTS, ElemType::NPOINTS, Eigen::RowMajor> NodalMatrixType;
     typedef Eigen::Matrix<double, ElemType::NPOINTS, 1> NodalVectorType;
     typedef Eigen::Matrix<double, ElemType::DIM, ElemType::NPOINTS, Eigen::RowMajor> DimNodalMatrixType;
     typedef Eigen::Matrix<double, ElemType::DIM, ElemType::DIM, Eigen::RowMajor> DimMatrixType;
+
+	// Dynamic size local matrices are much slower.
+    typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> NodalMatrixType;
+    //typedef Eigen::Matrix<double, Eigen::Dynamic, 1> NodalVectorType;
+    //typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::RowMajor> DimNodalMatrixType;
+    //typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> DimMatrixType;
 
 public:
 	LocalGWAssembler() :
@@ -95,17 +105,17 @@ public:
 		_fe_quad4.setMeshElement(*static_cast<const MeshLib::Quad*>(&e));
 
 		for (std::size_t ip(0); ip < _integration_method.getNPoints(); ip++) { // ip == number of gauss point
-			std::cout << ip << " (r,s) = " << _integration_method.getWeightedPoint(ip) << " w = " << _integration_method.getWeightedPoint(ip).getWeight() << "\n";
+			//std::cout << ip << " (r,s) = " << _integration_method.getWeightedPoint(ip) << " w = " << _integration_method.getWeightedPoint(ip).getWeight() << "\n";
 
 			_shape.setZero();
 			MathLib::WeightedPoint2D const& wp = _integration_method.getWeightedPoint(ip);
 			_fe_quad4.computeShapeFunctions(wp.getCoords(), _shape);
-			std::cout << "dNdx = " << _shape.dNdx << " J = " << _shape.detJ << std::endl;
-			std::cout << "m_" << ip << " = " << _m << std::endl;
+			//std::cout << "dNdx = " << _shape.dNdx << " J = " << _shape.detJ << std::endl;
+			//std::cout << "m_" << ip << " = " << _m << std::endl;
 			_m += _shape.dNdx.transpose() * _shape.dNdx * _shape.detJ * wp.getWeight();
 		}
 
-		std::cout << "ip = " << _m << std::endl;
+		//std::cout << "ip = " << _m << std::endl;
 
 		for (std::size_t i = 0; i < _integration_method.getNPoints(); i++)
 			for (std::size_t j = 0; j < _integration_method.getNPoints(); j++)
@@ -151,15 +161,19 @@ int main(int argc, char *argv[])
 	ProjectData project_data;
 
 	// *** read geometry
+	{
 //	const std::string schema_file(std::string(SOURCEPATH).append("/FileIO/OpenGeoSysGLI.xsd"));
 //	FileIO::XmlGmlInterface geo_io(&project_data, schema_file);
 //	geo_io.readFile(geometry_arg.getValue());
+	}
 	std::string unique_name;
-	std::vector < std::string > errors;
-	if (!FileIO::readGLIFileV4(geometry_arg.getValue(), project_data.getGEOObjects(), unique_name,
-			errors)) {
-		ERR("Could not read geometry file \"%s\".", geometry_arg.getValue().c_str());
-		abort();
+	{
+		std::vector < std::string > errors;
+		if (!FileIO::readGLIFileV4(geometry_arg.getValue(), project_data.getGEOObjects(), unique_name,
+				errors)) {
+			ERR("Could not read geometry file \"%s\".", geometry_arg.getValue().c_str());
+			abort();
+		}
 	}
 
 	// *** read mesh
@@ -209,7 +223,10 @@ int main(int argc, char *argv[])
 	//--------------------------------------------------------------------------
 	// Choose implementation type
 	//--------------------------------------------------------------------------
-	typedef AssemblerLib::SerialDenseSetup GlobalSetup;
+	//typedef AssemblerLib::SerialDenseSetup GlobalSetup;
+	typedef AssemblerLib::GlobalSetup<
+		AssemblerLib::SerialLisVectorMatrixBuilder,
+		AssemblerLib::SerialExecutor> GlobalSetup;
 	const GlobalSetup global_setup;
 
 	// allocate a vector and matrix
@@ -253,26 +270,30 @@ int main(int argc, char *argv[])
 			LocalMatrix,
 			LocalVector > GlobalAssembler;
 
+	//AssemblerLib::LocalToGlobalIndexMap ltgim(map_ele_nodes2vec_entries);
 	GlobalAssembler global_assembler(*A.get(), *rhs.get(), local_gw_assembler,
 			AssemblerLib::LocalToGlobalIndexMap(map_ele_nodes2vec_entries));
+			//ltgim);
 
 	// Call global assembler for each mesh element.
 	global_setup.execute(global_assembler, mesh.getElements());
 
 	// apply Dirichlet BC
-//	MathLib::applyKnownSolution(*A, *rhs, ex1.vec_DirichletBC_id,
-//	                                ex1.vec_DirichletBC_value);
+	//MathLib::applyKnownSolution(*A, *rhs, ex1.vec_DirichletBC_id,
+	                                //ex1.vec_DirichletBC_value);
 	//--------------------------------------------------------------------------
 	// solve x=A^-1 rhs
 	//--------------------------------------------------------------------------
-	std::cout << "A=\n";
-	for (std::size_t i = 0; i < 30; i++) {
-		for (std::size_t j = 0; j < 30; j++)
-			std::cout << (*A)(i, j) << " ";
-		std::cout << std::endl;
-	}
+//	std::cout << "A=\n";
+//	for (std::size_t i = 0; i < 30; i++) {
+//		for (std::size_t j = 0; j < 30; j++)
+//			std::cout << (*A)(i, j) << " ";
+//		std::cout << std::endl;
+//	}
 
-	MathLib::GaussAlgorithm<GlobalMatrix, GlobalVector> ls(*A);
+	MathLib::finalizeMatrixAssembly(*A);
+	//MathLib::GaussAlgorithm<GlobalMatrix, GlobalVector> ls(*A);
+	MathLib::LisLinearSolver ls(*A);
 	ls.solve(*rhs, *x);
 
 	std::cout << "x=\n";
@@ -290,6 +311,8 @@ int main(int argc, char *argv[])
 //	xml_out.setNameForExport(geo_name);
 //	xml_out.writeToFile(geo_name+".gml");
 
+	std::remove_if(vec_comp_dis.begin(), vec_comp_dis.end(),
+			[](MeshLib::MeshSubsets* v) { delete v; return true; });
 	delete custom_format;
 	delete logog_cout;
 	LOGOG_SHUTDOWN();

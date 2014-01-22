@@ -44,7 +44,14 @@ public:
 
     explicit LocalToGlobalIndexMap(std::vector<LineIndex> const& rows)
         : _rows(rows), _columns(rows)
-    { }
+    {
+        /*
+        std::cout << _rows[0][0] << " " << _rows[0][1] << " "
+                  << _rows[0][2] << " " << _rows[0][3] << "\n";
+        std::cout << _columns[1][0] << " " << _columns[1][1] << " "
+                  << _columns[1][2] << " " << _columns[1][3] << "\n";
+                  */
+    }
 
     std::size_t size() const
     {

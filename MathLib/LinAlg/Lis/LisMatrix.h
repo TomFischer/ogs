@@ -39,6 +39,10 @@ class LisVector;
 class LisMatrix
 {
 public:
+	typedef LIS_SCALAR FP_T;
+	typedef LIS_INT IDX_T;
+
+public:
     /**
      * constructor
      * @param n_rows the number of rows (that is equal to the number of columns)
@@ -121,8 +125,8 @@ private:
     LIS_MATRIX _AA;
     LIS_VECTOR _diag;
     bool _is_assembled;
-    int _is;	///< location where the partial matrix _AA starts in global matrix.
-    int _ie;	///< location where the partial matrix _AA ends in global matrix.
+    LIS_INT _is;	///< location where the partial matrix _AA starts in global matrix.
+    LIS_INT _ie;	///< location where the partial matrix _AA ends in global matrix.
 
     // friend function
     friend bool finalizeMatrixAssembly(LisMatrix &mat);
@@ -133,8 +137,8 @@ void
 LisMatrix::add(std::vector<std::size_t> const& row_pos, std::vector<std::size_t> const& col_pos,
         const T_DENSE_MATRIX &sub_matrix, double fkt)
 {
-    if (row_pos.size() != sub_matrix.getNRows() || col_pos.size() != sub_matrix.getNCols())
-        return;
+    //if (row_pos.size() != sub_matrix.getNRows() || col_pos.size() != sub_matrix.getNCols())
+        //return;
 
     const std::size_t n_rows = row_pos.size();
     const std::size_t n_cols = col_pos.size();
