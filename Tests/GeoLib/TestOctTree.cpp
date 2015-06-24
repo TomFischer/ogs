@@ -323,15 +323,18 @@ TEST_F(GeoLibOctTree, TestSmallDistanceDifferentLeaves)
 	}
 
 	// point near the GeoLib::Point (0, -10, -10, 10) (with id 10)
-	GeoLib::Point *p0(new GeoLib::Point(0.1, -10.0, -10.0));
+	auto p0 = GeoLib::Point{0.1, -10.0, -10.0};
 	GeoLib::Point * ret_pnt(nullptr);
-	ASSERT_FALSE(oct_tree->addPoint(p0, ret_pnt));
+	ASSERT_FALSE(oct_tree->addPoint(&p0, ret_pnt));
 	ASSERT_EQ(10u, ret_pnt->getID());
 
-	(*p0)[0] = -0.1;
+	p0[0] = -0.1;
 	ret_pnt = nullptr;
-	ASSERT_FALSE(oct_tree->addPoint(p0, ret_pnt));
+	ASSERT_FALSE(oct_tree->addPoint(&p0, ret_pnt));
 	ASSERT_EQ(10u, ret_pnt->getID());
+
+	for (auto p : ps_ptr)
+		delete p;
 }
 
 TEST_F(GeoLibOctTree, TestOctTreeWithTwoEqualPoints)
