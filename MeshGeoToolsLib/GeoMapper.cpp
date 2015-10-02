@@ -50,12 +50,23 @@ GeoMapper::~GeoMapper()
 
 void GeoMapper::mapOnDEM(const std::string &file_name)
 {
-	this->_raster = FileIO::AsciiRasterInterface::getRasterFromASCFile(file_name);
+	_raster = FileIO::AsciiRasterInterface::getRasterFromASCFile(file_name);
 	if (! _raster) {
 		ERR("GeoMapper::mapOnDEM(): failed to load %s", file_name.c_str());
 		return;
 	}
-	this->mapData();
+
+	std::vector<GeoLib::Point*> const* pnts(_geo_objects.getPointVec(_geo_name));
+	if (! pnts) {
+		ERR("Geometry \"%s\" does not exist.", _geo_name.c_str());
+		return;
+	}
+	bool const is_station(GeoLib::isStation((*pnts)[0]));
+	if (is_station) {
+		mapStationData();
+	} else {
+		mapPointDataToDEM();
+	}
 }
 
 void GeoMapper::mapOnMesh(const std::string &file_name)
@@ -93,7 +104,7 @@ void GeoMapper::mapOnMesh(const MeshLib::Mesh* mesh)
 	if (is_station) {
 		mapStationData();
 	} else {
-		mapData();
+		mapPointDataToMeshSurface();
 	}
 
 	delete _grid;
@@ -143,15 +154,44 @@ void GeoMapper::mapStationData()
 	}
 }
 
-void GeoMapper::mapData()
+void GeoMapper::mapPointDataToDEM()
 {
-	const std::vector<GeoLib::Point*> *points (this->_geo_objects.getPointVec(this->_geo_name));
+	std::vector<GeoLib::Point*> const* pnts(_geo_objects.getPointVec(_geo_name));
+
+	double min_val(0), max_val(0);
+	if (_surface_mesh)
+	{
+		GeoLib::AABB<MeshLib::Node> bounding_box(
+			_surface_mesh->getNodes().begin(), _surface_mesh->getNodes().end());
+		min_val = bounding_box.getMinPoint()[2];
+		max_val = bounding_box.getMaxPoint()[2];
+	}
 
 	for (auto pnt : *pnts)
 	{
-		GeoLib::Point* pnt ((*points)[j]);
-		(*pnt)[2] = (_grid) ? getMeshElevation((*pnt)[0],(*pnt)[1], min_val, max_val)
-			                : getDemElevation(*pnt);
+		GeoLib::Point &p(*pnt);
+		p[2] = getDemElevation(p);
+	}
+}
+
+void GeoMapper::mapPointDataToMeshSurface()
+{
+	std::vector<GeoLib::Point*> const& pnts(*_geo_objects.getPointVec(_geo_name));
+
+	double min_val(0), max_val(0);
+	GeoLib::AABB<MeshLib::Node> aabb(
+		_surface_mesh->getNodes().cbegin(), _surface_mesh->getNodes().cend());
+	min_val = aabb.getMinPoint()[2];
+	max_val = aabb.getMaxPoint()[2];
+
+	for (auto pnt : pnts) {
+		GeoLib::Point &p(*pnt);
+		if (p[0] < aabb.getMinPoint()[0] || aabb.getMaxPoint()[0] < p[0])
+			continue;
+		if (p[1] < aabb.getMinPoint()[1] || aabb.getMaxPoint()[1] < p[1])
+			continue;
+
+		p[2] = getMeshElevation(p[0], p[1], min_val, max_val);
 	}
 }
 

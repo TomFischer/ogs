@@ -72,8 +72,12 @@ public:
 private:
 	/// Mapping stations, boreholes on a raster or mesh.
 	void mapStationData();
-	/// Manages the mapping geometric data (points, stations, boreholes) on a raster or mesh.
-	void mapData();
+
+	/// Mapping points on a raster.
+	void mapPointDataToDEM();
+
+	/// Mapping points on mesh.
+	void mapPointDataToMeshSurface();
 
 	/// Returns the elevation at Point (x,y) based on a mesh. This uses collision detection for triangles and nearest neighbor for quads.
 	/// NOTE: This medhod only returns correct values if the node numbering of the elements is correct!
