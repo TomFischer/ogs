@@ -85,12 +85,15 @@ void GeoMapper::mapOnMesh(const MeshLib::Mesh* mesh)
 	}
 	bool const is_station(GeoLib::isStation((*pnts)[0]));
 
+	if (_surface_mesh)
+		delete _surface_mesh;
+
 	if (mesh->getDimension()<3)
-		this->_surface_mesh = new MeshLib::Mesh(*mesh);
+		_surface_mesh = new MeshLib::Mesh(*mesh);
 	else
 	{
 		const MathLib::Vector3 dir(0,0,-1);
-		this->_surface_mesh = MeshLib::MeshSurfaceExtraction::getMeshSurface(*mesh, dir, 90);
+		_surface_mesh = MeshLib::MeshSurfaceExtraction::getMeshSurface(*mesh, dir, 90);
 	}
 
 	// init grid
