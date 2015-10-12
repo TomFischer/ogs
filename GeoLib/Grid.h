@@ -229,29 +229,36 @@ Grid<POINT>::Grid(InputIterator first, InputIterator last,
 	}
 }
 
-template<typename POINT>
+template <typename POINT>
 template <typename P>
 std::vector<std::vector<POINT*> const*>
 Grid<POINT>::getPntVecsOfGridCellsIntersectingCube(P const& center,
-	double half_len) const
+                                                   double half_len) const
 {
 	std::vector<std::vector<POINT*> const*> pnts;
-	MathLib::Point3d tmp_pnt{
-		{{center[0]-half_len, center[1]-half_len, center[2]-half_len}}}; // min
-	std::array<std::size_t,3> min_coords(getGridCoords(tmp_pnt));
+	MathLib::Point3d tmp_pnt{{{center[0] - half_len, center[1] - half_len,
+	                           center[2] - half_len}}};  // min
+	std::array<std::size_t, 3> min_coords(getGridCoords(tmp_pnt));
 
 	tmp_pnt[0] = center[0] + half_len;
 	tmp_pnt[1] = center[1] + half_len;
 	tmp_pnt[2] = center[2] + half_len;
-	std::array<std::size_t,3> max_coords(getGridCoords(tmp_pnt));
+	std::array<std::size_t, 3> max_coords(getGridCoords(tmp_pnt));
 
 	std::size_t coords[3], steps0_x_steps1(_n_steps[0] * _n_steps[1]);
-	for (coords[0] = min_coords[0]; coords[0] < max_coords[0] + 1; coords[0]++) {
-		for (coords[1] = min_coords[1]; coords[1] < max_coords[1] + 1; coords[1]++) {
-			const std::size_t coords0_p_coords1_x_steps0(coords[0] + coords[1] * _n_steps[0]);
-			for (coords[2] = min_coords[2]; coords[2] < max_coords[2] + 1; coords[2]++) {
-				pnts.push_back(&(_grid_cell_nodes_map[coords0_p_coords1_x_steps0 + coords[2]
-								* steps0_x_steps1]));
+	for (coords[0] = min_coords[0]; coords[0] < max_coords[0] + 1; coords[0]++)
+	{
+		for (coords[1] = min_coords[1]; coords[1] < max_coords[1] + 1;
+		     coords[1]++)
+		{
+			const std::size_t coords0_p_coords1_x_steps0(
+			    coords[0] + coords[1] * _n_steps[0]);
+			for (coords[2] = min_coords[2]; coords[2] < max_coords[2] + 1;
+			     coords[2]++)
+			{
+				pnts.push_back(
+				    &(_grid_cell_nodes_map[coords0_p_coords1_x_steps0 +
+				                           coords[2] * steps0_x_steps1]));
 			}
 		}
 	}
