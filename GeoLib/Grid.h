@@ -468,15 +468,18 @@ std::tuple<POINT*, double> Grid<POINT>::getNearestPoint(P const& pnt) const
 	std::vector<std::vector<POINT*> const*> vecs_of_pnts(
 		getPntVecsOfGridCellsIntersectingCube(pnt, len));
 
-	const std::size_t n_vecs(vecs_of_pnts.size());
-	for (std::size_t j(0); j<n_vecs; j++) {
-		for (auto const& p : *vecs_of_pnts[j])
-		{
-			const double sqr_dist(MathLib::sqrDist(pnt, *p));
-			if (sqr_dist < sqr_min_dist) {
-				sqr_min_dist = sqr_dist;
-				nearest_pnt = p;
-			}
+	std::vector<POINT*> points;
+	points.reserve(vecs_of_pnts.size() * vecs_of_pnts.front()->size());
+	// flatten the vecs_of_pnts
+	for (auto const& ps : vecs_of_pnts)
+		std::copy(ps->cbegin(), ps->cend(), std::back_inserter(points));
+
+	for (auto const& p : points)
+	{
+		const double sqr_dist(MathLib::sqrDist(pnt, *p));
+		if (sqr_dist < sqr_min_dist) {
+			sqr_min_dist = sqr_dist;
+			nearest_pnt = p;
 		}
 	}
 
