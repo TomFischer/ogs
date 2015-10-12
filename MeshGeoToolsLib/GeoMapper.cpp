@@ -169,15 +169,6 @@ void GeoMapper::mapPointDataToDEM()
 {
 	std::vector<GeoLib::Point*> const* pnts(_geo_objects.getPointVec(_geo_name));
 
-	double min_val(0), max_val(0);
-	if (_surface_mesh)
-	{
-		GeoLib::AABB<MeshLib::Node> bounding_box(
-			_surface_mesh->getNodes().begin(), _surface_mesh->getNodes().end());
-		min_val = bounding_box.getMinPoint()[2];
-		max_val = bounding_box.getMaxPoint()[2];
-	}
-
 	for (auto pnt : *pnts)
 	{
 		GeoLib::Point &p(*pnt);
