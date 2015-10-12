@@ -206,8 +206,8 @@ float GeoMapper::getDemElevation(GeoLib::Point const& pnt) const
 double GeoMapper::getMeshElevation(
 	double x, double y, double min_val, double max_val) const
 {
-	const MeshLib::Node* pnt =
-	    _grid->getNearestPoint(MathLib::Point3d{{{x, y, 0}}});
+	const MeshLib::Node* pnt = std::get<0>(
+	    _grid->getNearestPoint(MathLib::Point3d{{{x, y, 0}}}));
 	const std::vector<MeshLib::Element*> elements(
 	    _surface_mesh->getNode(pnt->getID())->getElements());
 	GeoLib::Point* intersection(nullptr);
@@ -276,16 +276,17 @@ void GeoMapper::advancedMapOnMesh(
 
 	const unsigned nMeshNodes ( mesh->getNNodes() );
 	// index of closest geo point for each mesh node in (x,y)-plane
-	std::vector<int> closest_geo_point(nMeshNodes);
+	std::vector<int> closest_geo_point(nMeshNodes, -1);
 	// distance between geo points and mesh nodes in (x,y)-plane
 	std::vector<double> dist(nMeshNodes);
-	for (std::size_t i=0; i<nMeshNodes; ++i)
+	auto zero_coords = GeoLib::Point{};  // All coordinates zero.
+	GeoLib::Point* pnt;
+	for (std::size_t i = 0; i < nMeshNodes; ++i)
 	{
-		auto const zero_coords = GeoLib::Point((*mesh->getNode(i))[0],
-			(*mesh->getNode(i))[1], 0.0, mesh->getNode(i)->getID());
-		GeoLib::Point* pnt = grid.getNearestPoint(zero_coords);
-		dist[i] = MathLib::sqrDist(*pnt, zero_coords);
-		closest_geo_point[i] = (dist[i]<=max_segment_length) ? pnt->getID() : -1;
+		zero_coords[0] = (*mesh->getNode(i))[0];
+		zero_coords[1] = (*mesh->getNode(i))[1];
+		std::tie(pnt, dist[i]) = grid.getNearestPoint(zero_coords);
+		if (dist[i] <= max_segment_length) closest_geo_point[i] = pnt->getID();
 	}
 
 	// store for each point the line segment to which it was added.
