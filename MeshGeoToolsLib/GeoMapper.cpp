@@ -243,12 +243,6 @@ double GeoMapper::getMeshElevation(
 	return (*(_surface_mesh->getNode(pnt->getID())))[2];
 }
 
-unsigned getIndexInPntVec(GeoLib::Point const*const pnt, std::vector<GeoLib::Point*> const*const points)
-{
-	auto it (std::find(points->begin(), points->end(), pnt));
-	return static_cast<unsigned>(std::distance(points->begin(), it));
-}
-
 std::vector<GeoLib::Polyline*>* copyPolylinesVector(const std::vector<GeoLib::Polyline*> *polylines, std::vector<GeoLib::Point*> *points)
 {
 	std::size_t nLines = polylines->size();
@@ -300,7 +294,7 @@ void GeoMapper::advancedMapOnMesh(
 			(*mesh->getNode(i))[1], 0.0, mesh->getNode(i)->getID());
 		GeoLib::Point* pnt = grid.getNearestPoint(zero_coords);
 		dist[i] = MathLib::sqrDist(*pnt, zero_coords);
-		closest_geo_point[i] = (dist[i]<=max_segment_length) ? getIndexInPntVec(pnt, new_points) : -1;
+		closest_geo_point[i] = (dist[i]<=max_segment_length) ? pnt->getID() : -1;
 	}
 
 	// store for each point the line segment to which it was added.
