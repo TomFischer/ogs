@@ -75,7 +75,8 @@ public:
 	 * @return a pointer to the point with the smallest distance within the grid cells that are
 	 * outlined above or nullptr
 	 */
-	template <typename P> POINT* getNearestPoint(P const& pnt) const;
+	template <typename P>
+	std::tuple<POINT*, double> getNearestPoint(P const& pnt) const;
 
 	template <typename P> std::vector<std::size_t> getPointsInEpsilonEnvironment(
 		P const& pnt, double eps) const;
@@ -398,7 +399,7 @@ std::array<double,6> Grid<POINT>::getPointCellBorderDistances(P const& p,
 
 template <typename POINT>
 template <typename P>
-POINT* Grid<POINT>::getNearestPoint(P const& pnt) const
+std::tuple<POINT*, double> Grid<POINT>::getNearestPoint(P const& pnt) const
 {
 	std::array<std::size_t,3> coords(getGridCoords(pnt));
 
@@ -412,7 +413,7 @@ POINT* Grid<POINT>::getNearestPoint(P const& pnt) const
 		if (dists[0] >= min_dist && dists[1] >= min_dist
 			&& dists[2] >= min_dist && dists[3] >= min_dist
 			&& dists[4] >= min_dist && dists[5] >= min_dist) {
-			return nearest_pnt;
+			return std::make_tuple(nearest_pnt, sqr_min_dist);
 		}
 	} else {
 		// search in all border cells for at least one neighbor
@@ -473,7 +474,7 @@ POINT* Grid<POINT>::getNearestPoint(P const& pnt) const
 		}
 	}
 
-	return nearest_pnt;
+	return std::make_tuple(nearest_pnt, sqr_min_dist);
 }
 
 template <typename POINT>
