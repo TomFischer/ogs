@@ -19,6 +19,8 @@
 
 #include <logog/include/logog.hpp>
 
+#include "BaseLib/CPUTime.h"
+
 #include "FileIO/AsciiRasterInterface.h"
 #include "FileIO/readMeshFromFile.h"
 
@@ -78,6 +80,8 @@ void GeoMapper::mapOnMesh(const std::string &file_name)
 
 void GeoMapper::mapOnMesh(const MeshLib::Mesh* mesh)
 {
+	BaseLib::CPUTime cpu_time;
+	cpu_time.start();
 	std::vector<GeoLib::Point*> const* pnts(_geo_objects.getPointVec(_geo_name));
 	if (! pnts) {
 		ERR("Geometry \"%s\" does not exist.", _geo_name.c_str());
@@ -115,6 +119,7 @@ void GeoMapper::mapOnMesh(const MeshLib::Mesh* mesh)
 	delete _grid;
 	for (auto n_ptr : flat_nodes)
 		delete n_ptr;
+	INFO("mapOnMesh(): %f seconds", cpu_time.elapsed());
 }
 
 void GeoMapper::mapToConstantValue(double value)
@@ -262,6 +267,8 @@ std::vector<GeoLib::Polyline*>* copyPolylinesVector(const std::vector<GeoLib::Po
 void GeoMapper::advancedMapOnMesh(
 	MeshLib::Mesh const* mesh, std::string const& new_geo_name)
 {
+	BaseLib::CPUTime cpu_time;
+	cpu_time.start();
 	const std::vector<GeoLib::Point*> *points(_geo_objects.getPointVec(_geo_name));
 	const std::vector<GeoLib::Polyline*> *org_lines(_geo_objects.getPolylineVec(_geo_name));
 
@@ -375,6 +382,7 @@ void GeoMapper::advancedMapOnMesh(
 
 	// map new geometry incl. additional point using the normal mapping method
 	this->_geo_name = new_geo_name;
+	INFO("first part of advancedMapOnMesh(): %f seconds", cpu_time.elapsed());
 	this->mapOnMesh(mesh);
 }
 
