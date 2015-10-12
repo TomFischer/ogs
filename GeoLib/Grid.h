@@ -95,6 +95,10 @@ public:
 	std::vector<std::vector<POINT*> const*>
 	getPntVecsOfGridCellsIntersectingCube(P const& center, double half_len) const;
 
+	template <typename P>
+	std::vector<POINT*> getPntVecsOfGridCellsIntersectingCubeFlat(
+	    P const& center, double half_len) const;
+
 	void getPntVecsOfGridCellsIntersectingCuboid(
 		MathLib::Point3d const& min_pnt,
 		MathLib::Point3d const& max_pnt,
@@ -265,6 +269,42 @@ Grid<POINT>::getPntVecsOfGridCellsIntersectingCube(P const& center,
 	return pnts;
 }
 
+template <typename POINT>
+template <typename P>
+std::vector<POINT*>
+Grid<POINT>::getPntVecsOfGridCellsIntersectingCubeFlat(P const& center,
+                                                       double half_len) const
+{
+	std::vector<POINT*> pnts;
+	MathLib::Point3d tmp_pnt{{{center[0] - half_len, center[1] - half_len,
+	                           center[2] - half_len}}};  // min
+	std::array<std::size_t, 3> min_coords(getGridCoords(tmp_pnt));
+
+	tmp_pnt[0] = center[0] + half_len;
+	tmp_pnt[1] = center[1] + half_len;
+	tmp_pnt[2] = center[2] + half_len;
+	std::array<std::size_t, 3> max_coords(getGridCoords(tmp_pnt));
+
+	std::size_t coords[3], steps0_x_steps1(_n_steps[0] * _n_steps[1]);
+	for (coords[0] = min_coords[0]; coords[0] < max_coords[0] + 1; coords[0]++)
+	{
+		for (coords[1] = min_coords[1]; coords[1] < max_coords[1] + 1;
+		     coords[1]++)
+		{
+			const std::size_t coords0_p_coords1_x_steps0(
+			    coords[0] + coords[1] * _n_steps[0]);
+			for (coords[2] = min_coords[2]; coords[2] < max_coords[2] + 1;
+			     coords[2]++)
+			{
+				auto const& ps =
+				    _grid_cell_nodes_map[coords0_p_coords1_x_steps0 +
+				                         coords[2] * steps0_x_steps1];
+				std::copy(ps.cbegin(), ps.cend(), std::back_inserter(pnts));
+			}
+		}
+	}
+	return pnts;
+}
 template<typename POINT>
 void Grid<POINT>::getPntVecsOfGridCellsIntersectingCuboid(
 	MathLib::Point3d const& min_pnt,
@@ -465,14 +505,7 @@ std::tuple<POINT*, double> Grid<POINT>::getNearestPoint(P const& pnt) const
 
 	double len(sqrt(MathLib::sqrDist(pnt, *nearest_pnt)));
 	// search all other grid cells within the cube with the edge nodes
-	std::vector<std::vector<POINT*> const*> vecs_of_pnts(
-		getPntVecsOfGridCellsIntersectingCube(pnt, len));
-
-	std::vector<POINT*> points;
-	points.reserve(vecs_of_pnts.size() * vecs_of_pnts.front()->size());
-	// flatten the vecs_of_pnts
-	for (auto const& ps : vecs_of_pnts)
-		std::copy(ps->cbegin(), ps->cend(), std::back_inserter(points));
+	auto points = getPntVecsOfGridCellsIntersectingCubeFlat(pnt, len);
 
 	for (auto const& p : points)
 	{
