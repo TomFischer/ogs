@@ -276,17 +276,17 @@ void GeoMapper::advancedMapOnMesh(
 
 	const unsigned nMeshNodes ( mesh->getNNodes() );
 	// index of closest geo point for each mesh node in (x,y)-plane
-	std::vector<int> closest_geo_point(nMeshNodes);
+	std::vector<int> closest_geo_point(nMeshNodes, -1);
 	// distance between geo points and mesh nodes in (x,y)-plane
 	std::vector<double> dist(nMeshNodes);
 	auto zero_coords = GeoLib::Point{};  // All coordinates zero.
 	GeoLib::Point* pnt;
-	for (std::size_t i=0; i<nMeshNodes; ++i)
+	for (std::size_t i = 0; i < nMeshNodes; ++i)
 	{
 		zero_coords[0] = (*mesh->getNode(i))[0];
 		zero_coords[1] = (*mesh->getNode(i))[1];
 		std::tie(pnt, dist[i]) = grid.getNearestPoint(zero_coords);
-		closest_geo_point[i] = (dist[i]<=max_segment_length) ? pnt->getID() : -1;
+		if (dist[i] <= max_segment_length) closest_geo_point[i] = pnt->getID();
 	}
 
 	// store for each point the line segment to which it was added.
