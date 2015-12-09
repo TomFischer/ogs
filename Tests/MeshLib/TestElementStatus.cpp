@@ -33,7 +33,7 @@ TEST(MeshLib, ElementStatus)
 		mesh->getProperties().createNewPropertyVector<int>("MaterialIDs",
 		                                                   MeshLib::MeshItemType::Cell)
 	);
-	ASSERT_FALSE(!material_id_properties);
+	ASSERT_TRUE(bool(material_id_properties));
 	(*material_id_properties).resize(mesh->getNElements());
 
 	const std::vector<MeshLib::Element*> elements (mesh->getElements());
