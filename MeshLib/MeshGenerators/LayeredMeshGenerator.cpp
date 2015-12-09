@@ -32,7 +32,6 @@
 #include "MeshLib/MeshSearch/NodeSearch.h"
 #include "MeshLib/MeshEditing/RemoveMeshComponents.h"
 
-
 LayeredMeshGenerator::LayeredMeshGenerator()
 : _elevation_epsilon(0.0001), _minimum_thickness(std::numeric_limits<float>::epsilon())
 {
