@@ -221,7 +221,7 @@ protected:
 
 	/// Constructor for a generic mesh element without an array of mesh nodes.
 	/// @param id     element id
-	Element(std::size_t id);
+	explicit Element(std::size_t id);
 
 	/// Sets the element ID.
 	virtual void setID(std::size_t id) { this->_id = id; }
