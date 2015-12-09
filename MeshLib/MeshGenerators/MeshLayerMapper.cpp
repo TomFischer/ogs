@@ -62,15 +62,16 @@ MeshLib::Mesh* MeshLayerMapper::createStaticLayers(MeshLib::Mesh const& mesh, st
 	std::vector<MeshLib::Element*> new_elems;
 	new_elems.reserve(nElems * nLayers);
 	MeshLib::Properties properties;
-	boost::optional<PropertyVector<int> &> opt_materials =
-		properties.createNewPropertyVector<int>("MaterialIDs", MeshLib::MeshItemType::Cell);
-	if (!opt_materials) {
+	boost::optional<PropertyVector<int>&> materials =
+	    properties.createNewPropertyVector<int>("MaterialIDs",
+	                                            MeshLib::MeshItemType::Cell);
+	if (!materials)
+	{
 		ERR("Could not create PropertyVector object \"MaterialIDs\".");
 		return nullptr;
 	}
 
-	auto & materials(opt_materials.get());
-	materials.reserve(nElems * nLayers);
+	materials->reserve(nElems * nLayers);
 	double z_offset (0.0);
 
 	for (unsigned layer_id = 0; layer_id <= nLayers; ++layer_id)
@@ -110,7 +111,7 @@ MeshLib::Mesh* MeshLayerMapper::createStaticLayers(MeshLib::Mesh const& mesh, st
 			// extrude quads to hexes
 			else if (sfc_elem->getGeomType() == MeshLib::MeshElemType::QUAD)
 				new_elems.push_back (new MeshLib::Hex(e_nodes));
-			materials.push_back(mat_id);
+			materials->push_back(mat_id);
 		}
 	}
 	return new MeshLib::Mesh(mesh_name, new_nodes, new_elems, properties);
