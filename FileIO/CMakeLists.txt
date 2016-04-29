@@ -9,12 +9,10 @@ set(SOURCES
 	GMSHInterface.cpp
 	PetrelInterface.h
 	PetrelInterface.cpp
-	readGeometryFromFile.h
-	readGeometryFromFile.cpp
 	readMeshFromFile.h
 	readMeshFromFile.cpp
-	writeGeometryToFile.h
-	writeGeometryToFile.cpp
+	SHPInterface.h
+	SHPInterface.cpp
 	TetGenInterface.h
 	TetGenInterface.cpp
 	TINInterface.h
