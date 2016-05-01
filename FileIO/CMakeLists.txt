@@ -9,16 +9,12 @@ set(SOURCES
 	GMSHInterface.cpp
 	PetrelInterface.h
 	PetrelInterface.cpp
-	readMeshFromFile.h
-	readMeshFromFile.cpp
 	SHPInterface.h
 	SHPInterface.cpp
 	TetGenInterface.h
 	TetGenInterface.cpp
 	TINInterface.h
 	TINInterface.cpp
-	writeMeshToFile.h
-	writeMeshToFile.cpp
 )
 if(Shapelib_FOUND)
 	list(APPEND SOURCES SHPInterface.h SHPInterface.cpp)
