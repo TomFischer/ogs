@@ -9,8 +9,6 @@ set(SOURCES
 	GMSHInterface.cpp
 	PetrelInterface.h
 	PetrelInterface.cpp
-	SHPInterface.h
-	SHPInterface.cpp
 	TetGenInterface.h
 	TetGenInterface.cpp
 	TINInterface.h
