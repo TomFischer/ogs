@@ -342,4 +342,3 @@ void BoostXmlGmlInterface::addPolylinesToPropertyTree(
 
 } // end namespace IO
 } // end namespace GeoLib
-
