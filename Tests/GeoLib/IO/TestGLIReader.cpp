@@ -200,4 +200,3 @@ TEST_F(OGSIOVer4InterfaceTest, SimpleTIN_AdditionalEmptyLinesAtEnd)
 
 	std::remove(tin_fname.c_str());
 }
-
