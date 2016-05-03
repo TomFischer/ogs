@@ -368,7 +368,7 @@ std::string readSurface(std::istream &in,
             }
             else
             {
-            	WARN("readSurface(): cannot create surface %s from polyline %d since polyline is not closed.",  name.c_str(), ply_id);
+                WARN("readSurface(): cannot create surface %s from polyline %d since polyline is not closed.",  name.c_str(), ply_id);
             }
         }
     }
