@@ -782,7 +782,8 @@ void MainWindow::writeGeometryToFile(QString gliName, QString fileName)
 	QFileInfo fi(fileName);
 	if (fi.suffix().toLower() == "gli")
 	{
-		GeoLib::IO::Legacy::writeAllDataToGLIFileV4(fileName.toStdString(), *_project.getGEOObjects());
+		GeoLib::IO::Legacy::writeAllDataToGLIFileV4(fileName.toStdString(),
+		                                            _project.getGEOObjects());
 		return;
 	}
 #endif
