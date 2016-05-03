@@ -69,7 +69,7 @@ int XmlGspInterface::readFile(const QString &fileName)
 		const QString file_node(fileList.at(i).nodeName());
 		if (file_node.compare("geo") == 0)
 		{
-			GeoLib::IO::XmlGmlInterface gml(_project.getgeoObjects());
+			GeoLib::IO::XmlGmlInterface gml(_project.getGEOObjects());
 			const QDomNodeList childList = fileList.at(i).childNodes();
 			for(int j = 0; j < childList.count(); j++)
 			{
