@@ -18,7 +18,7 @@ endif() # OGS_BUILD_GUI (VtkVis-target is existing)
 
 
 add_executable(generateStructuredMesh generateStructuredMesh.cpp)
-target_link_libraries(generateStructuredMesh FileIO)
+target_link_libraries(generateStructuredMesh MeshLib)
 set_target_properties(generateStructuredMesh PROPERTIES FOLDER Utilities)
 
 ####################
