@@ -23,7 +23,7 @@ add_library(GeoLib STATIC ${SOURCES}
 target_link_libraries(GeoLib
 	BaseLib
 	MathLib
-	FileIO # TODO remove after all is linking
+#	FileIO # TODO remove after all is linking
 )
 
 if(QT4_FOUND)
