@@ -33,3 +33,12 @@ install(TARGETS
 	RUNTIME DESTINATION bin
 	COMPONENT Utilities
 )
+
+add_executable(PrintBoundingBox PrintBoundingBox.cpp)
+target_link_libraries(PrintBoundingBox GeoLib)
+set_target_properties(PrintBoundingBox PROPERTIES FOLDER Utilities)
+install(TARGETS
+	PrintBoundingBox
+	RUNTIME DESTINATION bin
+	COMPONENT Utilities
+)
