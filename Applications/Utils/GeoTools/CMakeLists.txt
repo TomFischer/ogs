@@ -24,3 +24,12 @@ if(QT4_FOUND)
         COMPONENT Utilities
     )
 endif() # QT4_FOUND
+
+add_executable(ComputeRasterFromPoints ComputeRasterFromPoints.cpp)
+target_link_libraries(ComputeRasterFromPoints GeoLib)
+set_target_properties(ComputeRasterFromPoints PROPERTIES FOLDER Utilities)
+install(TARGETS
+	ComputeRasterFromPoints
+	RUNTIME DESTINATION bin
+	COMPONENT Utilities
+)
