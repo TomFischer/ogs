@@ -53,6 +53,10 @@ set_target_properties(TIN2VTK PROPERTIES FOLDER Utilities)
 target_link_libraries(TIN2VTK MeshLib)
 ADD_VTK_DEPENDENCY(TIN2VTK)
 
+add_executable(Csv2GeometryPoints Csv2GeometryPoints.cpp)
+set_target_properties(Csv2GeometryPoints PROPERTIES FOLDER Utilities)
+target_link_libraries(Csv2GeometryPoints GeoLib FileIO)
+
 ####################
 ### Installation ###
 ####################
