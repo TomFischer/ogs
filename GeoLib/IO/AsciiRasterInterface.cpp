@@ -199,6 +199,7 @@ void AsciiRasterInterface::writeRasterAsASC(GeoLib::Raster const& raster, std::s
 
     // write header
     std::ofstream out(file_name);
+    out.precision(std::numeric_limits<double>::digits10);
     out << "ncols " << nCols << "\n";
     out << "nrows " << nRows << "\n";
     out << "xllcorner " << origin[0] << "\n";
