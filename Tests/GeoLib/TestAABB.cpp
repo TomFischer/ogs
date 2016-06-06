@@ -63,7 +63,7 @@ TEST(GeoLibAABB, RandomNumberOfPointsRandomPointInAList)
 {
     /* initialize random seed: */
      srand ( static_cast<unsigned>(time(nullptr)) );
-     int n (rand() % 1000000);
+     int n (rand() % 100000);
      int box_size (rand());
      double half_box_size(box_size/2);
      double minus_half_box_size(-half_box_size);
@@ -131,7 +131,7 @@ TEST(GeoLibAABB, RandomNumberOfPointsRandomPointInAVector)
 {
     /* initialize random seed: */
      srand ( static_cast<unsigned>(time(nullptr)) );
-     int n (rand() % 1000000);
+     int n (rand() % 100000);
      int box_size (rand());
      double half_box_size(box_size/2);
      double minus_half_box_size(-half_box_size);
@@ -163,7 +163,7 @@ TEST(GeoLibAABB, RandomNumberOfPointsRandomBox)
 {
     /* initialize random seed: */
      srand (static_cast<unsigned>(time(nullptr)));
-     int n (rand() % 1000000);
+     int n (rand() % 100000);
      int box_size_x (rand());
      int box_size_y (rand());
      int box_size_z (rand());
