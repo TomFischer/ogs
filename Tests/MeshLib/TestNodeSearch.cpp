@@ -15,7 +15,7 @@
 #include "MeshLib/Elements/Element.h"
 #include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
 #include "MeshLib/MeshGenerators/RasterToMesh.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 
 #include "GeoLib/Raster.h"
 

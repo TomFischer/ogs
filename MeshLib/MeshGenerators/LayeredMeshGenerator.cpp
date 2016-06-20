@@ -27,7 +27,7 @@
 #include "MeshLib/PropertyVector.h"
 #include "MeshLib/Properties.h"
 #include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
-#include "MeshLib/MeshEditing/RemoveMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/RemoveMeshComponents.h"
 
 LayeredMeshGenerator::LayeredMeshGenerator()
 : _elevation_epsilon(0.0001), _minimum_thickness(std::numeric_limits<float>::epsilon())

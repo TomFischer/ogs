@@ -21,7 +21,7 @@
 #include "MeshLib/Elements/Tet.h"
 #include "MeshLib/Elements/Tri.h"
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/MeshRevision.h"
+#include "MeshGeoToolsLib/MeshEditing/MeshRevision.h"
 #include "MeshLib/Node.h"
 
 

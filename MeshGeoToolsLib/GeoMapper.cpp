@@ -32,7 +32,7 @@
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Node.h"
 #include "MeshLib/MeshSurfaceExtraction.h"
-#include "MeshLib/MeshEditing/projectMeshOntoPlane.h"
+#include "MeshGeoToolsLib/MeshEditing/projectMeshOntoPlane.h"
 
 namespace MeshGeoToolsLib {
 

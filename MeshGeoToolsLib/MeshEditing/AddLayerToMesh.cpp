@@ -25,8 +25,8 @@
 #include "MeshLib/Node.h"
 #include "MeshLib/Elements/Elements.h"
 #include "MeshLib/MeshSurfaceExtraction.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
-#include "MeshLib/MeshEditing/FlipElements.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/FlipElements.h"
 
 namespace MeshLib
 {

@@ -24,7 +24,7 @@
 #include "Elements/Tri.h"
 #include "Elements/Quad.h"
 #include "MeshInformation.h"
-#include "MeshEditing/MeshRevision.h"
+#include "MeshGeoToolsLib/MeshEditing/MeshRevision.h"
 
 namespace MeshLib {
 

@@ -21,8 +21,8 @@
 #include "MeshLib/Elements/Tri.h"
 #include "MeshLib/Elements/Quad.h"
 #include "MeshLib/Properties.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
-#include "MeshLib/MeshEditing/RemoveMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/RemoveMeshComponents.h"
 #include "MeshLib/MeshGenerators/MeshLayerMapper.h"
 #include "MeshGeoToolsLib/MeshSearch/ElementSearch.h"
 

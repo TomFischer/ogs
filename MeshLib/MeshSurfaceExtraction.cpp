@@ -22,9 +22,9 @@
 #include "MeshLib/Elements/Line.h"
 #include "MeshLib/Elements/Tri.h"
 #include "MeshLib/Elements/Quad.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 #include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
-#include "MeshLib/MeshEditing/RemoveMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/RemoveMeshComponents.h"
 
 namespace MeshLib {
 

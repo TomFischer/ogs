@@ -21,7 +21,7 @@
 #include "MeshLib/IO/writeMeshToFile.h"
 
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/AddLayerToMesh.h"
+#include "MeshGeoToolsLib/MeshEditing/AddLayerToMesh.h"
 
 int main (int argc, char* argv[])
 {

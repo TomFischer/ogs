@@ -13,7 +13,7 @@
 
 #include "gtest/gtest.h"
 
-#include "MeshLib/MeshEditing/moveMeshNodes.h"
+#include "MeshGeoToolsLib/MeshEditing/moveMeshNodes.h"
 #include "MeshLib/Node.h"
 
 TEST(MeshLib, moveMeshNodes)

@@ -22,7 +22,7 @@
 #include "MeshLib/Node.h"
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/MeshRevision.h"
+#include "MeshGeoToolsLib/MeshEditing/MeshRevision.h"
 
 #include "MeshLib/IO/readMeshFromFile.h"
 #include "MeshLib/IO/writeMeshToFile.h"

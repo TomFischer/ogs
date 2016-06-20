@@ -21,7 +21,7 @@
 #include "MeshLib/Node.h"
 #include "MeshLib/Mesh.h"
 
-#include "MeshLib/MeshEditing/ElementValueModification.h"
+#include "MeshGeoToolsLib/MeshEditing/ElementValueModification.h"
 
 #include "BaseLib/FileTools.h"
 

@@ -18,7 +18,7 @@
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Elements/Line.h"
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/projectMeshOntoPlane.h"
+#include "MeshGeoToolsLib/MeshEditing/projectMeshOntoPlane.h"
 #include "MeshLib/Node.h"
 
 class ProjectionTest : public ::testing::Test

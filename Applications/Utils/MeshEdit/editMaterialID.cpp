@@ -16,7 +16,7 @@
 #include "MeshLib/IO/writeMeshToFile.h"
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Elements/Element.h"
-#include "MeshLib/MeshEditing/ElementValueModification.h"
+#include "MeshGeoToolsLib/MeshEditing/ElementValueModification.h"
 
 int main (int argc, char* argv[])
 {

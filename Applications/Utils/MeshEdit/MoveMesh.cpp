@@ -24,7 +24,7 @@
 
 #include "MeshLib/Node.h"
 #include "MeshLib/Elements/Element.h"
-#include "MeshLib/MeshEditing/moveMeshNodes.h"
+#include "MeshGeoToolsLib/MeshEditing/moveMeshNodes.h"
 #include "MeshLib/Mesh.h"
 
 int main(int argc, char *argv[])

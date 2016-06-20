@@ -22,7 +22,7 @@
 #include "MeshGeoToolsLib/MeshQuality/MeshValidation.h"
 #include "MeshLib/MeshGenerators/MeshGenerator.h"
 #include "MeshLib/MeshGenerators/RasterToMesh.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 #include "MeshLib/Elements/Element.h"
 
 #include "GeoLib/Raster.h"

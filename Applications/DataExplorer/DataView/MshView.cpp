@@ -30,7 +30,7 @@
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Node.h"
 #include "MeshLib/MeshSurfaceExtraction.h"
-#include "MeshLib/MeshEditing/AddLayerToMesh.h"
+#include "MeshGeoToolsLib/MeshEditing/AddLayerToMesh.h"
 
 #include "OGSError.h"
 #include "MeshMapping2DDialog.h"

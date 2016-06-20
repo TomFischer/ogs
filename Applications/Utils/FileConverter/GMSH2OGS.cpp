@@ -33,7 +33,7 @@
 #include "MeshLib/IO/writeMeshToFile.h"
 #include "MeshGeoToolsLib/MeshSearch/ElementSearch.h"
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/RemoveMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/RemoveMeshComponents.h"
 
 int main (int argc, char* argv[])
 {

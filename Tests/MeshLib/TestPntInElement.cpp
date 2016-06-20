@@ -17,7 +17,7 @@
 
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Node.h"
-#include "MeshLib/MeshEditing/MeshRevision.h"
+#include "MeshGeoToolsLib/MeshEditing/MeshRevision.h"
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Elements/Tri.h"
 #include "MeshLib/Elements/Quad.h"

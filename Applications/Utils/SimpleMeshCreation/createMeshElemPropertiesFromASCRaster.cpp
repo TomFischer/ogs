@@ -32,7 +32,7 @@
 #include "MeshLib/MeshGenerators/VtkMeshConverter.h"
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshEditing/Mesh2MeshPropertyInterpolation.h"
+#include "MeshGeoToolsLib/MeshEditing/Mesh2MeshPropertyInterpolation.h"
 #include "MeshLib/MeshEnums.h"
 
 // From wikipedia:

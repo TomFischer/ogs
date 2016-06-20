@@ -23,7 +23,7 @@
 
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Node.h"
-#include "MeshLib/MeshEditing/DuplicateMeshComponents.h"
+#include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 
 
 namespace MeshLib {
