@@ -27,7 +27,7 @@
 #include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
 #include "MeshLib/MeshSurfaceExtraction.h"
 
-namespace MeshLib {
+namespace MeshGeoToolsLib {
 
 MeshValidation::MeshValidation(MeshLib::Mesh &mesh)
 {
@@ -38,7 +38,7 @@ MeshValidation::MeshValidation(MeshLib::Mesh &mesh)
     if (!ns.getSearchedNodeIDs().empty()) {
         INFO ("%d unused mesh nodes found.", ns.getSearchedNodeIDs().size());
     }
-    MeshRevision rev(mesh);
+    MeshLib::MeshRevision rev(mesh);
     INFO ("Found %d potentially collapsable nodes.", rev.getNumberOfCollapsableNodes());
 
     const std::vector<ElementErrorCode> codes (this->testElementGeometry(mesh));
@@ -129,7 +129,8 @@ unsigned MeshValidation::detectHoles(MeshLib::Mesh const& mesh)
     if (mesh.getDimension() == 1)
         return 0;
 
-    MeshLib::Mesh* boundary_mesh (MeshSurfaceExtraction::getMeshBoundary(mesh));
+    MeshLib::Mesh* boundary_mesh(
+        MeshLib::MeshSurfaceExtraction::getMeshBoundary(mesh));
     std::vector<MeshLib::Element*> const& elements (boundary_mesh->getElements());
 
     std::vector<unsigned> sfc_idx (elements.size(), std::numeric_limits<unsigned>::max());
@@ -167,4 +168,4 @@ void MeshValidation::trackSurface(MeshLib::Element const* element, std::vector<u
     }
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

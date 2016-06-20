@@ -27,7 +27,7 @@
 #include "MeshGeoToolsLib/MeshQuality/AngleSkewMetric.h"
 #include "MeshGeoToolsLib/MeshQuality/RadiusEdgeRatioMetric.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -86,15 +86,15 @@ private:
     void calculateElementQuality(MeshLib::Mesh const& mesh, MeshQualityType t)
     {
         if (t == MeshQualityType::EDGERATIO)
-            _quality_tester = new MeshLib::EdgeRatioMetric(mesh);
+            _quality_tester = new MeshGeoToolsLib::EdgeRatioMetric(mesh);
         else if (t == MeshQualityType::ELEMENTSIZE)
-            _quality_tester = new MeshLib::ElementSizeMetric(mesh);
+            _quality_tester = new MeshGeoToolsLib::ElementSizeMetric(mesh);
         else if (t == MeshQualityType::SIZEDIFFERENCE)
-            _quality_tester = new MeshLib::SizeDifferenceMetric(mesh);
+            _quality_tester = new MeshGeoToolsLib::SizeDifferenceMetric(mesh);
         else if (t == MeshQualityType::EQUIANGLESKEW)
-            _quality_tester = new MeshLib::AngleSkewMetric(mesh);
+            _quality_tester = new MeshGeoToolsLib::AngleSkewMetric(mesh);
         else if (t == MeshQualityType::RADIUSEDGERATIO)
-            _quality_tester = new MeshLib::RadiusEdgeRatioMetric(mesh);
+            _quality_tester = new MeshGeoToolsLib::RadiusEdgeRatioMetric(mesh);
         else
         {
             ERR("ElementQualityInterface::calculateElementQuality(): Unknown MeshQualityType.");
@@ -105,7 +105,7 @@ private:
 
     MeshQualityType const _type;
     MeshLib::Mesh const& _mesh;
-    MeshLib::ElementQualityMetric* _quality_tester;
+    MeshGeoToolsLib::ElementQualityMetric* _quality_tester;
 };
 
 }

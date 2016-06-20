@@ -17,7 +17,7 @@
 
 #include "ElementQualityMetric.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -27,7 +27,7 @@ namespace MeshLib
 class RadiusEdgeRatioMetric : public ElementQualityMetric
 {
 public:
-    RadiusEdgeRatioMetric(Mesh const& mesh);
+    RadiusEdgeRatioMetric(MeshLib::Mesh const& mesh);
     virtual ~RadiusEdgeRatioMetric() {}
 
     virtual void calculateQuality ();

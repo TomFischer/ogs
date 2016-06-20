@@ -433,7 +433,7 @@ void VtkVisPipeline::listArrays(vtkDataSet* dataSet)
 
 void VtkVisPipeline::showMeshElementQuality(
     MeshLib::VtkMappedMeshSource* source,
-    MeshLib::MeshQualityType t, std::vector<double> const& quality)
+    MeshGeoToolsLib::MeshQualityType t, std::vector<double> const& quality)
 {
     if (!source || quality.empty())
         return;
@@ -453,7 +453,7 @@ void VtkVisPipeline::showMeshElementQuality(
         VtkCompositeFilter* filter =
             VtkFilterFactory::CreateCompositeFilter("VtkCompositeElementSelectionFilter",
                                                     parentItem->transformFilter());
-        if (t == MeshLib::MeshQualityType::ELEMENTSIZE)
+        if (t == MeshGeoToolsLib::MeshQualityType::ELEMENTSIZE)
         {
             auto const range (std::minmax_element(quality.cbegin(), quality.cend()));
             static_cast<VtkCompositeElementSelectionFilter*>(filter)->setRange(*range.first, *range.second);

@@ -17,9 +17,9 @@
 #include "MathLib/MathTools.h"
 #include "MeshLib/Node.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
-EdgeRatioMetric::EdgeRatioMetric(Mesh const& mesh) :
+EdgeRatioMetric::EdgeRatioMetric(MeshLib::Mesh const& mesh) :
     ElementQualityMetric(mesh)
 {
 }
@@ -31,39 +31,39 @@ void EdgeRatioMetric::calculateQuality()
     const std::size_t nElements (_mesh.getNumberOfElements());
     for (std::size_t k(0); k < nElements; k++)
     {
-        Element const& elem (*elements[k]);
+        MeshLib::Element const& elem (*elements[k]);
         switch (elem.getGeomType())
         {
-        case MeshElemType::LINE:
+        case MeshLib::MeshElemType::LINE:
             _element_quality_metric[k] = 1.0;
             break;
-        case MeshElemType::TRIANGLE: {
+        case MeshLib::MeshElemType::TRIANGLE: {
             _element_quality_metric[k] = checkTriangle(*elem.getNode(0), *elem.getNode(1), *elem.getNode(2));
             break;
         }
-        case MeshElemType::QUAD: {
+        case MeshLib::MeshElemType::QUAD: {
             _element_quality_metric[k] = checkQuad(*elem.getNode(0), *elem.getNode(1), *elem.getNode(2), *elem.getNode(3));
             break;
         }
-        case MeshElemType::TETRAHEDRON: {
+        case MeshLib::MeshElemType::TETRAHEDRON: {
             _element_quality_metric[k] = checkTetrahedron(*elem.getNode(0), *elem.getNode(1), *elem.getNode(2), *elem.getNode(3));
             break;
         }
-        case MeshElemType::PRISM: {
+        case MeshLib::MeshElemType::PRISM: {
             std::vector<const MathLib::Point3d*> pnts;
             for (std::size_t j(0); j < 6; j++)
                 pnts.push_back(elem.getNode(j));
             _element_quality_metric[k] = checkPrism(pnts);
             break;
         }
-        case MeshElemType::PYRAMID: {
+        case MeshLib::MeshElemType::PYRAMID: {
             std::vector<const MathLib::Point3d*> pnts;
             for (std::size_t j(0); j < 5; j++)
                 pnts.push_back(elem.getNode(j));
             _element_quality_metric[k] = checkPyramid(pnts);
             break;
         }
-        case MeshElemType::HEXAHEDRON: {
+        case MeshLib::MeshElemType::HEXAHEDRON: {
             std::vector<const MathLib::Point3d*> pnts;
             for (std::size_t j(0); j < 8; j++)
                 pnts.push_back(elem.getNode(j));
@@ -212,4 +212,4 @@ double EdgeRatioMetric::checkHexahedron (std::vector<const MathLib::Point3d*> co
 
     return sqrt(sqr_lengths[0]) / sqrt(sqr_lengths[11]);
 }
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

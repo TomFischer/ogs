@@ -101,9 +101,10 @@ int main(int argc, char *argv[])
     if (valid_arg.isSet()) {
         // MeshValidation outputs error messages
         // Remark: MeshValidation can modify the original mesh
-        MeshLib::MeshValidation validation(*mesh);
+        MeshGeoToolsLib::MeshValidation validation(*mesh);
 
-        unsigned const n_holes (MeshLib::MeshValidation::detectHoles(*mesh));
+        unsigned const n_holes(
+            MeshGeoToolsLib::MeshValidation::detectHoles(*mesh));
         if (n_holes > 0)
         {
             INFO("%d hole(s) detected within the mesh", n_holes);

@@ -16,10 +16,10 @@
 
 #include <limits>
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
-SizeDifferenceMetric::SizeDifferenceMetric(Mesh const& mesh) :
+SizeDifferenceMetric::SizeDifferenceMetric(MeshLib::Mesh const& mesh) :
 ElementQualityMetric(mesh)
 { }
 
@@ -31,7 +31,7 @@ void SizeDifferenceMetric::calculateQuality()
 
     for (std::size_t k=0; k < nElements; ++k)
     {
-        Element const& elem (*elements[k]);
+        MeshLib::Element const& elem (*elements[k]);
         if (elem.getDimension() < mesh_dim)
         {
             _element_quality_metric[k] = 0;
@@ -56,4 +56,4 @@ void SizeDifferenceMetric::calculateQuality()
     }
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

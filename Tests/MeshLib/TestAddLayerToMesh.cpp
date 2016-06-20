@@ -30,7 +30,7 @@ namespace AddLayerValidation
         std::size_t const nErrorFlags (static_cast<std::size_t>(ElementErrorFlag::MaxValue));
         ElementErrorFlag const flags[nErrorFlags] = {ElementErrorFlag::ZeroVolume,
         ElementErrorFlag::NonCoplanar, ElementErrorFlag::NonConvex,  ElementErrorFlag::NodeOrder};
-        std::vector<ElementErrorCode> const codes (MeshLib::MeshValidation::testElementGeometry(mesh));
+        std::vector<ElementErrorCode> const codes (MeshGeoToolsLib::MeshValidation::testElementGeometry(mesh));
         for (std::size_t i=0; i<codes.size(); ++i)
             for (std::size_t j=0; j<nErrorFlags-reduce_tests; ++j)
                 ASSERT_FALSE(codes[i][flags[j]]);

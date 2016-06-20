@@ -23,9 +23,9 @@
 
 using namespace boost::math::double_constants;
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
-AngleSkewMetric::AngleSkewMetric(Mesh const& mesh) :
+AngleSkewMetric::AngleSkewMetric(MeshLib::Mesh const& mesh) :
     ElementQualityMetric(mesh)
 {}
 
@@ -39,25 +39,25 @@ void AngleSkewMetric::calculateQuality ()
 
     for (std::size_t k(0); k < nElements; k++)
     {
-        Element const& elem (*elements[k]);
+        MeshLib::Element const& elem (*elements[k]);
         switch (elem.getGeomType())
         {
-        case MeshElemType::LINE:
+        case MeshLib::MeshElemType::LINE:
             _element_quality_metric[k] = -1.0;
             break;
-        case MeshElemType::TRIANGLE:
+        case MeshLib::MeshElemType::TRIANGLE:
             _element_quality_metric[k] = checkTriangle (elem);
             break;
-        case MeshElemType::QUAD:
+        case MeshLib::MeshElemType::QUAD:
             _element_quality_metric[k] = checkQuad (elem);
             break;
-        case MeshElemType::TETRAHEDRON:
+        case MeshLib::MeshElemType::TETRAHEDRON:
             _element_quality_metric[k] = checkTetrahedron (elem);
             break;
-        case MeshElemType::HEXAHEDRON:
+        case MeshLib::MeshElemType::HEXAHEDRON:
             _element_quality_metric[k] = checkHexahedron (elem);
             break;
-        case MeshElemType::PRISM:
+        case MeshLib::MeshElemType::PRISM:
             _element_quality_metric[k] = checkPrism (elem);
             break;
         default:
@@ -66,7 +66,7 @@ void AngleSkewMetric::calculateQuality ()
     }
 }
 
-double AngleSkewMetric::checkTriangle (Element const& elem) const
+double AngleSkewMetric::checkTriangle (MeshLib::Element const& elem) const
 {
     double const* const node0 (elem.getNode(0)->getCoords());
     double const* const node1 (elem.getNode(1)->getCoords());
@@ -80,7 +80,7 @@ double AngleSkewMetric::checkTriangle (Element const& elem) const
                     (third_pi - min_angle) / third_pi);
 }
 
-double AngleSkewMetric::checkQuad (Element const& elem) const
+double AngleSkewMetric::checkQuad (MeshLib::Element const& elem) const
 {
     double const* const node0 (elem.getNode(0)->getCoords());
     double const* const node1 (elem.getNode(1)->getCoords());
@@ -96,7 +96,7 @@ double AngleSkewMetric::checkQuad (Element const& elem) const
            std::max((max_angle - two_pi) / (-pi), (two_pi - min_angle) / (two_pi));
 }
 
-double AngleSkewMetric::checkTetrahedron (Element const& elem) const
+double AngleSkewMetric::checkTetrahedron (MeshLib::Element const& elem) const
 {
     double const* const node0 (elem.getNode(0)->getCoords());
     double const* const node1 (elem.getNode(1)->getCoords());
@@ -119,7 +119,7 @@ double AngleSkewMetric::checkTetrahedron (Element const& elem) const
                           (third_pi - min_angle) / third_pi);
 }
 
-double AngleSkewMetric::checkHexahedron (Element const& elem) const
+double AngleSkewMetric::checkHexahedron (MeshLib::Element const& elem) const
 {
     double const* const node0 (elem.getNode(0)->getCoords());
     double const* const node1 (elem.getNode(1)->getCoords());
@@ -150,7 +150,7 @@ double AngleSkewMetric::checkHexahedron (Element const& elem) const
            std::max((max_angle - two_pi) / (-pi), (two_pi - min_angle) / two_pi);
 }
 
-double AngleSkewMetric::checkPrism (Element const& elem) const
+double AngleSkewMetric::checkPrism (MeshLib::Element const& elem) const
 {
     double const* const node0 (elem.getNode(0)->getCoords());
     double const* const node1 (elem.getNode(1)->getCoords());
@@ -214,4 +214,4 @@ void AngleSkewMetric::getMinMaxAngleFromTriangle(double const* const n0,
     }
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

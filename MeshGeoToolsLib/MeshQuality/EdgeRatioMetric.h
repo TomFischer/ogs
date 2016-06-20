@@ -18,7 +18,7 @@
 #include "ElementQualityMetric.h"
 #include "MathLib/Point3d.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -27,7 +27,7 @@ namespace MeshLib
 class EdgeRatioMetric : public ElementQualityMetric
 {
 public:
-    EdgeRatioMetric(Mesh const& mesh);
+    EdgeRatioMetric(MeshLib::Mesh const& mesh);
     virtual ~EdgeRatioMetric () {}
 
     virtual void calculateQuality ();

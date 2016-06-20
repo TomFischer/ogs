@@ -40,7 +40,7 @@ detectHoles(MeshLib::Mesh const& mesh,
         elems.erase(elems.begin()+pos);
     }
     MeshLib::Mesh mesh2("mesh2", nodes, elems);
-    ASSERT_EQ(expected_n_holes, MeshLib::MeshValidation::detectHoles(mesh2));
+    ASSERT_EQ(expected_n_holes, MeshGeoToolsLib::MeshValidation::detectHoles(mesh2));
 };
 
 TEST(MeshValidation, DetectHolesTri)
@@ -51,7 +51,7 @@ TEST(MeshValidation, DetectHolesTri)
     GeoLib::Raster const raster(header ,pix.begin(), pix.end());
     std::unique_ptr<MeshLib::Mesh> mesh (MeshLib::RasterToMesh::convert(
         raster, MeshLib::MeshElemType::TRIANGLE, MeshLib::UseIntensityAs::ELEVATION));
-    ASSERT_EQ(0, MeshLib::MeshValidation::detectHoles(*mesh));
+    ASSERT_EQ(0, MeshGeoToolsLib::MeshValidation::detectHoles(*mesh));
 
     detectHoles(*mesh, {12}, 1);
     detectHoles(*mesh, {11, 11}, 1);
@@ -63,7 +63,7 @@ TEST(MeshValidation, DetectHolesHex)
     auto mesh = std::unique_ptr<MeshLib::Mesh>{
         MeshLib::MeshGenerator::generateRegularHexMesh(
             5, 4, 4, 1.0, 1.0, 1.0, MathLib::ORIGIN, "mesh")};
-    ASSERT_EQ(0, MeshLib::MeshValidation::detectHoles(*mesh));
+    ASSERT_EQ(0, MeshGeoToolsLib::MeshValidation::detectHoles(*mesh));
 
     detectHoles(*mesh, {27}, 1);
     detectHoles(*mesh, {28, 27}, 1);

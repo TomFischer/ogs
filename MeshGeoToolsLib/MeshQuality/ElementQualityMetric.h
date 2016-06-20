@@ -24,7 +24,7 @@
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Elements/Element.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -33,7 +33,7 @@ namespace MeshLib
 class ElementQualityMetric
 {
 public:
-    ElementQualityMetric(Mesh const& mesh);
+    ElementQualityMetric(MeshLib::Mesh const& mesh);
 
     virtual ~ElementQualityMetric () {}
 
@@ -54,11 +54,11 @@ public:
     virtual BaseLib::Histogram<double> getHistogram (std::size_t n_bins = 0) const;
 
 protected:
-    void errorMsg (Element const& elem, std::size_t idx) const;
+    void errorMsg (MeshLib::Element const& elem, std::size_t idx) const;
 
     double _min;
     double _max;
-    Mesh const& _mesh;
+    MeshLib::Mesh const& _mesh;
     std::vector<double> _element_quality_metric;
 };
 }

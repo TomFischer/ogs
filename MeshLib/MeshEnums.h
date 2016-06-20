@@ -64,19 +64,6 @@ enum class CellType
 };
 
 /**
- * \brief Describes a mesh quality metric.
- */
-enum class MeshQualityType
-{
-    INVALID = 0,
-    ELEMENTSIZE,
-    SIZEDIFFERENCE,
-    EDGERATIO,
-    EQUIANGLESKEW,
-    RADIUSEDGERATIO
-};
-
-/**
  * \brief Selection of possible interpretations for intensities.
  */
 enum class UseIntensityAs
@@ -104,8 +91,6 @@ std::vector<std::string> getMeshElemTypeStringsShort();
 
 /// Given a MeshElemType this returns the appropriate string.
 const std::string CellType2String(const CellType t);
-
-const std::string MeshQualityType2String(const MeshQualityType t);
 
 }
 

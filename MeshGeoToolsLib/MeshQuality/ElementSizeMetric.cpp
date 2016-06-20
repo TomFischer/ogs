@@ -17,9 +17,9 @@
 
 #include <limits>
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
-ElementSizeMetric::ElementSizeMetric(Mesh const& mesh)
+ElementSizeMetric::ElementSizeMetric(MeshLib::Mesh const& mesh)
 : ElementQualityMetric(mesh)
 {}
 
@@ -66,7 +66,7 @@ std::size_t ElementSizeMetric::calc2dQuality()
 
     for (std::size_t k(0); k < nElems; k++)
     {
-        Element const& elem (*elements[k]);
+        MeshLib::Element const& elem (*elements[k]);
 
         if (elem.getDimension() == 1)
         {
@@ -93,7 +93,7 @@ std::size_t ElementSizeMetric::calc3dQuality()
 
     for (std::size_t k(0); k < nElems; k++)
     {
-        Element const& elem (*elements[k]);
+        MeshLib::Element const& elem (*elements[k]);
         if (elem.getDimension()<3)
         {
             _element_quality_metric[k] = 0.0;
@@ -111,4 +111,4 @@ std::size_t ElementSizeMetric::calc3dQuality()
     return error_count;
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

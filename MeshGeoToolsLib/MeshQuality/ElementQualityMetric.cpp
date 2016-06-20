@@ -18,9 +18,9 @@
 
 #include "MeshLib/Node.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
-ElementQualityMetric::ElementQualityMetric(Mesh const& mesh) :
+ElementQualityMetric::ElementQualityMetric(MeshLib::Mesh const& mesh) :
     _min (std::numeric_limits<double>::max()), _max (0), _mesh (mesh)
 {
     _element_quality_metric.resize (_mesh.getNumberOfElements(), -1.0);
@@ -34,10 +34,11 @@ BaseLib::Histogram<double> ElementQualityMetric::getHistogram (std::size_t n_bin
     return BaseLib::Histogram<double>(getElementQuality(), n_bins, true);
 }
 
-void ElementQualityMetric::errorMsg (Element const& elem, std::size_t idx) const
+void ElementQualityMetric::errorMsg (MeshLib::Element const& elem, std::size_t idx) const
 {
     ERR ("Error in MeshQualityChecker::check() - Calculated value of element is below double precision minimum.");
-    ERR ("Points of %s-Element %d: ", MeshElemType2String(elem.getGeomType()).c_str(), idx);
+    ERR("Points of %s-Element %d: ",
+        MeshLib::MeshElemType2String(elem.getGeomType()).c_str(), idx);
     for (std::size_t i(0); i < elem.getNumberOfBaseNodes(); i++)
     {
         const double* coords = elem.getNode(i)->getCoords();
@@ -60,4 +61,4 @@ double ElementQualityMetric::getMaxValue() const
     return _max;
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

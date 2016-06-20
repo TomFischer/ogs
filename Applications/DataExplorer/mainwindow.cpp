@@ -1064,8 +1064,8 @@ void MainWindow::showMeshQualitySelectionDialog(MeshLib::VtkMappedMeshSource* ms
     MeshQualitySelectionDialog dlg;
     if (dlg.exec() != QDialog::Accepted)
         return;
-    MeshLib::MeshQualityType const type (dlg.getSelectedMetric());
-    MeshLib::ElementQualityInterface quality_interface(*mshSource->GetMesh(), type);
+    MeshGeoToolsLib::MeshQualityType const type (dlg.getSelectedMetric());
+    MeshGeoToolsLib::ElementQualityInterface quality_interface(*mshSource->GetMesh(), type);
     _vtkVisPipeline->showMeshElementQuality(mshSource, type, quality_interface.getQualityVector());
 
     if (dlg.getHistogram())

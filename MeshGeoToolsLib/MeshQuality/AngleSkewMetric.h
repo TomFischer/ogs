@@ -17,7 +17,7 @@
 
 #include "ElementQualityMetric.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -26,17 +26,17 @@ namespace MeshLib
 class AngleSkewMetric : public ElementQualityMetric
 {
 public:
-    AngleSkewMetric(Mesh const& mesh);
+    AngleSkewMetric(MeshLib::Mesh const& mesh);
     virtual ~AngleSkewMetric();
 
     virtual void calculateQuality ();
 
 private:
-    double checkTriangle(Element const& elem) const;
-    double checkQuad(Element const& elem) const;
-    double checkTetrahedron(Element const& elem) const;
-    double checkHexahedron(Element const& elem) const;
-    double checkPrism (Element const& elem) const;
+    double checkTriangle(MeshLib::Element const& elem) const;
+    double checkQuad(MeshLib::Element const& elem) const;
+    double checkTetrahedron(MeshLib::Element const& elem) const;
+    double checkHexahedron(MeshLib::Element const& elem) const;
+    double checkPrism (MeshLib::Element const& elem) const;
     void getMinMaxAngleFromQuad(double const* const n0,
                                 double const* const n1, double const* const n2,
                                 double const* const n3, double &min_angle,

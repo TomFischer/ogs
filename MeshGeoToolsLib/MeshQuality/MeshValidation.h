@@ -21,10 +21,14 @@
 
 #include "MeshLib/Elements/ElementErrorCode.h"
 
-namespace MeshLib {
-    class Mesh;
-    class Element;
+namespace MeshLib
+{
+class Mesh;
+class Element;
+}
 
+namespace MeshGeoToolsLib
+{
 /**
  * \brief A collection of methods for testing mesh quality and correctness
  */
@@ -76,6 +80,6 @@ private:
 
 };
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif //MESHVALIDATION_H

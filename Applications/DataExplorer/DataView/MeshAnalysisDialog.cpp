@@ -60,12 +60,12 @@ void MeshAnalysisDialog::on_startButton_pressed()
     this->nodesGroupBox->setTitle("Nodes (out of " + QString::number(mesh.getNumberOfNodes()) + ")");
     this->nodesMsgOutput(unusedNodesIdx, collapsibleNodeIds);
 
-    const std::vector<ElementErrorCode> element_error_codes (MeshLib::MeshValidation::testElementGeometry(
+    const std::vector<ElementErrorCode> element_error_codes (MeshGeoToolsLib::MeshValidation::testElementGeometry(
         mesh, this->zeroVolumeThreshold->text().toDouble() + std::numeric_limits<double>::epsilon()));
     this->elementsGroupBox->setTitle("Elements (out of " + QString::number(mesh.getNumberOfElements()) + ")");
     this->elementsMsgOutput(element_error_codes);
 
-    unsigned const n_holes (MeshLib::MeshValidation::detectHoles(mesh));
+    unsigned const n_holes (MeshGeoToolsLib::MeshValidation::detectHoles(mesh));
     if (n_holes>0)
         this->meshHoleOutputLabel->setText("<strong>" + QString::number(n_holes) + " hole(s) found within the mesh</strong>");
 }
@@ -100,7 +100,7 @@ void MeshAnalysisDialog::nodesMsgOutput(std::vector<std::size_t> const& node_ids
 
 void MeshAnalysisDialog::elementsMsgOutput(const std::vector<ElementErrorCode> &element_error_codes)
 {
-    std::array<std::string, static_cast<std::size_t>(ElementErrorFlag::MaxValue)> output_str(MeshLib::MeshValidation::ElementErrorCodeOutput(element_error_codes));
+    std::array<std::string, static_cast<std::size_t>(ElementErrorFlag::MaxValue)> output_str(MeshGeoToolsLib::MeshValidation::ElementErrorCodeOutput(element_error_codes));
 
     this->zeroVolumeText->setText(QString::fromStdString(output_str[0]));
     this-> nonPlanarText->setText(QString::fromStdString(output_str[1]));

@@ -15,7 +15,7 @@
 #ifndef MESHQUALITYSELECTIONDIALOG_H
 #define MESHQUALITYSELECTIONDIALOG_H
 
-#include "MeshEnums.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshQualityType.h"
 #include "ui_MeshQualitySelection.h"
 #include <QDialog>
 
@@ -33,7 +33,7 @@ public:
     ~MeshQualitySelectionDialog(void);
 
     /// Returns selected metric
-    MeshLib::MeshQualityType getSelectedMetric() const { return _metric; }
+    MeshGeoToolsLib::MeshQualityType getSelectedMetric() const { return _metric; }
 
     /// Returns true if a histogram needs to be calculated
     bool getHistogram() const { return this->histogramCheckBox->isChecked(); }
@@ -42,7 +42,7 @@ public:
     std::string getHistogramPath() const { return _histogram_path; }
 
 private:
-    MeshLib::MeshQualityType _metric;
+    MeshGeoToolsLib::MeshQualityType _metric;
     std::string _histogram_path;
 
 private slots:

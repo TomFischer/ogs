@@ -17,7 +17,7 @@
 
 #include "ElementQualityMetric.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -26,7 +26,7 @@ namespace MeshLib
 class ElementSizeMetric : public ElementQualityMetric
 {
 public:
-    ElementSizeMetric(Mesh const& mesh);
+    ElementSizeMetric(MeshLib::Mesh const& mesh);
     virtual ~ElementSizeMetric() {}
 
     virtual void calculateQuality ();

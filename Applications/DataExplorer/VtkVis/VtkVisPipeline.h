@@ -20,7 +20,7 @@
 
 #include "Color.h"
 #include "GeoType.h"
-#include "MeshEnums.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshQualityType.h"
 #include "Point.h"
 #include "TreeModel.h"
 
@@ -101,7 +101,7 @@ public:
     void setGlobalBackfaceCulling(bool enable) const;
 
     /// Checks the quality of mesh elements and adds a filter to highlight deformed elements.
-    void showMeshElementQuality(MeshLib::VtkMappedMeshSource* mesh, MeshLib::MeshQualityType t, std::vector<double> const& quality);
+    void showMeshElementQuality(MeshLib::VtkMappedMeshSource* mesh, MeshGeoToolsLib::MeshQualityType t, std::vector<double> const& quality);
 
 public slots:
     /// \brief Adds the given Model to the pipeline.

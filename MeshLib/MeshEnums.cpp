@@ -130,19 +130,4 @@ const std::string CellType2String(const CellType t)
 #undef RETURN_CELL_TYPE_STR
 }
 
-const std::string MeshQualityType2String(const MeshQualityType t)
-{
-    if (t == MeshQualityType::ELEMENTSIZE)
-        return "ElementSize";
-    if (t == MeshQualityType::EDGERATIO)
-        return "EdgeRatio";
-    if (t == MeshQualityType::EQUIANGLESKEW)
-        return "EquiAngleSkew";
-    if (t == MeshQualityType::RADIUSEDGERATIO)
-        return "RadiusEdgeRatio";
-    if (t == MeshQualityType::SIZEDIFFERENCE)
-        return "SizeDifference";
-    return "none";
-}
-
 }
