@@ -20,12 +20,12 @@
 #include "BaseLib/Histogram.h"
 
 #include "MeshLib/Mesh.h"
-#include "MeshLib/MeshQuality/ElementQualityMetric.h"
-#include "MeshLib/MeshQuality/EdgeRatioMetric.h"
-#include "MeshLib/MeshQuality/ElementSizeMetric.h"
-#include "MeshLib/MeshQuality/SizeDifferenceMetric.h"
-#include "MeshLib/MeshQuality/AngleSkewMetric.h"
-#include "MeshLib/MeshQuality/RadiusEdgeRatioMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/ElementQualityMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/EdgeRatioMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/ElementSizeMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/SizeDifferenceMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/AngleSkewMetric.h"
+#include "MeshGeoToolsLib/MeshQuality/RadiusEdgeRatioMetric.h"
 
 namespace MeshLib
 {

@@ -79,7 +79,8 @@
 #include "Elements/Element.h"
 #include "MeshSurfaceExtraction.h"
 #include "convertMeshToGeo.h"
-#include "MeshQuality/ElementQualityInterface.h"
+
+#include "MeshGeoToolsLib/MeshQuality/ElementQualityInterface.h"
 
 // Qt includes
 #include <QDesktopWidget>

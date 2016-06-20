@@ -1,8 +1,9 @@
 # Source files
 GET_SOURCE_FILES(SOURCES_MeshGeoToolsLib)
+GET_SOURCE_FILES(SOURCES_QUALITY MeshQuality)
 GET_SOURCE_FILES(SOURCES_SEARCH MeshSearch)
 
-set(SOURCES ${SOURCES_MeshGeoToolsLib} ${SOURCES_SEARCH})
+set(SOURCES ${SOURCES_MeshGeoToolsLib} ${SOURCES_QUALITY} ${SOURCES_SEARCH})
 
 # Create the library
 add_library(MeshGeoToolsLib ${SOURCES})

@@ -19,7 +19,7 @@
 
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Node.h"
-#include "MeshLib/MeshQuality/MeshValidation.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshValidation.h"
 #include "MeshLib/MeshGenerators/MeshGenerator.h"
 #include "MeshLib/MeshGenerators/RasterToMesh.h"
 #include "MeshLib/MeshEditing/DuplicateMeshComponents.h"

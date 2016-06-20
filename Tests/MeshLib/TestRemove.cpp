@@ -22,7 +22,7 @@
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/MeshEditing/RemoveMeshComponents.h"
 #include "MeshLib/MeshGenerators/MeshGenerator.h"
-#include "MeshLib/MeshQuality/MeshValidation.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshValidation.h"
 
 TEST(MeshLib, RemoveNodes)
 {

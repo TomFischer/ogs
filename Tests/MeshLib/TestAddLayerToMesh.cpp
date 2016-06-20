@@ -17,7 +17,7 @@
 #include "MeshLib/MeshSurfaceExtraction.h"
 #include "MeshLib/MeshGenerators/MeshGenerator.h"
 #include "MeshLib/MeshEditing/AddLayerToMesh.h"
-#include "MeshLib/MeshQuality/MeshValidation.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshValidation.h"
 
 namespace AddLayerValidation
 {

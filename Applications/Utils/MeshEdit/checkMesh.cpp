@@ -25,7 +25,7 @@
 #include "MeshLib/Elements/Element.h"
 #include "MeshLib/Mesh.h"
 #include "MeshLib/MeshInformation.h"
-#include "MeshLib/MeshQuality/MeshValidation.h"
+#include "MeshGeoToolsLib/MeshQuality/MeshValidation.h"
 
 #include "MeshLib/IO/readMeshFromFile.h"
 
