@@ -15,9 +15,13 @@
 #ifndef MESH2MESHPROPERTYINTERPOLATION_H_
 #define MESH2MESHPROPERTYINTERPOLATION_H_
 
-namespace MeshLib {
-
+namespace MeshLib
+{
 class Mesh;
+}
+
+namespace MeshGeoToolsLib
+{
 /**
  * Class Mesh2MeshPropertyInterpolation transfers properties of
  * mesh elements of a (source) mesh to mesh elements of another
@@ -36,7 +40,7 @@ public:
      * For instance if mesh has \f$n\f$ (pairwise) different property
      * indices the vector of properties must have \f$\ge n\f$ entries.
      */
-    Mesh2MeshPropertyInterpolation(Mesh const*const source_mesh, std::vector<double> const*const source_properties);
+    Mesh2MeshPropertyInterpolation(MeshLib::Mesh const*const source_mesh, std::vector<double> const*const source_properties);
     virtual ~Mesh2MeshPropertyInterpolation();
 
     /**
@@ -48,7 +52,7 @@ public:
      *     at output interpolated property values
      * @return true if the operation was successful, false on error
      */
-    bool setPropertiesForMesh(Mesh *mesh, std::vector<double>& properties) const;
+    bool setPropertiesForMesh(MeshLib::Mesh *mesh, std::vector<double>& properties) const;
 
 private:
     /**
@@ -56,7 +60,7 @@ private:
      * @param dest_mesh
      * @param dest_properties
      */
-    void interpolatePropertiesForMesh(Mesh *dest_mesh, std::vector<double>& dest_properties) const;
+    void interpolatePropertiesForMesh(MeshLib::Mesh *dest_mesh, std::vector<double>& dest_properties) const;
     /**
      * Method interpolates the element wise given properties to the nodes of the element
      * @param interpolated_node_properties the vector must have the same number of entries as
@@ -64,10 +68,10 @@ private:
      */
     void interpolateElementPropertiesToNodeProperties(std::vector<double> &interpolated_node_properties) const;
 
-    Mesh const*const _src_mesh;
+    MeshLib::Mesh const*const _src_mesh;
     std::vector<double> const*const _src_properties;
 };
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif /* MESH2MESHPROPERTYINTERPOLATION_H_ */

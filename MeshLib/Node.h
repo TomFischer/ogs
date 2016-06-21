@@ -22,6 +22,11 @@
 #include "MathLib/Point3dWithID.h"
 #include "MathLib/Vector3.h"
 
+namespace MeshGeoToolsLib
+{
+class MeshRevision;
+}
+
 namespace MeshLib {
 
 class Element;
@@ -33,7 +38,7 @@ class Node : public MathLib::Point3dWithID
 {
     /* friend classes: */
     friend class Mesh;
-    friend class MeshRevision;
+    friend class MeshGeoToolsLib::MeshRevision;
     friend class MeshLayerMapper;
 
 public:

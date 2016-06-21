@@ -29,8 +29,8 @@ TEST(MeshLib, Duplicate)
     auto mesh = std::unique_ptr<MeshLib::Mesh>{
         MeshLib::MeshGenerator::generateRegularQuadMesh(10, 5, 1)};
 
-    std::vector<MeshLib::Node*> new_nodes (MeshLib::copyNodeVector(mesh->getNodes()));
-    std::vector<MeshLib::Element*> new_elements (MeshLib::copyElementVector(mesh->getElements(), new_nodes));
+    std::vector<MeshLib::Node*> new_nodes (MeshGeoToolsLib::copyNodeVector(mesh->getNodes()));
+    std::vector<MeshLib::Element*> new_elements (MeshGeoToolsLib::copyElementVector(mesh->getElements(), new_nodes));
 
     MeshLib::Mesh new_mesh ("new", new_nodes, new_elements);
 
@@ -38,7 +38,7 @@ TEST(MeshLib, Duplicate)
     ASSERT_EQ (mesh->getNumberOfNodes(), new_mesh.getNumberOfNodes());
 
     std::vector<std::size_t> del_idx(1,1);
-    std::unique_ptr<MeshLib::Mesh> mesh2(MeshLib::removeNodes(*mesh, del_idx, "mesh2"));
+    std::unique_ptr<MeshLib::Mesh> mesh2(MeshGeoToolsLib::removeNodes(*mesh, del_idx, "mesh2"));
 
     ASSERT_EQ (mesh2->getNumberOfElements(), new_mesh.getNumberOfElements()-2);
     ASSERT_EQ (mesh2->getNumberOfNodes(), new_mesh.getNumberOfNodes()-2);

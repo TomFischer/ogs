@@ -92,7 +92,9 @@ int main (int argc, char* argv[])
     if (exclude_lines_arg.getValue()) {
         auto ex = MeshGeoToolsLib::ElementSearch(*mesh);
         ex.searchByElementType(MeshLib::MeshElemType::LINE);
-        auto m = MeshLib::removeElements(*mesh, ex.getSearchedElementIDs(), mesh->getName()+"-withoutLines");
+        auto m =
+            MeshGeoToolsLib::removeElements(*mesh, ex.getSearchedElementIDs(),
+                                            mesh->getName() + "-withoutLines");
         if (m != nullptr) {
             INFO("Removed %d lines.", mesh->getNumberOfElements() - m->getNumberOfElements());
             std::swap(m, mesh);

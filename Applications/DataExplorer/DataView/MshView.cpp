@@ -226,7 +226,7 @@ void MshView::openAddLayerDialog()
         return;
 
     double const thickness (dlg.getThickness());
-    std::unique_ptr<MeshLib::Mesh> result(MeshLib::addLayerToMesh(
+    std::unique_ptr<MeshLib::Mesh> result(MeshGeoToolsLib::addLayerToMesh(
         *mesh, thickness, dlg.getName(), dlg.isTopLayer()));
 
     if (result)

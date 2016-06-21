@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     std::unique_ptr<MeshLib::Mesh> new_mesh;
     if (simplify_arg.getValue()) {
         INFO("Simplifying the mesh...");
-        MeshLib::MeshRevision rev(const_cast<MeshLib::Mesh&>(*org_mesh));
+        MeshGeoToolsLib::MeshRevision rev(const_cast<MeshLib::Mesh&>(*org_mesh));
         unsigned int minDim = (minDim_arg.isSet() ? minDim_arg.getValue() : org_mesh->getDimension());
         new_mesh.reset(
             rev.simplifyMesh("revised_mesh", eps_arg.getValue(), minDim));

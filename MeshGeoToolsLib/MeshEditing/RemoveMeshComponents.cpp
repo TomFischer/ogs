@@ -15,7 +15,7 @@
 #include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
 #include "DuplicateMeshComponents.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 namespace details
@@ -57,8 +57,10 @@ MeshLib::Mesh* removeElements(const MeshLib::Mesh& mesh, const std::vector<std::
     INFO("%d elements remain in mesh.", tmp_elems.size());
 
     // copy node and element objects
-    std::vector<MeshLib::Node*> new_nodes = MeshLib::copyNodeVector(mesh.getNodes());
-    std::vector<MeshLib::Element*> new_elems = MeshLib::copyElementVector(tmp_elems, new_nodes);
+    std::vector<MeshLib::Node*> new_nodes =
+        MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
+    std::vector<MeshLib::Element*> new_elems =
+        MeshGeoToolsLib::copyElementVector(tmp_elems, new_nodes);
 
     // delete unused nodes
     MeshGeoToolsLib::NodeSearch ns(mesh);
@@ -93,8 +95,8 @@ MeshLib::Mesh* removeNodes(const MeshLib::Mesh &mesh, const std::vector<std::siz
         return nullptr;
 
     // copy node and element objects
-    std::vector<MeshLib::Node*> new_nodes = MeshLib::copyNodeVector(mesh.getNodes());
-    std::vector<MeshLib::Element*> new_elems = MeshLib::copyElementVector(mesh.getElements(), new_nodes);
+    std::vector<MeshLib::Node*> new_nodes = MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
+    std::vector<MeshLib::Element*> new_elems = MeshGeoToolsLib::copyElementVector(mesh.getElements(), new_nodes);
 
     // delete elements
     MeshGeoToolsLib::ElementSearch es(mesh);
@@ -136,5 +138,5 @@ MeshLib::Mesh* removeNodes(const MeshLib::Mesh &mesh, const std::vector<std::siz
         return nullptr;
     }
 }
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 

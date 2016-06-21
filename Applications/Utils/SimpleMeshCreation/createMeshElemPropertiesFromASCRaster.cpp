@@ -201,8 +201,8 @@ int main (int argc, char* argv[])
         (*materialIds)[src_mesh->getElement(src_perm[k])->getID()] = mat_map[k];
 
     // do the interpolation
-    MeshLib::Mesh2MeshPropertyInterpolation mesh_interpolation(src_mesh.get(),
-                                                               &compressed_src_properties);
+    MeshGeoToolsLib::Mesh2MeshPropertyInterpolation mesh_interpolation(
+        src_mesh.get(), &compressed_src_properties);
     std::vector<double> dest_properties(dest_mesh->getNumberOfElements());
     mesh_interpolation.setPropertiesForMesh(dest_mesh.get(),
                                             dest_properties);

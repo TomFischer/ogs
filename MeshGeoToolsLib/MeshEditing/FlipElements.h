@@ -14,7 +14,7 @@
 #include <vector>
 #include "MeshLib/Elements/Element.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 class Mesh;
 class Node;

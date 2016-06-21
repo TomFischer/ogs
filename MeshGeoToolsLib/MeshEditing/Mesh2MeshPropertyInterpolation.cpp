@@ -27,33 +27,55 @@
 #include "MeshLib/Node.h"
 #include "MeshLib/Elements/Element.h"
 
-namespace MeshLib {
-
-Mesh2MeshPropertyInterpolation::Mesh2MeshPropertyInterpolation(Mesh const*const src_mesh, std::vector<double> const*const src_properties) :
-    _src_mesh(src_mesh), _src_properties(src_properties)
+namespace MeshGeoToolsLib
+{
+Mesh2MeshPropertyInterpolation::Mesh2MeshPropertyInterpolation(
+    MeshLib::Mesh const* const src_mesh,
+    std::vector<double> const* const src_properties)
+    : _src_mesh(src_mesh), _src_properties(src_properties)
 {}
 
 Mesh2MeshPropertyInterpolation::~Mesh2MeshPropertyInterpolation()
 {}
 
-bool Mesh2MeshPropertyInterpolation::setPropertiesForMesh(Mesh *dest_mesh, std::vector<double>& dest_properties) const
+bool Mesh2MeshPropertyInterpolation::setPropertiesForMesh(MeshLib::Mesh *dest_mesh, std::vector<double>& dest_properties) const
 {
     if (_src_mesh->getDimension() != dest_mesh->getDimension()) {
-        ERR ("MeshLib::Mesh2MeshPropertyInterpolation::setPropertiesForMesh() dimension of source (dim = %d) and destination (dim = %d) mesh does not match.", _src_mesh->getDimension(), dest_mesh->getDimension());
+        ERR("MeshGeoToolsLib::Mesh2MeshPropertyInterpolation::"
+            "setPropertiesForMesh() dimension of source (dim = %d) and "
+            "destination (dim = %d) mesh does not match.",
+            _src_mesh->getDimension(),
+            dest_mesh->getDimension());
         return false;
     }
 
     if (_src_mesh->getDimension() != 2) {
-        WARN ("MeshLib::Mesh2MeshPropertyInterpolation::setPropertiesForMesh() implemented only for 2D case at the moment.");
+        WARN(
+            "MeshGeoToolsLib::Mesh2MeshPropertyInterpolation::"
+            "setPropertiesForMesh() implemented only for 2D case at the "
+            "moment.");
         return false;
     }
 
     GeoLib::AABB src_aabb(_src_mesh->getNodes().begin(), _src_mesh->getNodes().end());
     GeoLib::AABB dest_aabb(dest_mesh->getNodes().begin(), dest_mesh->getNodes().end());
     if (!src_aabb.containsAABB(dest_aabb)) {
-        ERR("MeshLib::Mesh2MeshPropertyInterpolation::setPropertiesForMesh() source mesh to small.");
-        ERR("src_aabb: %f, %f, %f | %f, %f, %f", src_aabb.getMinPoint()[0], src_aabb.getMinPoint()[1], src_aabb.getMinPoint()[2], src_aabb.getMaxPoint()[0], src_aabb.getMaxPoint()[1], src_aabb.getMaxPoint()[2]);
-        ERR("dest_aabb: %f, %f, %f | %f, %f, %f", dest_aabb.getMinPoint()[0], dest_aabb.getMinPoint()[1], dest_aabb.getMinPoint()[2], dest_aabb.getMaxPoint()[0], dest_aabb.getMaxPoint()[1], dest_aabb.getMaxPoint()[2]);
+        ERR("MeshGeoToolsLib::Mesh2MeshPropertyInterpolation::"
+            "setPropertiesForMesh() source mesh to small.");
+        ERR("src_aabb: %f, %f, %f | %f, %f, %f",
+            src_aabb.getMinPoint()[0],
+            src_aabb.getMinPoint()[1],
+            src_aabb.getMinPoint()[2],
+            src_aabb.getMaxPoint()[0],
+            src_aabb.getMaxPoint()[1],
+            src_aabb.getMaxPoint()[2]);
+        ERR("dest_aabb: %f, %f, %f | %f, %f, %f",
+            dest_aabb.getMinPoint()[0],
+            dest_aabb.getMinPoint()[1],
+            dest_aabb.getMinPoint()[2],
+            dest_aabb.getMaxPoint()[0],
+            dest_aabb.getMaxPoint()[1],
+            dest_aabb.getMaxPoint()[2]);
         return false;
     }
 
@@ -62,7 +84,7 @@ bool Mesh2MeshPropertyInterpolation::setPropertiesForMesh(Mesh *dest_mesh, std::
     return true;
 }
 
-void Mesh2MeshPropertyInterpolation::interpolatePropertiesForMesh(Mesh *dest_mesh, std::vector<double>& dest_properties) const
+void Mesh2MeshPropertyInterpolation::interpolatePropertiesForMesh(MeshLib::Mesh *dest_mesh, std::vector<double>& dest_properties) const
 {
     // carry over property information from source elements to source nodes
     std::vector<double> interpolated_src_node_properties(_src_mesh->getNumberOfNodes());
@@ -166,4 +188,4 @@ void Mesh2MeshPropertyInterpolation::interpolateElementPropertiesToNodePropertie
     }
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

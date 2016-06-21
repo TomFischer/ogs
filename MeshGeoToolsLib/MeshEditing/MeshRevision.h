@@ -21,14 +21,15 @@
 #include <vector>
 
 // forward declaration
-namespace MeshLib {
-    class Mesh;
-    class Node;
-    class Element;
+namespace MeshLib
+{
+class Mesh;
+class Node;
+class Element;
 }
 
-namespace MeshLib {
-
+namespace MeshGeoToolsLib
+{
 /**
  * Collapses nodes with a distance smaller min_distance and
  * reduces elements accordingly.
@@ -183,7 +184,7 @@ private:
     unsigned lutPrismThirdNode(unsigned id1, unsigned id2) const;
 
     /// The original mesh used for constructing the class
-    Mesh& _mesh;
+    MeshLib::Mesh& _mesh;
 
     static const std::array<unsigned,8> _hex_diametral_nodes;
 };

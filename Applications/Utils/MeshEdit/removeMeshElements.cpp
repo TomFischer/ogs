@@ -156,8 +156,9 @@ int main (int argc, char* argv[])
     }
 
     // remove the elements and create a new mesh object.
-    std::unique_ptr<MeshLib::Mesh const> new_mesh(MeshLib::removeElements(
-        *mesh, searcher.getSearchedElementIDs(), mesh->getName()));
+    std::unique_ptr<MeshLib::Mesh const> new_mesh(
+        MeshGeoToolsLib::removeElements(*mesh, searcher.getSearchedElementIDs(),
+                                        mesh->getName()));
 
     if (new_mesh == nullptr)
         return EXIT_FAILURE;

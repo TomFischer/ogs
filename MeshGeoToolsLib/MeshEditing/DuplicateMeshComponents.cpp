@@ -17,7 +17,7 @@
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Elements/Elements.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 std::vector<MeshLib::Node*> copyNodeVector(const std::vector<MeshLib::Node*> &nodes)
@@ -42,19 +42,19 @@ std::vector<MeshLib::Element*> copyElementVector(const std::vector<MeshLib::Elem
 
 MeshLib::Element* copyElement(MeshLib::Element const*const element, const std::vector<MeshLib::Node*> &nodes)
 {
-    if (element->getGeomType() == MeshElemType::LINE)
+    if (element->getGeomType() == MeshLib::MeshElemType::LINE)
         return copyElement<MeshLib::Line>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::TRIANGLE)
+    else if (element->getGeomType() == MeshLib::MeshElemType::TRIANGLE)
         return copyElement<MeshLib::Tri>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::QUAD)
+    else if (element->getGeomType() == MeshLib::MeshElemType::QUAD)
         return copyElement<MeshLib::Quad>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::TETRAHEDRON)
+    else if (element->getGeomType() == MeshLib::MeshElemType::TETRAHEDRON)
         return copyElement<MeshLib::Tet>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::HEXAHEDRON)
+    else if (element->getGeomType() == MeshLib::MeshElemType::HEXAHEDRON)
         return copyElement<MeshLib::Hex>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::PYRAMID)
+    else if (element->getGeomType() == MeshLib::MeshElemType::PYRAMID)
         return copyElement<MeshLib::Pyramid>(element, nodes);
-    else if (element->getGeomType() == MeshElemType::PRISM)
+    else if (element->getGeomType() == MeshLib::MeshElemType::PRISM)
         return copyElement<MeshLib::Prism>(element, nodes);
 
     ERR ("Error: Unknown element type.");
@@ -70,4 +70,4 @@ MeshLib::Element* copyElement(MeshLib::Element const*const element, const std::v
     return new E(new_nodes);
 }
 
-} // namespace MeshLib
+} // namespace MeshGeoToolsLib

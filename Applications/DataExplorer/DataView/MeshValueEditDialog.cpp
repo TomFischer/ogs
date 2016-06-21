@@ -33,7 +33,7 @@ MeshValueEditDialog::~MeshValueEditDialog(void)
 void MeshValueEditDialog::accept()
 {
     if (this->condenseButton->isChecked())
-        MeshLib::ElementValueModification::condense(*_mesh);
+        MeshGeoToolsLib::ElementValueModification::condense(*_mesh);
     else
     {
         if (this->edit_old_value->text().isEmpty())
@@ -49,7 +49,8 @@ void MeshValueEditDialog::accept()
         }
         unsigned new_value = static_cast<unsigned>(this->edit_new_value->text().toInt());
         bool do_not_replace = this->replaceCheckBox->isChecked();
-        bool result = MeshLib::ElementValueModification::replace(*_mesh, old_value, new_value, !do_not_replace);
+        bool result = MeshGeoToolsLib::ElementValueModification::replace(
+            *_mesh, old_value, new_value, !do_not_replace);
         if (!result && do_not_replace)
         {
             OGSError::box("The new material group already exists.");

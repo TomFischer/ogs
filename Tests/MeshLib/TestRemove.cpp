@@ -34,7 +34,7 @@ TEST(MeshLib, RemoveNodes)
         removed_node_ids.push_back(i);
 
     auto new_mesh = std::unique_ptr<MeshLib::Mesh>{
-        MeshLib::removeNodes(*mesh, removed_node_ids, "")};
+        MeshGeoToolsLib::removeNodes(*mesh, removed_node_ids, "")};
 
     ASSERT_EQ(5u, new_mesh->getNumberOfNodes());
     ASSERT_EQ(5u, new_mesh->getNumberOfBaseNodes());
@@ -53,7 +53,7 @@ TEST(MeshLib, RemoveElements)
         removed_ele_ids.push_back(i);
 
     auto new_mesh = std::unique_ptr<MeshLib::Mesh>{
-        MeshLib::removeElements(*mesh, removed_ele_ids, "")};
+        MeshGeoToolsLib::removeElements(*mesh, removed_ele_ids, "")};
 
     ASSERT_EQ(5u, new_mesh->getNumberOfNodes());
     ASSERT_EQ(5u, new_mesh->getNumberOfBaseNodes());

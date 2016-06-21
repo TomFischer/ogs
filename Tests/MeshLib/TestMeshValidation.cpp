@@ -32,8 +32,8 @@ detectHoles(MeshLib::Mesh const& mesh,
     std::vector<std::size_t> erase_elems,
     std::size_t const expected_n_holes)
 {
-    std::vector<MeshLib::Node*> nodes = MeshLib::copyNodeVector(mesh.getNodes());
-    std::vector<MeshLib::Element*> elems = MeshLib::copyElementVector(mesh.getElements(),nodes);
+    std::vector<MeshLib::Node*> nodes = MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
+    std::vector<MeshLib::Element*> elems = MeshGeoToolsLib::copyElementVector(mesh.getElements(),nodes);
     for (auto pos : erase_elems)
     {
         delete elems[pos];

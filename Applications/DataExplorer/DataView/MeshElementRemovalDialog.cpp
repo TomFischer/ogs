@@ -107,7 +107,9 @@ void MeshElementRemovalDialog::accept()
 
     if (anything_checked)
     {
-        MeshLib::Mesh* new_mesh = MeshLib::removeElements(*msh, ex.getSearchedElementIDs(), this->newMeshNameEdit->text().toStdString());
+        MeshLib::Mesh* new_mesh = MeshGeoToolsLib::removeElements(
+            *msh, ex.getSearchedElementIDs(),
+            newMeshNameEdit->text().toStdString());
         if (new_mesh)
             emit meshAdded(new_mesh);
         else

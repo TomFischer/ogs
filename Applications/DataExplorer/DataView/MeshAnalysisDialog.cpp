@@ -54,7 +54,7 @@ void MeshAnalysisDialog::on_startButton_pressed()
     MeshGeoToolsLib::NodeSearch ns(mesh);
     ns.searchUnused();
     const std::vector<std::size_t> unusedNodesIdx (ns.getSearchedNodeIDs());
-    MeshLib::MeshRevision rev(const_cast<MeshLib::Mesh&>(mesh));
+    MeshGeoToolsLib::MeshRevision rev(const_cast<MeshLib::Mesh&>(mesh));
     std::vector<std::size_t> const& collapsibleNodeIds (rev.collapseNodeIndices(
         this->collapsibleNodesThreshold->text().toDouble() + std::numeric_limits<double>::epsilon()));
     this->nodesGroupBox->setTitle("Nodes (out of " + QString::number(mesh.getNumberOfNodes()) + ")");

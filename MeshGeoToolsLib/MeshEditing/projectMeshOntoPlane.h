@@ -26,7 +26,7 @@
 #include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 
 
-namespace MeshLib {
+namespace MeshGeoToolsLib {
 
 /**
  * Projects all nodes of a mesh onto a plane specified by a point of origin and a normal vector.
@@ -53,9 +53,9 @@ MeshLib::Mesh* projectMeshOntoPlane(MeshLib::Mesh const& mesh,
     }
 
     return new MeshLib::Mesh("Projected_Mesh", new_nodes,
-                             MeshLib::copyElementVector(mesh.getElements(), new_nodes));
+                             MeshGeoToolsLib::copyElementVector(mesh.getElements(), new_nodes));
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif //PROJECTMESHONTOPLANE_H

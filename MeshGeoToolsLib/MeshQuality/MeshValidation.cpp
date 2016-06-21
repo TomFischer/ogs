@@ -38,7 +38,7 @@ MeshValidation::MeshValidation(MeshLib::Mesh &mesh)
     if (!ns.getSearchedNodeIDs().empty()) {
         INFO ("%d unused mesh nodes found.", ns.getSearchedNodeIDs().size());
     }
-    MeshLib::MeshRevision rev(mesh);
+    MeshGeoToolsLib::MeshRevision rev(mesh);
     INFO ("Found %d potentially collapsable nodes.", rev.getNumberOfCollapsableNodes());
 
     const std::vector<ElementErrorCode> codes (this->testElementGeometry(mesh));

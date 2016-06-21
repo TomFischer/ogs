@@ -50,7 +50,7 @@ TEST_F(ProjectionTest, ProjectToXY)
     for (std::size_t p=0; p<10; p++)
     {
         MathLib::Point3d origin (std::array<double,3>{{0,0,static_cast<double>(p)}});
-        MeshLib::Mesh* result = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal);
+        MeshLib::Mesh* result = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal);
         for (std::size_t i=0; i<n_nodes; i++)
             ASSERT_NEAR(static_cast<double>(p), (*result->getNode(i))[2], std::numeric_limits<double>::epsilon());
         delete result;
@@ -65,7 +65,7 @@ TEST_F(ProjectionTest, ProjectToXZ)
     for (std::size_t p=0; p<10; p++)
     {
         MathLib::Point3d origin (std::array<double,3>{{0,static_cast<double>(p),0}});
-        MeshLib::Mesh* result = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal);
+        MeshLib::Mesh* result = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal);
         for (std::size_t i=0; i<n_nodes; i++)
             ASSERT_NEAR(static_cast<double>(p), (*result->getNode(i))[1], std::numeric_limits<double>::epsilon());
         delete result;
@@ -80,7 +80,7 @@ TEST_F(ProjectionTest, ProjectToYZ)
     for (std::size_t p=0; p<10; p++)
     {
         MathLib::Point3d origin (std::array<double,3>{{static_cast<double>(p),0,0}});
-        MeshLib::Mesh* result = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal);
+        MeshLib::Mesh* result = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal);
         for (std::size_t i=0; i<n_nodes; i++)
             ASSERT_NEAR(static_cast<double>(p), (*result->getNode(i))[0], std::numeric_limits<double>::epsilon());
         delete result;
@@ -94,8 +94,8 @@ TEST_F(ProjectionTest, NormalDirection)
     MathLib::Vector3 normal_n (0,0,-1);
     std::size_t const n_nodes (_mesh->getNumberOfNodes());
     MathLib::Point3d origin (std::array<double,3>{{0,0,0}});
-    MeshLib::Mesh* result_p = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal_p);
-    MeshLib::Mesh* result_n = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal_n);
+    MeshLib::Mesh* result_p = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal_p);
+    MeshLib::Mesh* result_n = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal_n);
     for (std::size_t i=0; i<n_nodes; i++)
         ASSERT_EQ((*result_p->getNode(i))[2], (*result_n->getNode(i))[2]);
     delete result_p;
@@ -108,11 +108,11 @@ TEST_F(ProjectionTest, NormalLength)
     MathLib::Point3d origin (std::array<double,3>{{0,0,0}});
     MathLib::Vector3 normal (0,0,1);
     std::size_t const n_nodes (_mesh->getNumberOfNodes());
-    MeshLib::Mesh* result = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal);
+    MeshLib::Mesh* result = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal);
     for (std::size_t p=2; p<10; p++)
     {
         normal[2] = static_cast<double>(p);
-        MeshLib::Mesh* result_p = MeshLib::projectMeshOntoPlane(*_mesh, origin, normal);
+        MeshLib::Mesh* result_p = MeshGeoToolsLib::projectMeshOntoPlane(*_mesh, origin, normal);
         for (std::size_t i=0; i<n_nodes; i++)
             ASSERT_EQ((*result->getNode(i))[2], (*result_p->getNode(i))[2]);
         delete result_p;

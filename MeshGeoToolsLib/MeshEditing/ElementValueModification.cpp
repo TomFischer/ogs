@@ -21,7 +21,7 @@
 #include "MeshLib/Mesh.h"
 #include "MeshLib/Elements/Element.h"
 
-namespace MeshLib {
+namespace MeshGeoToolsLib {
 
 bool ElementValueModification::replace(MeshLib::Mesh &mesh,
     std::string const& property_name, int const old_value, int const new_value,
@@ -95,7 +95,7 @@ std::size_t ElementValueModification::condense(MeshLib::Mesh &mesh)
     return nValues;
 }
 
-std::size_t ElementValueModification::setByElementType(MeshLib::Mesh &mesh, MeshElemType ele_type, int const new_value)
+std::size_t ElementValueModification::setByElementType(MeshLib::Mesh &mesh, MeshLib::MeshElemType ele_type, int const new_value)
 {
     boost::optional<MeshLib::PropertyVector<int> &>
         optional_property_value_vec(
@@ -122,4 +122,4 @@ std::size_t ElementValueModification::setByElementType(MeshLib::Mesh &mesh, Mesh
     return cnt;
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib

@@ -72,7 +72,7 @@ LayeredMeshGenerator::getMesh(std::string const& mesh_name) const
     std::unique_ptr<MeshLib::Mesh> result(new MeshLib::Mesh(mesh_name, _nodes, _elements, properties));
     MeshGeoToolsLib::NodeSearch ns(*result.get());
     if (ns.searchUnused() > 0) {
-        std::unique_ptr<MeshLib::Mesh> new_mesh(MeshLib::removeNodes(
+        std::unique_ptr<MeshLib::Mesh> new_mesh(MeshGeoToolsLib::removeNodes(
             *result.get(), ns.getSearchedNodeIDs(), mesh_name));
         return new_mesh;
     }

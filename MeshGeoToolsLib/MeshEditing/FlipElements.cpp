@@ -16,7 +16,7 @@
 #include "MeshLib/Elements/Quad.h"
 #include "DuplicateMeshComponents.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 std::unique_ptr<MeshLib::Element> createFlippedElement(MeshLib::Element const& elem, std::vector<MeshLib::Node*> const& nodes)
@@ -30,11 +30,11 @@ std::unique_ptr<MeshLib::Element> createFlippedElement(MeshLib::Element const& e
         elem_nodes[i] = nodes[elem.getNode(i)->getID()];
     std::swap(elem_nodes[0], elem_nodes[1]);
 
-    if (elem.getGeomType() == MeshElemType::LINE)
+    if (elem.getGeomType() == MeshLib::MeshElemType::LINE)
         return std::unique_ptr<MeshLib::Line>(new MeshLib::Line(elem_nodes, elem.getID()));
-    else if (elem.getGeomType() == MeshElemType::TRIANGLE)
+    else if (elem.getGeomType() == MeshLib::MeshElemType::TRIANGLE)
         return std::unique_ptr<MeshLib::Tri>(new MeshLib::Tri(elem_nodes, elem.getID()));
-    else if (elem.getGeomType() == MeshElemType::QUAD)
+    else if (elem.getGeomType() == MeshLib::MeshElemType::QUAD)
     {
         std::swap(elem_nodes[2], elem_nodes[3]);
         return std::unique_ptr<MeshLib::Quad>(new MeshLib::Quad(elem_nodes, elem.getID()));
@@ -47,7 +47,7 @@ std::unique_ptr<MeshLib::Mesh> createFlippedMesh(MeshLib::Mesh const& mesh)
     if (mesh.getDimension() > 2)
         return nullptr;
 
-    std::vector<MeshLib::Node*> new_nodes (MeshLib::copyNodeVector(mesh.getNodes()));
+    std::vector<MeshLib::Node*> new_nodes (MeshGeoToolsLib::copyNodeVector(mesh.getNodes()));
     std::vector<MeshLib::Element*> const& elems (mesh.getElements());
     std::vector<MeshLib::Element*> new_elems;
     std::size_t n_elems (mesh.getNumberOfElements());
@@ -60,5 +60,5 @@ std::unique_ptr<MeshLib::Mesh> createFlippedMesh(MeshLib::Mesh const& mesh)
     return std::unique_ptr<MeshLib::Mesh>(new MeshLib::Mesh("FlippedElementMesh", new_nodes, new_elems, new_props));
 }
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 

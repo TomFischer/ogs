@@ -29,8 +29,8 @@ std::unique_ptr<MeshLib::Mesh> appendLinesAlongPolylines(
     const MeshLib::Mesh& mesh, const GeoLib::PolylineVec& ply_vec)
 {
     // copy existing nodes and elements
-    std::vector<MeshLib::Node*> vec_new_nodes = MeshLib::copyNodeVector(mesh.getNodes());
-    std::vector<MeshLib::Element*> vec_new_eles = MeshLib::copyElementVector(mesh.getElements(), vec_new_nodes);
+    std::vector<MeshLib::Node*> vec_new_nodes = MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
+    std::vector<MeshLib::Element*> vec_new_eles = MeshGeoToolsLib::copyElementVector(mesh.getElements(), vec_new_nodes);
 
     std::vector<int> new_mat_ids;
     {

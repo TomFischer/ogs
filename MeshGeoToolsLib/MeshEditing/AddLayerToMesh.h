@@ -20,11 +20,13 @@
 
 namespace MeshLib
 {
-
 class Mesh;
 class Node;
 class Element;
+}
 
+namespace MeshGeoToolsLib
+{
 /// Adds a layer on top of the mesh
 MeshLib::Mesh* addTopLayerToMesh(MeshLib::Mesh const& mesh,
     double thickness,
@@ -42,6 +44,6 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh,
     std::string const& name,
     bool on_top);
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif //ADDLAYERTOMESH_H

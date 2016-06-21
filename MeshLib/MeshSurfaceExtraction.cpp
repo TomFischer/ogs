@@ -139,7 +139,7 @@ MeshLib::Mesh* MeshSurfaceExtraction::getMeshBoundary(const MeshLib::Mesh &mesh)
     }
 
     // For 2D meshes return the boundary lines
-    std::vector<MeshLib::Node*> nodes = MeshLib::copyNodeVector(mesh.getNodes());
+    std::vector<MeshLib::Node*> nodes = MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
     std::vector<MeshLib::Element*> boundary_elements;
 
     std::vector<MeshLib::Element*> const& org_elems (mesh.getElements());
@@ -151,7 +151,8 @@ MeshLib::Mesh* MeshSurfaceExtraction::getMeshBoundary(const MeshLib::Mesh &mesh)
             if (elem->getNeighbor(i) == nullptr)
             {
                 MeshLib::Element const*const edge (elem->getEdge(i));
-                boundary_elements.push_back(MeshLib::copyElement(edge, nodes));
+                boundary_elements.push_back(
+                    MeshGeoToolsLib::copyElement(edge, nodes));
                 delete edge;
             }
     }
@@ -160,7 +161,8 @@ MeshLib::Mesh* MeshSurfaceExtraction::getMeshBoundary(const MeshLib::Mesh &mesh)
     if (ns.searchUnused() == 0) {
         return result;
     } else {
-        auto removed = MeshLib::removeNodes(*result, ns.getSearchedNodeIDs(), result->getName());
+        auto removed = MeshGeoToolsLib::removeNodes(
+            *result, ns.getSearchedNodeIDs(), result->getName());
         delete result;
         return removed;
     }

@@ -17,7 +17,10 @@ namespace MeshLib
 {
 class Mesh;
 class Element;
+}
 
+namespace MeshGeoToolsLib
+{
 /**
  * Removes mesh elements and returns a new mesh object. The original mesh is kept unchanged.
  * @param mesh                 an original mesh whose elements are removed
@@ -37,6 +40,6 @@ MeshLib::Mesh* removeElements(const MeshLib::Mesh& mesh,
  */
 MeshLib::Mesh* removeNodes(const MeshLib::Mesh &mesh, const std::vector<std::size_t> &removed_node_ids, const std::string &new_mesh_name);
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif //REMOVEMESHCOMPONENTS_H_

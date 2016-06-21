@@ -42,8 +42,8 @@ bool LayeredVolume::createRasterLayers(const MeshLib::Mesh &mesh,
     // remove line elements, only tri + quad remain
     MeshGeoToolsLib::ElementSearch ex(mesh);
     ex.searchByElementType(MeshLib::MeshElemType::LINE);
-    std::unique_ptr<MeshLib::Mesh> top(
-        removeElements(mesh, ex.getSearchedElementIDs(), "MeshLayer"));
+    std::unique_ptr<MeshLib::Mesh> top(MeshGeoToolsLib::removeElements(
+        mesh, ex.getSearchedElementIDs(), "MeshLayer"));
     if (top==nullptr)
         top.reset(new MeshLib::Mesh(mesh));
 
@@ -56,8 +56,8 @@ bool LayeredVolume::createRasterLayers(const MeshLib::Mesh &mesh,
         return false;
 
     this->_minimum_thickness = minimum_thickness;
-    _nodes = MeshLib::copyNodeVector(bottom->getNodes());
-    _elements = MeshLib::copyElementVector(bottom->getElements(), _nodes);
+    _nodes = MeshGeoToolsLib::copyNodeVector(bottom->getNodes());
+    _elements = MeshGeoToolsLib::copyElementVector(bottom->getElements(), _nodes);
     if (!_materials.empty())
     {
         ERR("The materials vector is not empty.");

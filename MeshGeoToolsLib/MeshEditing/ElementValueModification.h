@@ -23,7 +23,7 @@
 #include "MeshLib/Mesh.h"
 #include "MeshLib/PropertyVector.h"
 
-namespace MeshLib {
+namespace MeshGeoToolsLib {
 // forward declarations
 class Mesh;
 
@@ -46,7 +46,7 @@ public:
 
     /// Sets new value for all elements having the given element type
     /// Returns the number of elements having the given element type
-    static std::size_t setByElementType(MeshLib::Mesh &mesh, MeshElemType ele_type, int const new_value);
+    static std::size_t setByElementType(MeshLib::Mesh &mesh, MeshLib::MeshElemType ele_type, int const new_value);
 
 private:
     /// Returns sorted values of properties within the PropertyVector
@@ -77,6 +77,6 @@ private:
 
 };
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif //MESHVALUEMODIFICATION_H

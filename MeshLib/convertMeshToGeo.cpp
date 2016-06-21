@@ -107,7 +107,7 @@ MeshLib::Mesh* convertSurfaceToMesh(const GeoLib::Surface &sfc, const std::strin
     MeshLib::Mesh mesh_with_duplicated_nodes(mesh_name, nodes, elements);
 
     // remove duplicated nodes
-    MeshLib::MeshRevision rev(mesh_with_duplicated_nodes);
+    MeshGeoToolsLib::MeshRevision rev(mesh_with_duplicated_nodes);
     return rev.simplifyMesh(mesh_with_duplicated_nodes.getName(), eps);
 }
 

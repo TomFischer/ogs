@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
          displacement[0],
          displacement[1],
          displacement[2]);
-    MeshLib::moveMeshNodes(
+    MeshGeoToolsLib::moveMeshNodes(
         mesh->getNodes().begin(), mesh->getNodes().end(), displacement);
 
     std::string out_fname(mesh_out_arg.getValue());

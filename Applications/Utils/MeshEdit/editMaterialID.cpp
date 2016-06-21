@@ -77,21 +77,21 @@ int main (int argc, char* argv[])
 
     if (condenseArg.isSet()) {
         INFO("Condensing material ID...");
-        MeshLib::ElementValueModification::condense(*mesh);
+        MeshGeoToolsLib::ElementValueModification::condense(*mesh);
     } else if (replaceArg.isSet()) {
         INFO("Replacing material ID...");
         const auto vecOldID = matIDArg.getValue();
         const unsigned newID = newIDArg.getValue();
         for (auto oldID : vecOldID) {
             INFO("%d -> %d", oldID, newID);
-            MeshLib::ElementValueModification::replace(*mesh, oldID, newID, true);
+            MeshGeoToolsLib::ElementValueModification::replace(*mesh, oldID, newID, true);
         }
     } else if (specifyArg.isSet()) {
         INFO("Specifying material ID...");
         const std::string eleTypeName(eleTypeArg.getValue());
         const MeshLib::MeshElemType eleType = MeshLib::String2MeshElemType(eleTypeName);
         const unsigned newID = newIDArg.getValue();
-        unsigned cnt = MeshLib::ElementValueModification::setByElementType(*mesh, eleType, newID);
+        unsigned cnt = MeshGeoToolsLib::ElementValueModification::setByElementType(*mesh, eleType, newID);
         INFO("updated %d elements", cnt);
     }
 

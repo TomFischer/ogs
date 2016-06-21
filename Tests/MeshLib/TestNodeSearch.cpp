@@ -31,9 +31,9 @@ TEST(NodeSearch, UnusedNodes)
     std::vector<std::size_t> u_nodes = ns.getSearchedNodeIDs();
     ASSERT_EQ(0, u_nodes.size());
 
-    std::vector<MeshLib::Node*> nodes = MeshLib::copyNodeVector(mesh->getNodes());
+    std::vector<MeshLib::Node*> nodes = MeshGeoToolsLib::copyNodeVector(mesh->getNodes());
     nodes.push_back(new MeshLib::Node(-1,-1,-1));
-    std::vector<MeshLib::Element*> elems = MeshLib::copyElementVector(mesh->getElements(),nodes);
+    std::vector<MeshLib::Element*> elems = MeshGeoToolsLib::copyElementVector(mesh->getElements(),nodes);
     MeshLib::Mesh mesh2("mesh2", nodes, elems);
     MeshGeoToolsLib::NodeSearch ns2(mesh2);
     ns2.searchUnused();

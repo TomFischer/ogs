@@ -15,7 +15,7 @@
 
 #include "MeshLib/Node.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /**
@@ -43,6 +43,6 @@ void moveMeshNodes(
     );
 };
 
-} // end namespace MeshLib
+} // end namespace MeshGeoToolsLib
 
 #endif /* MOVEMESHNODES_H_ */

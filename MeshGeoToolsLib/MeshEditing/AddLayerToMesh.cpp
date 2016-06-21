@@ -28,7 +28,7 @@
 #include "MeshGeoToolsLib/MeshEditing/DuplicateMeshComponents.h"
 #include "MeshGeoToolsLib/MeshEditing/FlipElements.h"
 
-namespace MeshLib
+namespace MeshGeoToolsLib
 {
 
 /** Extrudes point, line, triangle or quad elements to its higher dimensional
@@ -104,8 +104,10 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
         sfc_mesh.reset(MeshLib::MeshSurfaceExtraction::getMeshSurface(
             mesh, dir, angle, prop_name));
     else {
-        sfc_mesh = (on_top) ? std::unique_ptr<MeshLib::Mesh>(new MeshLib::Mesh(mesh)) :
-                              std::unique_ptr<MeshLib::Mesh>(MeshLib::createFlippedMesh(mesh));
+        sfc_mesh = (on_top)
+                       ? std::unique_ptr<MeshLib::Mesh>(new MeshLib::Mesh(mesh))
+                       : std::unique_ptr<MeshLib::Mesh>(
+                             MeshGeoToolsLib::createFlippedMesh(mesh));
         // add property storing node ids
         boost::optional<MeshLib::PropertyVector<std::size_t>&> pv(
             sfc_mesh->getProperties().createNewPropertyVector<std::size_t>(
@@ -122,9 +124,9 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
 
     // *** add new surface nodes
     std::vector<MeshLib::Node*> subsfc_nodes =
-        MeshLib::copyNodeVector(mesh.getNodes());
+        MeshGeoToolsLib::copyNodeVector(mesh.getNodes());
     std::vector<MeshLib::Element*> subsfc_elements =
-        MeshLib::copyElementVector(mesh.getElements(), subsfc_nodes);
+        MeshGeoToolsLib::copyElementVector(mesh.getElements(), subsfc_nodes);
 
     std::size_t const n_subsfc_nodes(subsfc_nodes.size());
 
@@ -169,7 +171,7 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
     );
 
     if (opt_materials) {
-        boost::optional<PropertyVector<int> &> new_materials(
+        boost::optional<MeshLib::PropertyVector<int> &> new_materials(
         new_mesh->getProperties().createNewPropertyVector<int>("MaterialIDs",
             MeshLib::MeshItemType::Cell, 1));
         if (!new_materials) {
@@ -190,4 +192,4 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
     return new_mesh;
 }
 
-} // namespace MeshLib
+} // namespace MeshGeoToolsLib

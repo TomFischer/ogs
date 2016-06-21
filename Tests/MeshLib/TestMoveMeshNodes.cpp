@@ -37,7 +37,7 @@ TEST(MeshLib, moveMeshNodes)
     MeshLib::Node displacement(rand(), rand(), rand());
 
     /* move the mesh node */
-    MeshLib::moveMeshNodes(nodes.begin(), nodes.end(), displacement);
+    MeshGeoToolsLib::moveMeshNodes(nodes.begin(), nodes.end(), displacement);
 
     /* reverse the direction of displacement */
     displacement[0] *= -1.0;
@@ -45,7 +45,7 @@ TEST(MeshLib, moveMeshNodes)
     displacement[2] *= -1.0;
 
     /* move the mesh node back */
-    MeshLib::moveMeshNodes(nodes.begin(), nodes.end(), displacement);
+    MeshGeoToolsLib::moveMeshNodes(nodes.begin(), nodes.end(), displacement);
 
     /* check the result */
     double const eps(std::numeric_limits<double>::epsilon());
