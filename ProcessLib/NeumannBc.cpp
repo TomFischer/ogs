@@ -12,7 +12,7 @@
 #include "NumLib/Fem/FiniteElement/TemplateIsoparametric.h"
 #include "NumLib/Fem/ShapeMatrixPolicy.h"
 
-#include "MeshLib/MeshSearch/NodeSearch.h"
+#include "MeshGeoToolsLib/MeshSearch/NodeSearch.h"
 
 #include "Utils/CreateLocalAssemblers.h"
 
