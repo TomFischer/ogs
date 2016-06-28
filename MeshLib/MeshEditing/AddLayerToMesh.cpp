@@ -95,7 +95,7 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
     INFO("Extracting top surface of mesh \"%s\" ... ", mesh.getName().c_str());
     int const flag = (on_top) ? -1 : 1;
     const MathLib::Vector3 dir(0, 0, flag);
-    double const angle(90);
+    double const angle(45);
     std::unique_ptr<MeshLib::Mesh> sfc_mesh (nullptr);
 
     std::string const prop_name("OriginalSubsurfaceNodeIDs");
@@ -104,8 +104,10 @@ MeshLib::Mesh* addLayerToMesh(MeshLib::Mesh const& mesh, double thickness,
         sfc_mesh.reset(MeshLib::MeshSurfaceExtraction::getMeshSurface(
             mesh, dir, angle, prop_name));
     else {
-        sfc_mesh = (on_top) ? std::unique_ptr<MeshLib::Mesh>(new MeshLib::Mesh(mesh)) :
-                              std::unique_ptr<MeshLib::Mesh>(MeshLib::createFlippedMesh(mesh));
+        sfc_mesh = (on_top)
+                       ? std::unique_ptr<MeshLib::Mesh>(new MeshLib::Mesh(mesh))
+                       : std::unique_ptr<MeshLib::Mesh>(
+                             MeshLib::createFlippedMesh(mesh));
         // add property storing node ids
         boost::optional<MeshLib::PropertyVector<std::size_t>&> pv(
             sfc_mesh->getProperties().createNewPropertyVector<std::size_t>(
