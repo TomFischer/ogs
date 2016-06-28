@@ -55,6 +55,10 @@ add_executable(AddTopLayer AddTopLayer.cpp)
 target_link_libraries(AddTopLayer MeshLib)
 set_target_properties(AddTopLayer PROPERTIES FOLDER Utilities)
 
+add_executable(CheckTopLayerConnectivity CheckTopLayerConnectivity.cpp)
+target_link_libraries(CheckTopLayerConnectivity MeshLib)
+set_target_properties(CheckTopLayerConnectivity PROPERTIES FOLDER Utilities)
+
 add_executable(createLayeredMeshFromRasters createLayeredMeshFromRasters.cpp)
 target_link_libraries(createLayeredMeshFromRasters
     MeshLib
