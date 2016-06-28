@@ -58,8 +58,8 @@ int main (int argc, char* argv[])
     }
     INFO("done.");
 
-    std::unique_ptr<MeshLib::Mesh> result(MeshLib::addTopLayerToMesh(
-        *subsfc_mesh, layer_thickness_arg.getValue(), mesh_out_arg.getValue()));
+    std::unique_ptr<MeshLib::Mesh> result{MeshLib::addTopLayerToMesh(
+        *subsfc_mesh, layer_thickness_arg.getValue(), mesh_out_arg.getValue())};
     if (!result) {
         ERR("Failure while adding top layer.")
         return EXIT_FAILURE;
