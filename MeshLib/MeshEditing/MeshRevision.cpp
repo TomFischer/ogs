@@ -219,8 +219,15 @@ std::vector<std::size_t> MeshRevision::collapseNodeIndices(double eps) const
                     continue;
 
                 // calc distance
-                if (MathLib::sqrDist(node->getCoords(), test_node->getCoords()) < sqr_eps)
+                if (MathLib::sqrDist(*node, *test_node) < sqr_eps)
+                {
                     id_map[test_node->getID()] = node->getID();
+                    std::stringstream out;
+                    out.precision(std::numeric_limits<double>::digits10);
+                    out << *test_node << " / " << *node;
+                    INFO("MeshRevision: Collapsed node %d and %d (%s).",
+                         test_node->getID(), node->getID(), out.str().c_str());
+                }
             }
         }
     }
