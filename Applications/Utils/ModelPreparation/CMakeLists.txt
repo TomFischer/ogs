@@ -22,3 +22,19 @@ target_link_libraries(createNeumannBc
 if(OGS_BUILD_METIS)
     add_subdirectory(PartitionMesh)
 endif()
+
+add_executable( ConvertPolylineToVerticalPolygon
+	ConvertPolylineToVerticalPolygon.cpp
+	ExtractPolygon.cpp
+	ExtractPolygon.h
+)
+
+target_link_libraries( ConvertPolylineToVerticalPolygon
+	BaseLib
+	GeoLib
+	MeshLib
+	ApplicationsFileIO
+	${VTK_LIBRARIES}
+)
+ADD_VTK_DEPENDENCY(ConvertPolylineToVerticalPolygon)
+set_target_properties(ConvertPolylineToVerticalPolygon PROPERTIES FOLDER Utilities)
