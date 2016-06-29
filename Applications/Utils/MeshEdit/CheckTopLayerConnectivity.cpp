@@ -75,9 +75,10 @@ int main (int argc, char* argv[])
             std::unique_ptr<MeshLib::Element const> face{elem->getFace(j)};
             MathLib::Vector3 const normal{
                 MeshLib::FaceRule::getSurfaceNormal(face.get())};
-            double const scpr(MathLib::scalarProduct(normal, up));
-            if (std::abs(scpr) < 0.9) {
-                if (elem->getNeighbor(j) != nullptr)
+            if (MathLib::scalarProduct(normal, up) < 0.9 * normal.getLength())
+            {
+                auto const n = elem->getNeighbor(j);
+                if (n != nullptr && (*materials)[n->getID()] == max_layer_id)
                     neighbor_count.back()++;
             }
         }
@@ -86,7 +87,9 @@ int main (int argc, char* argv[])
     std::size_t const max_value(
         *std::max_element(neighbor_count.cbegin(), neighbor_count.cend()));
         std::cout << "max_value: " << max_value << "\n";
-    BaseLib::Histogram<std::size_t> h(neighbor_count, max_value);
+    std::size_t const min_value(
+        *std::min_element(neighbor_count.cbegin(), neighbor_count.cend()));
+    BaseLib::Histogram<std::size_t> h(neighbor_count, max_value-min_value);
     h.prettyPrint(std::cout);
     INFO("size of neighbor count: %d.", neighbor_count.size());
     return EXIT_SUCCESS;
