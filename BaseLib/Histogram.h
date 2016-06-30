@@ -89,7 +89,7 @@ public:
         DataCI itEnd;
         for (unsigned int bin = 0; bin < _nr_bins; bin++)
         {
-            itEnd = std::upper_bound(it, (DataCI)_data.end(),
+            itEnd = std::lower_bound(it, (DataCI)_data.end(),
                                      _min + (bin + 1) * _bin_width);
             _histogram[bin] = std::distance(it, itEnd);
             it = itEnd;
