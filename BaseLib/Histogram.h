@@ -81,7 +81,8 @@ public:
         if (!_dirty)
             return;
 
-        _bin_width = (_max - _min) / _nr_bins;
+        _bin_width = std::ceil(
+            static_cast<double>(std::nextafter(_max, _max+1) - _min) / _nr_bins);
 
         typedef typename Data::const_iterator DataCI;
         DataCI it = _data.begin();
@@ -161,7 +162,6 @@ protected:
         _histogram.resize(_nr_bins);
         _min = _data.front();
         _max = _data.back();
-        _bin_width = (_max - _min) / _nr_bins;
 
         _dirty = true;
         if (computeHistogram)
