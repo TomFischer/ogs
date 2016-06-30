@@ -89,7 +89,7 @@ int main (int argc, char* argv[])
         std::cout << "max_value: " << max_value << "\n";
     std::size_t const min_value(
         *std::min_element(neighbor_count.cbegin(), neighbor_count.cend()));
-    BaseLib::Histogram<std::size_t> h(neighbor_count, max_value-min_value);
+    BaseLib::Histogram<std::size_t> h(neighbor_count, max_value-min_value+1);
     h.prettyPrint(std::cout);
     INFO("size of neighbor count: %d.", neighbor_count.size());
     return EXIT_SUCCESS;
