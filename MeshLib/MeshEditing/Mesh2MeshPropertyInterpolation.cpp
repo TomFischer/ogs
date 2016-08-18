@@ -28,6 +28,8 @@
 #include "MeshLib/Node.h"
 #include "MeshLib/Elements/Element.h"
 
+#include "MeshGeoToolsLib/Utils/constructAABBFromElement.h"
+
 namespace MeshLib {
 
 Mesh2MeshPropertyInterpolation::Mesh2MeshPropertyInterpolation(
@@ -98,9 +100,8 @@ void Mesh2MeshPropertyInterpolation::interpolatePropertiesForMesh(
             continue;
 
         // compute axis aligned bounding box around the current element
-        const GeoLib::AABB elem_aabb(
-            dest_element.getNodes(),
-            dest_element.getNodes() + dest_element.getNumberOfBaseNodes());
+        GeoLib::AABB const elem_aabb(
+            MeshGeoToolsLib::constructAABBFromElement(dest_element));
 
         // request "interesting" nodes from grid
         std::vector<std::vector<MeshLib::Node*> const*> nodes;
