@@ -24,7 +24,7 @@ void fixNoDataValuesByInterpolation(MeshLib::Mesh& mesh, double no_data_value,
 {
     std::vector<MeshLib::Element*> const& elements(mesh.getElements());
 
-    boost::optional<MeshLib::PropertyVector<double> const&> orig_prop(
+    MeshLib::PropertyVector<double> const* orig_prop(
         mesh.getProperties().getPropertyVector<double>(original_property_name));
     if (!orig_prop)
     {
@@ -32,7 +32,7 @@ void fixNoDataValuesByInterpolation(MeshLib::Mesh& mesh, double no_data_value,
                   original_property_name.c_str());
     }
 
-    boost::optional<MeshLib::PropertyVector<double> &> int_prop(
+    MeshLib::PropertyVector<double>* int_prop(
         mesh.getProperties().getPropertyVector<double>(
             interpolated_property_name));
     if (int_prop)
@@ -40,7 +40,7 @@ void fixNoDataValuesByInterpolation(MeshLib::Mesh& mesh, double no_data_value,
         OGS_FATAL(
             "PropertyVector \"%s\" for interpolation of no data values already "
             "exist in the mesh.",
-            original_property_name.c_str());
+            interpolated_property_name.c_str());
     }
 
     int_prop = mesh.getProperties().createNewPropertyVector<double>(
