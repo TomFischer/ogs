@@ -551,7 +551,7 @@ void GeoMapper::advancedMapOnMesh(MeshLib::Mesh const& mesh)
     if (mesh.getDimension()<3) {
         _surface_mesh = new MeshLib::Mesh(mesh);
     } else {
-        const MathLib::Vector3 dir(0,0,-1);
+        const MathLib::Vector3 dir(0,0,1);
         _surface_mesh =
             MeshLib::MeshSurfaceExtraction::getMeshSurface(mesh, dir, 90+1e-6);
     }
