@@ -51,12 +51,8 @@ void applyKnownSolution(EigenMatrix &A_, EigenVector &b_, EigenVector &/*x*/,
         }
 
         auto& c = AT.coeffRef(row_id, row_id);
-        if (c != 0.0) {
-            b[row_id] = x * c;
-        } else {
-            b[row_id] = x;
-            c = 1.0;
-        }
+        b[row_id] = x;
+        c = 1.0;
     }
 
     A = AT.transpose();
