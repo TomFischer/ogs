@@ -69,6 +69,7 @@ PETScLinearSolver::PETScLinearSolver(const std::string /*prefix*/,
     }
 
     KSPSetInitialGuessNonzero(_solver, PETSC_TRUE);
+    KSPSetNormType(_solver, KSP_NORM_UNPRECONDITIONED);
     KSPSetFromOptions(_solver);  // set run-time options
 }
 
