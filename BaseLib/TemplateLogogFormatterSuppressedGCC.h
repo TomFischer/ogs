@@ -40,8 +40,8 @@ public:
 
     TOPIC_FLAGS GetTopicFlags(const logog::Topic& topic) override
     {
-    return ( logog::Formatter::GetTopicFlags( topic ) &
-        ~( T_SUPPPRESS_TOPIC_FLAG ));
+        return (logog::Formatter::GetTopicFlags(topic) &
+                ~(T_SUPPPRESS_TOPIC_FLAG));
     }
 
     LOGOG_STRING& Format(const logog::Topic& topic,
