@@ -34,9 +34,10 @@
 
 #include "ProcessLib/UncoupledProcessesTimeLoop.h"
 
+#include "ProcessLib/HT/CreateHTProcess.h"
+/*
 #include "ProcessLib/ComponentTransport/CreateComponentTransportProcess.h"
 #include "ProcessLib/GroundwaterFlow/CreateGroundwaterFlowProcess.h"
-#include "ProcessLib/HT/CreateHTProcess.h"
 #include "ProcessLib/HeatConduction/CreateHeatConductionProcess.h"
 #include "ProcessLib/HydroMechanics/CreateHydroMechanicsProcess.h"
 #include "ProcessLib/LIE/HydroMechanics/CreateHydroMechanicsProcess.h"
@@ -51,6 +52,7 @@
 #include "ProcessLib/ThermoMechanics/CreateThermoMechanicsProcess.h"
 #include "ProcessLib/TwoPhaseFlowWithPP/CreateTwoPhaseFlowWithPPProcess.h"
 #include "ProcessLib/TwoPhaseFlowWithPrho/CreateTwoPhaseFlowWithPrhoProcess.h"
+*/
 
 namespace detail
 {
@@ -303,6 +305,7 @@ void ProjectData::parseProcesses(BaseLib::ConfigTree const& processes_config,
             //! \ogs_file_param{prj__processes__process__jacobian_assembler}
             process_config.getConfigSubtreeOptional("jacobian_assembler"));
 
+        /*
         if (type == "GROUNDWATER_FLOW")
         {
             // The existence check of the in the configuration referenced
@@ -386,13 +389,15 @@ void ProjectData::parseProcesses(BaseLib::ConfigTree const& processes_config,
                         "given dimension");
             }
         }
-        else if (type == "HT")
+        */
+        if (type == "HT")
         {
             process = ProcessLib::HT::createHTProcess(
                 *_mesh_vec[0], std::move(jacobian_assembler),
                 _process_variables, _parameters, integration_order,
                 process_config);
         }
+        /*
         else if (type == "ComponentTransport")
         {
             process =
@@ -532,7 +537,7 @@ void ProjectData::parseProcesses(BaseLib::ConfigTree const& processes_config,
                     _process_variables, _parameters, integration_order,
                     process_config, _curves);
         }
-
+        */
         else
         {
             OGS_FATAL("Unknown process type: %s", type.c_str());
