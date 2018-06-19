@@ -9,6 +9,7 @@
 
 #include "ConfigTree.h"
 
+#include <logog/include/logog.hpp>
 #include <sstream>
 #include <utility>
 
@@ -68,6 +69,7 @@ boost::optional<T> ConfigTree::getConfigParameterOptionalImpl(
 {
     if (auto p = getConfigSubtreeOptional(param)) return p->getValue<T>();
 
+    DBUG("getConfigSubtreeOptional ...");
     return boost::none;
 }
 
