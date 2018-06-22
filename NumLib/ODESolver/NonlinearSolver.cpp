@@ -105,7 +105,7 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Picard>::solve(
         timer_dirichlet.start();
         sys.applyKnownSolutionsPicard(A, rhs, *x_new[process_id]);
         time_dirichlet += timer_dirichlet.elapsed();
-        INFO("[time] Applying Dirichlet BCs took %g s.", time_dirichlet);
+        //INFO("[time] Applying Dirichlet BCs took %g s.", time_dirichlet.elapsed());
 
         if (!sys.isLinear() && _convergence_criterion->hasResidualCheck()) {
             GlobalVector res;
