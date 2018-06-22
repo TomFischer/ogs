@@ -67,7 +67,7 @@ bool NonlinearSolver<NonlinearSolverTag::Picard>::solve(
         time_dirichlet.start();
         // Here _x_new has to be used and it has to be equal to x!
         sys.applyKnownSolutionsPicard(A, rhs, x_new);
-        INFO("[time] Applying Dirichlet BCs took %g s.", time_dirichlet.elapsed());
+        //INFO("[time] Applying Dirichlet BCs took %g s.", time_dirichlet.elapsed());
 
         if (!sys.isLinear() && _convergence_criterion->hasResidualCheck()) {
             GlobalVector res;
