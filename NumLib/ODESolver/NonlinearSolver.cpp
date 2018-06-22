@@ -77,7 +77,7 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Picard>::solve(
          ++iteration, _convergence_criterion->reset())
     {
         BaseLib::RunTime timer_dirichlet;
-        double time_dirichlet = 0.0;
+        // double time_dirichlet = 0.0;
 
         BaseLib::RunTime time_iteration;
         time_iteration.start();
@@ -85,7 +85,7 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Picard>::solve(
         timer_dirichlet.start();
         sys.computeKnownSolutions(*x_new[process_id], process_id);
         sys.applyKnownSolutions(*x_new[process_id]);
-        time_dirichlet += timer_dirichlet.elapsed();
+        // time_dirichlet += timer_dirichlet.elapsed();
 
         sys.preIteration(iteration, *x_new[process_id]);
 
@@ -115,8 +115,8 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Picard>::solve(
 
         timer_dirichlet.start();
         sys.applyKnownSolutionsPicard(A, rhs, *x_new[process_id]);
-        time_dirichlet += timer_dirichlet.elapsed();
-        INFO("[time] Applying Dirichlet BCs took {:g} s.", time_dirichlet);
+        //time_dirichlet += timer_dirichlet.elapsed();
+        //INFO("[time] Applying Dirichlet BCs took %g s.", time_dirichlet.elapsed());
 
         if (!sys.isLinear() && _convergence_criterion->hasResidualCheck()) {
             GlobalVector res;
