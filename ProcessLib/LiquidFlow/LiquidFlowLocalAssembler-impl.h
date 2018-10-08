@@ -33,7 +33,7 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
     const int material_id = _material_properties.getMaterialID(pos);
 
     const Eigen::MatrixXd& permeability = _material_properties.getPermeability(
-        material_id, t, pos, _element.getDimension());
+        material_id, t, pos, _element.getDimension(), 0.0, 0.0);
     // Note: For Inclined 1D in 2D/3D or 2D element in 3D, the first item in
     //  the assert must be changed to permeability.rows() ==
     //  _element->getDimension()
@@ -62,8 +62,7 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
                             std::vector<double>& local_M_data,
                             std::vector<double>& local_K_data,
                             std::vector<double>& local_b_data,
-                            ParameterLib::SpatialPosition const& pos,
-                            Eigen::MatrixXd const& permeability)
+                            ParameterLib::SpatialPosition const& pos)
 {
     auto const local_matrix_size = local_x.size();
     assert(local_matrix_size == ShapeFunction::NPOINTS);
@@ -104,6 +103,10 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
         const double mu =
             _material_properties.getViscosity(p, _reference_temperature);
 
+        pos.setIntegrationPoint(ip);
+        auto const& permeability = _material_properties.getPermeability(
+            material_id, t, pos, _element.getDimension(), p, 0.0);
+
         // Assemble Laplacian, K, and RHS by the gravitational term
         LaplacianGravityVelocityCalculator::calculateLaplacianAndGravityTerm(
             local_K, local_b, ip_data, permeability, mu, rho_g,
@@ -131,8 +134,10 @@ LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
     ParameterLib::SpatialPosition pos;
     pos.setElementID(_element.getID());
     const int material_id = _material_properties.getMaterialID(pos);
+    // evaluate the permeability to distinguish which computeDarcyVelocity
+    // method should be used
     const Eigen::MatrixXd& permeability = _material_properties.getPermeability(
-        material_id, t, pos, _element.getDimension());
+        material_id, t, pos, _element.getDimension(), 0.0, 0.0);
 
     // Note: For Inclined 1D in 2D/3D or 2D element in 3D, the first item in
     //  the assert must be changed to perm.rows() == _element->getDimension()
@@ -140,13 +145,13 @@ LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
 
     if (permeability.size() == 1)
     {  // isotropic or 1D problem.
-        computeDarcyVelocityLocal<IsotropicCalculator>(local_x, permeability,
-                                                       velocity_cache_vectors);
+        computeDarcyVelocityLocal<IsotropicCalculator>(
+            material_id, t, local_x, pos, velocity_cache_vectors);
     }
     else
     {
         computeDarcyVelocityLocal<AnisotropicCalculator>(
-            local_x, permeability, velocity_cache_vectors);
+            material_id, t, local_x, pos, velocity_cache_vectors);
     }
     return velocity_cache;
 }
@@ -156,8 +161,10 @@ template <typename ShapeFunction, typename IntegrationMethod,
 template <typename LaplacianGravityVelocityCalculator>
 void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
     computeDarcyVelocityLocal(
+        const int material_id,
+        const double t,
         std::vector<double> const& local_x,
-        Eigen::MatrixXd const& permeability,
+        SpatialPosition& pos,
         MatrixOfVelocityAtIntegrationPoints& darcy_velocity_at_ips) const
 {
     auto const local_matrix_size = local_x.size();
@@ -182,6 +189,8 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
         const double mu =
             _material_properties.getViscosity(p, _reference_temperature);
 
+        auto const& permeability = _material_properties.getPermeability(
+            material_id, t, pos, _element.getDimension(), p, 0.0);
         LaplacianGravityVelocityCalculator::calculateVelocity(
             ip, local_p_vec, ip_data, permeability, mu, rho_g,
             _gravitational_axis_id, darcy_velocity_at_ips);
