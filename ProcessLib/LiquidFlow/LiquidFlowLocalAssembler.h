@@ -204,8 +204,7 @@ private:
                                  std::vector<double> const& local_x,
                                  std::vector<double>& local_M_data,
                                  std::vector<double>& local_K_data,
-                                 std::vector<double>& local_b_data,
-                                 SpatialPosition& pos);
+                                 std::vector<double>& local_b_data);
 
     template <typename LaplacianGravityVelocityCalculator>
     void computeDarcyVelocityLocal(

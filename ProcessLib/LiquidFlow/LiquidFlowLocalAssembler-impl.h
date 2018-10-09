@@ -42,14 +42,12 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
     if (permeability.size() == 1)
     {  // isotropic or 1D problem.
         assembleMatrixAndVector<IsotropicCalculator>(
-            material_id, t, local_x, local_M_data, local_K_data, local_b_data,
-            pos, permeability);
+            material_id, t, local_x, local_M_data, local_K_data, local_b_data);
     }
     else
     {
         assembleMatrixAndVector<AnisotropicCalculator>(
-            material_id, t, local_x, local_M_data, local_K_data, local_b_data,
-            pos, permeability);
+            material_id, t, local_x, local_M_data, local_K_data, local_b_data);
     }
 }
 
@@ -61,8 +59,7 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
                             std::vector<double> const& local_x,
                             std::vector<double>& local_M_data,
                             std::vector<double>& local_K_data,
-                            std::vector<double>& local_b_data,
-                            ParameterLib::SpatialPosition const& pos)
+                            std::vector<double>& local_b_data)
 {
     auto const local_matrix_size = local_x.size();
     assert(local_matrix_size == ShapeFunction::NPOINTS);
@@ -76,6 +73,9 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
 
     unsigned const n_integration_points =
         _integration_method.getNumberOfPoints();
+
+    SpatialPosition pos;
+    pos.setElementID(_element.getID());
 
     // TODO: The following two variables should be calculated inside the
     //       the integration loop for non-constant porosity and storage models.
