@@ -212,7 +212,7 @@ private:
         const int material_id,
         const double t,
         std::vector<double> const& local_x,
-        SpatialPosition& pos,
+        SpatialPosition const& pos,
         MatrixOfVelocityAtIntegrationPoints& darcy_velocity_at_ips) const;
 
     const int _gravitational_axis_id;
