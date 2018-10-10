@@ -54,5 +54,5 @@ endif()
 
 if(OGS_USE_PETSC)
     target_include_directories(MathLib PUBLIC ${PETSC_INCLUDE_DIRS})
-    target_link_libraries(MathLib PUBLIC ${PETSC_LIBRARIES})
+    target_link_libraries(MathLib PUBLIC ${PETSC_LIBRARIES} HYPRE)
 endif()
