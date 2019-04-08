@@ -23,6 +23,20 @@
 
 namespace MeshGeoToolsLib
 {
+std::vector<bool> markPreprocessedNodesOutSideOfPolygon(
+    std::vector<GeoLib::Point*> const& nodes, GeoLib::Polygon const& polygon)
+{
+    std::vector<bool> outside(nodes.size(), true);
+    for (std::size_t k(0); k < nodes.size(); k++)
+    {
+        if (polygon.isPntInPolygon(*(nodes[k])))
+        {
+            outside[k] = false;
+        }
+    }
+    return outside;
+}
+
 std::vector<bool> markNodesOutSideOfPolygon(
     std::vector<MeshLib::Node*> const& nodes, GeoLib::Polygon const& polygon)
 {
@@ -46,14 +60,8 @@ std::vector<bool> markNodesOutSideOfPolygon(
                   [](GeoLib::Point* p) { (*p)[2] = 0.0; });
 
     // *** mark rotated nodes
-    std::vector<bool> outside(rotated_nodes.size(), true);
-    for (std::size_t k(0); k < rotated_nodes.size(); k++)
-    {
-        if (rot_polygon.isPntInPolygon(*(rotated_nodes[k])))
-        {
-            outside[k] = false;
-        }
-    }
+    auto const outside =
+        markPreprocessedNodesOutSideOfPolygon(rotated_nodes, rot_polygon);
 
     for (auto& rotated_node : rotated_nodes)
     {
