@@ -118,6 +118,20 @@ void Mesh2MeshPropertyInterpolation::interpolatePropertiesForMesh(
         src_grid.getPntVecsOfGridCellsIntersectingCuboid(
             elem_aabb.getMinPoint(), elem_aabb.getMaxPoint(), nodes);
 
+        INFO("aabb around dest_element: ");
+        INFO("  <point x=\"%f\" y=\"%f\" z=\"%f\" id=\"0\" name=\"aabb_dest_min\"/>",
+            elem_aabb.getMinPoint()[0], elem_aabb.getMinPoint()[1], elem_aabb.getMinPoint()[2]);
+        INFO("  <point x=\"%f\" y=\"%f\" z=\"%f\" id=\"1\" name=\"aabb_dest_max\"/>",
+            elem_aabb.getMaxPoint()[0], elem_aabb.getMaxPoint()[1], elem_aabb.getMaxPoint()[2]);
+        INFO("nodes.size: %d", nodes.size());
+        INFO("nodes[0].size: %d", nodes[0]->size());
+        std::size_t id_cnt(2);
+        for (auto const* n : *nodes[0])
+        {
+            INFO("  <point x=\"%f\" y=\"%f\" z=\"%f\" id=\"%d\" name=\"%d\"/>",
+                (*n)[0], (*n)[1], (*n)[2], id_cnt++, n->getID());
+        }
+
         std::size_t cnt(0);
         double average_value(0.0);
 
