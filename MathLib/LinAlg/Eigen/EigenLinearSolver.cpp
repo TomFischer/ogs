@@ -63,13 +63,15 @@ public:
         }
 
         _solver.compute(A);
-        if(_solver.info()!=Eigen::Success) {
+        if (_solver.info() != Eigen::Success)
+        {
             ERR("Failed during Eigen linear solver initialization");
             return false;
         }
 
         x = _solver.solve(b);
-        if(_solver.info()!=Eigen::Success) {
+        if (_solver.info() != Eigen::Success)
+        {
             ERR("Failed during Eigen linear solve");
             return false;
         }
@@ -100,7 +102,8 @@ public:
         }
 
         _solver.compute(A);
-        if(_solver.info()!=Eigen::Success) {
+        if (_solver.info() != Eigen::Success)
+        {
             ERR("Failed during Eigen linear solver initialization");
             return false;
         }
@@ -109,7 +112,8 @@ public:
         INFO("\t iteration: %d/%ld", _solver.iterations(), opt.max_iterations);
         INFO("\t residual: %e\n", _solver.error());
 
-        if(_solver.info()!=Eigen::Success) {
+        if (_solver.info() != Eigen::Success)
+        {
             ERR("Failed during Eigen linear solve");
             return false;
         }
