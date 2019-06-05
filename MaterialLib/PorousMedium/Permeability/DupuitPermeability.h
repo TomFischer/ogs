@@ -13,7 +13,7 @@
 
 #include "BaseLib/Error.h"
 #include "MaterialLib/PorousMedium/Permeability/Permeability.h"
-#include "ProcessLib/Parameter/Parameter.h"
+#include "ParameterLib/Parameter.h"
 
 namespace MaterialLib
 {
@@ -26,7 +26,7 @@ class DupuitPermeability final : public Permeability
 {
 public:
     explicit DupuitPermeability(
-        ProcessLib::Parameter<double> const& permeability_parameter,
+        ParameterLib::Parameter<double> const& permeability_parameter,
         int const dimension)
         : Permeability(permeability_parameter, dimension)
     {
@@ -43,7 +43,7 @@ public:
      */
     Eigen::MatrixXd const& getValue(
         const double t,
-        ProcessLib::SpatialPosition const& pos,
+        ParameterLib::SpatialPosition const& pos,
         const double variable,
         const double temperature) const override
     {

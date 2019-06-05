@@ -74,7 +74,7 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
     unsigned const n_integration_points =
         _integration_method.getNumberOfPoints();
 
-    SpatialPosition pos;
+    ParameterLib::SpatialPosition pos;
     pos.setElementID(_element.getID());
 
     // TODO: The following two variables should be calculated inside the
@@ -164,7 +164,7 @@ void LiquidFlowLocalAssembler<ShapeFunction, IntegrationMethod, GlobalDim>::
         const int material_id,
         const double t,
         std::vector<double> const& local_x,
-        SpatialPosition const& pos,
+        ParameterLib::SpatialPosition const& pos,
         MatrixOfVelocityAtIntegrationPoints& darcy_velocity_at_ips) const
 {
     auto const local_matrix_size = local_x.size();

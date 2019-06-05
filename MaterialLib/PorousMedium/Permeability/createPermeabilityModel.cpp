@@ -59,7 +59,8 @@ std::unique_ptr<Permeability> createPermeabilityModel(
 
     if (type == "Dupuit")
     {
-        auto const& permeability_parameter = ProcessLib::findParameter<double>(
+        auto const& permeability_parameter = ParameterLib::findParameter<
+            double>(
             config,
             //! \ogs_file_param_special{material__porous_medium__permeability__permeability_tensor_entries}
             "permeability_tensor_entries", parameters, 0);
