@@ -120,12 +120,6 @@ public:
         {
             pos.setIntegrationPoint(ip);
 
-            // \todo the argument to getValue() has to be changed for non
-            // constant storage model
-            auto const specific_storage =
-                solid_phase.property(MaterialPropertyLib::PropertyType::storage)
-                    .template value<double>(vars, pos, t);
-
             auto const& ip_data = this->_ip_data[ip];
             auto const& N = ip_data.N;
             auto const& dNdx = ip_data.dNdx;
@@ -162,6 +156,18 @@ public:
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::density)
                     .template value<double>(vars, pos, t);
+            auto const drho_dp =
+                liquid_phase
+                    .property(MaterialPropertyLib::PropertyType::density)
+                    .template dValue<double>(
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
+            auto const drho_dT =
+                liquid_phase
+                    .property(MaterialPropertyLib::PropertyType::density)
+                    .template dValue<double>(
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
 
             // Use the viscosity model to compute the viscosity
             auto const viscosity =
@@ -192,7 +198,7 @@ public:
                                  vars, porosity, fluid_density,
                                  specific_heat_capacity_fluid, pos, t) *
                              N.transpose() * N;
-            Mpp.noalias() += w * N.transpose() * specific_storage * N;
+            Mpp.noalias() += (w * porosity * drho_dp) * N.transpose() * N;
             if (process_data.has_gravity)
             {
                 Bp += w * fluid_density * dNdx.transpose() * K_over_mu * b;
