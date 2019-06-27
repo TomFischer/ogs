@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <OpenGeoSysProject>
-    <meshes>
-        <mesh>square_1x1_quad_1e2.vtu</mesh>
-        <mesh>square_1x1_quad_1e2_geometry_left.vtu</mesh>
-        <mesh>square_1x1_quad_1e2_geometry_right.vtu</mesh>
-    </meshes>
+<meshes>
+<mesh>TestSet_01.vtu</mesh>
+<mesh>BC_BOTTOM.vtu</mesh>
+<mesh>BC_TOP.vtu</mesh>
+<mesh>BC_DOMAIN.vtu</mesh>
+</meshes>
+
     <processes>
         <process>
             <name>LiquidFlow</name>
@@ -26,19 +28,20 @@
                 <fluid>
                     <density>
                         <type>Constant</type>
-                        <value> 1.e3 </value>
+                        <value> 1 </value>
                     </density>
                     <viscosity>
                         <type>Constant</type>
-                        <value> 1.e-3 </value>
+                        <value> 1 </value>
                     </viscosity>
                 </fluid>
                 <porous_medium>
                     <porous_medium id="0">
                         <permeability>
                             <permeability_tensor_entries>kappa1</permeability_tensor_entries>
-                            <type>Constant</type>
-                            <!--type>Dupuit</type-->
+                            <type>Dupuit</type>
+                            <!--<type>Dupuit</type>-->
+                            <!--<type>Constant</type>-->
                         </permeability>
                         <porosity>
                             <type>Constant</type>
@@ -46,7 +49,7 @@
                         </porosity>
                         <storage>
                             <type>Constant</type>
-                            <value> 1e-5 </value>
+                            <value> 0.25 </value>
                         </storage>
                     </porous_medium>
                 </porous_medium>
@@ -65,20 +68,14 @@
                 <time_discretization>
                     <type>BackwardEuler</type>
                 </time_discretization>
-                <output>
-                    <variables>
-                        <variable> pressure </variable>
-                        <variable> v </variable>
-                    </variables>
-                </output>
                 <time_stepping>
                     <type>FixedTimeStepping</type>
                     <t_initial> 0.0 </t_initial>
-                    <t_end> 1e3 </t_end>
+                    <t_end> 8640000 </t_end>
                     <timesteps>
                         <pair>
-                            <repeat>1000</repeat>
-                            <delta_t>1</delta_t>
+                            <repeat>100</repeat>
+                            <delta_t>86400</delta_t>
                         </pair>
                     </timesteps>
                 </time_stepping>
@@ -86,11 +83,15 @@
         </processes>
         <output>
             <type>VTK</type>
-            <prefix>dupuit_quad</prefix>
+            <prefix>TestSet_01</prefix>
+            <variables>
+                 <variable> pressure </variable>
+                 <variable> v </variable>
+             </variables>
             <timesteps>
                 <pair>
-                    <repeat> 100 </repeat>
-                    <each_steps> 10 </each_steps>
+                    <repeat> 10 </repeat>
+                    <each_steps> 1 </each_steps>
                 </pair>
             </timesteps>
         </output>
@@ -99,27 +100,36 @@
         <parameter>
             <name>p0</name>
             <type>Constant</type>
-            <value>0</value>
+            <value>16</value>
         </parameter>
         <parameter>
             <name>p_bc0</name>
             <type>Constant</type>
-            <value>1000</value>
+            <value>15</value>
         </parameter>
         <parameter>
             <name>p_bc1</name>
             <type>Constant</type>
-            <value>0</value>
+            <value>25</value>
+            <!--<value>1.15741e-05</value>-->  <!--This value is for Dupuit and in-line with Modflow) -->
+            <!--<value>4.62863e-07</value>-->   <!--This value is for Confined and is Dupuit value divided by Aquifer thickness -->		
         </parameter>
         <parameter>
             <name>constant_porosity_parameter</name>
             <type>Constant</type>
-            <value>1.0</value>
+            <value>0.25</value>
         </parameter>
         <parameter>
             <name>kappa1</name>
             <type>Constant</type>
-            <values>1e-15 0. 0. 1e-14</values>
+            <values>0.00185 0. 0. 0.00185</values>
+        </parameter>
+		<parameter>
+            <name>recharge</name>
+            <type>Constant</type>
+			<value>0.0E-00</value>
+            <!--  <value>1.45E-10</value> <!-- This is recalculated for the confined case with Aquifer thickness = 25 m (== 3.62E-09 / 25) -->
+            <!--  <value>3.62E-09</value> <!-- This is for the unconfined  case in m/s-->
         </parameter>
     </parameters>
     <process_variables>
@@ -130,16 +140,23 @@
             <initial_condition>p0</initial_condition>
             <boundary_conditions>
                 <boundary_condition>
-                    <mesh>square_1x1_quad_1e2_geometry_left</mesh>
+                    <mesh>BC_TOP</mesh>
                     <type>Dirichlet</type>
                     <parameter>p_bc0</parameter>
                 </boundary_condition>
                 <boundary_condition>
-                    <mesh>square_1x1_quad_1e2_geometry_right</mesh>
+                    <mesh>BC_BOTTOM</mesh>
                     <type>Dirichlet</type>
                     <parameter>p_bc1</parameter>
                 </boundary_condition>
             </boundary_conditions>
+            <source_terms>
+                <source_term>
+                    <mesh>BC_DOMAIN</mesh>
+                    <type>Volumetric</type>
+					<parameter>recharge</parameter>
+                </source_term>
+            </source_terms>
         </process_variable>
     </process_variables>
     <nonlinear_solvers>
