@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <OpenGeoSysProject>
-<meshes>
-<mesh>TestSet_01.vtu</mesh>
-<mesh>BC_BOTTOM.vtu</mesh>
-<mesh>BC_TOP.vtu</mesh>
-<mesh>BC_DOMAIN.vtu</mesh>
-</meshes>
-
+    <meshes>
+        <mesh>TestSet_01.vtu</mesh>
+        <mesh>BC_BOTTOM.vtu</mesh>
+        <mesh>BC_TOP.vtu</mesh>
+        <mesh>BC_DOMAIN.vtu</mesh>
+    </meshes>
     <processes>
         <process>
             <name>LiquidFlow</name>
@@ -40,8 +39,6 @@
                         <permeability>
                             <permeability_tensor_entries>kappa1</permeability_tensor_entries>
                             <type>Dupuit</type>
-                            <!--<type>Dupuit</type>-->
-                            <!--<type>Constant</type>-->
                         </permeability>
                         <porosity>
                             <type>Constant</type>
@@ -85,9 +82,9 @@
             <type>VTK</type>
             <prefix>TestSet_01</prefix>
             <variables>
-                 <variable> pressure </variable>
-                 <variable> v </variable>
-             </variables>
+                <variable> pressure </variable>
+                <variable> v </variable>
+            </variables>
             <timesteps>
                 <pair>
                     <repeat> 10 </repeat>
@@ -111,8 +108,6 @@
             <name>p_bc1</name>
             <type>Constant</type>
             <value>25</value>
-            <!--<value>1.15741e-05</value>-->  <!--This value is for Dupuit and in-line with Modflow) -->
-            <!--<value>4.62863e-07</value>-->   <!--This value is for Confined and is Dupuit value divided by Aquifer thickness -->		
         </parameter>
         <parameter>
             <name>constant_porosity_parameter</name>
@@ -124,12 +119,10 @@
             <type>Constant</type>
             <values>0.00185 0. 0. 0.00185</values>
         </parameter>
-		<parameter>
+        <parameter>
             <name>recharge</name>
             <type>Constant</type>
-			<value>0.0E-00</value>
-            <!--  <value>1.45E-10</value> <!-- This is recalculated for the confined case with Aquifer thickness = 25 m (== 3.62E-09 / 25) -->
-            <!--  <value>3.62E-09</value> <!-- This is for the unconfined  case in m/s-->
+            <value>0.0</value>
         </parameter>
     </parameters>
     <process_variables>
@@ -154,7 +147,7 @@
                 <source_term>
                     <mesh>BC_DOMAIN</mesh>
                     <type>Volumetric</type>
-					<parameter>recharge</parameter>
+                    <parameter>recharge</parameter>
                 </source_term>
             </source_terms>
         </process_variable>
