@@ -15,10 +15,10 @@
                     <component_magnitudes>1 1</component_magnitudes>
                     <relative_epsilons>1e-6 1e-6</relative_epsilons>
                 </reference_jacobian_assembler>
-                <abs_tol>1e-18</abs_tol>
+                <abs_tol>1e-14</abs_tol>
                 <rel_tol>1e-7</rel_tol>
                 <fail_on_error>true</fail_on_error>
-                <log_file>/tmp/jacobians.log</log_file>
+                <log_file>/tmp/jacobian_laplace_T_storage_T.log</log_file>
             </jacobian_assembler>
             <type>HT</type>
             <integration_order>2</integration_order>
@@ -41,7 +41,7 @@
                         <property>
                             <name>specific_heat_capacity</name>
                             <type>Constant</type>
-                            <value>1</value>
+                            <value>1e0</value>
                         </property>
                         <property>
                             <name>thermal_conductivity</name>
@@ -58,7 +58,7 @@
                                 <slope>-4.3e-4</slope>
                             </independent_variable-->
                             <type>Constant</type>
-                            <value>0</value>
+                            <value>1e3</value>
                         </property>
                         <property>
                             <name>viscosity</name>
@@ -93,12 +93,12 @@
                         <property>
                             <name>specific_heat_capacity</name>
                             <type>Constant</type>
-                            <value>4</value>
+                            <value>0</value>
                         </property>
                         <property>
                             <name>thermal_conductivity</name>
                             <type>Constant</type>
-                            <value>1</value>
+                            <value>8</value>
                         </property>
                     </properties>
                 </phase>
