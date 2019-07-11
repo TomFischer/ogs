@@ -223,7 +223,8 @@ void CompareJacobiansJacobianAssembler::assembleWithJacobian(
     }
 
     // basic consistency check if something went terribly wrong
-    auto check_equality = [&fatal_error](auto mat_or_vec1, auto mat_or_vec2) {
+    auto check_equality = [&fatal_error, this](auto mat_or_vec1,
+                                               auto mat_or_vec2) {
         if (mat_or_vec1.size() == 0 || mat_or_vec2.size() == 0)
         {
             return;
@@ -232,10 +233,21 @@ void CompareJacobiansJacobianAssembler::assembleWithJacobian(
             mat_or_vec1.cols() != mat_or_vec2.cols())
         {
             fatal_error = true;
+            return;
         }
-        else if (((mat_or_vec1 - mat_or_vec2).array().cwiseAbs() >
-                  std::numeric_limits<double>::epsilon())
-                     .any())
+        auto const abs_diff = (mat_or_vec1 - mat_or_vec2).array().eval();
+        if ((abs_diff.cwiseAbs() > _abs_tol).any())
+        {
+            fatal_error = true;
+        }
+        auto const rel_diff =
+            (abs_diff == 0.0)
+                .select(abs_diff,
+                        2. * abs_diff /
+                            (mat_or_vec2.cwiseAbs() + mat_or_vec1.cwiseAbs())
+                                .array())
+                .eval();
+        if ((rel_diff.cwiseAbs() > _rel_tol).any())
         {
             fatal_error = true;
         }
@@ -243,7 +255,12 @@ void CompareJacobiansJacobianAssembler::assembleWithJacobian(
 
     check_equality(local_M1, local_M2);
     check_equality(local_K1, local_K2);
-    check_equality(local_b1, local_b2);
+    // compile b only when K1 and M1 / K2 and M2 are calculated
+    if ((local_K1.size() == 0 && local_M1.size() == 0) ||
+        (local_K2.size() == 0 && local_M2.size() == 0))
+    {
+        check_equality(local_b1, local_b2);
+    }
 
     Eigen::VectorXd res1 = Eigen::VectorXd::Zero(num_dof);
     if (local_M1.size() != 0)
