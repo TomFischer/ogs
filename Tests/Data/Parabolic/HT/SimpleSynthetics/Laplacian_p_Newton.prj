@@ -186,8 +186,10 @@
         </parameter>
         <parameter>
             <name>P0</name>
-            <type>Function</type>
-            <expression>-x+1.0</expression>
+            <type>Constant</type>
+            <value>0</value>
+            <!--type>Function</type>
+            <expression>-x+1.0</expression-->
             <!--expression>-0.25*x*x-3.0/4.0*x+1.0</expression-->
         </parameter>
         <parameter>
