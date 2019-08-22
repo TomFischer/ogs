@@ -15,8 +15,8 @@
                     <component_magnitudes>10 1</component_magnitudes>
                     <relative_epsilons>1e-6 1e-6</relative_epsilons>
                 </reference_jacobian_assembler>
-                <abs_tol>1e-14</abs_tol>
-                <rel_tol>1e-7</rel_tol>
+                <abs_tol>5e-15</abs_tol>
+                <rel_tol>5e-14</rel_tol>
                 <fail_on_error>true</fail_on_error>
                 <log_file>/tmp/jacobian_laplace_T.log</log_file>
             </jacobian_assembler>
