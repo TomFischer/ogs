@@ -255,9 +255,9 @@ void CompareJacobiansJacobianAssembler::assembleWithJacobian(
 
     check_equality(local_M1, local_M2);
     check_equality(local_K1, local_K2);
-    // compile b only when K1 and M1 / K2 and M2 are calculated
-    if ((local_K1.size() == 0 && local_M1.size() == 0) ||
-        (local_K2.size() == 0 && local_M2.size() == 0))
+    // compare b only when K1 and M1 / K2 and M2 are calculated
+    if ((local_K1.size() == 0 && local_K2.size() == 0) ||
+        (local_M1.size() == 0 && local_M2.size() == 0))
     {
         check_equality(local_b1, local_b2);
     }
