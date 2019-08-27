@@ -14,10 +14,10 @@
                     <component_magnitudes>1 1</component_magnitudes>
                     <relative_epsilons>1e-6 1e-6</relative_epsilons>
                 </reference_jacobian_assembler>
-                <abs_tol>1e-18</abs_tol>
-                <rel_tol>1e-7</rel_tol>
+                <abs_tol>1e-15</abs_tol>
+                <rel_tol>1e-11</rel_tol>
                 <fail_on_error>true</fail_on_error>
-                <log_file>/tmp/jacobians.log</log_file>
+                <log_file>/tmp/jacobians_g=-9.81.log</log_file>
             </jacobian_assembler>
             <name>PressureDiffusionTemperatureDiffusion</name>
             <type>HT</type>
@@ -26,10 +26,8 @@
                 <temperature>T</temperature>
                 <pressure>p</pressure>
             </process_variables>
-            <!--density_solid>rho_solid</density_solid>
-            <specific_heat_capacity_solid>c_solid</specific_heat_capacity_solid>
-            <thermal_conductivity_solid>lambda_solid</thermal_conductivity_solid-->
             <specific_body_force>0 -9.81</specific_body_force>
+            <!--specific_body_force>0 0</specific_body_force-->
             <secondary_variables>
                 <secondary_variable type="static" internal_name="darcy_velocity" output_name="darcy_velocity"/>
             </secondary_variables>
@@ -57,16 +55,14 @@
                             <reference_value>1.0e+3</reference_value>
                             <independent_variable>
                                 <variable_name>phase_pressure</variable_name>
-                                <reference_condition>1000</reference_condition>
+                                <reference_condition>10000</reference_condition>
                                 <slope>4.3e-4</slope>
                             </independent_variable>
-                            <!--type>Constant</type>
-                            <value>1.0e+3</value-->
                         </property>
                         <property>
                             <name>viscosity</name>
                             <type>Constant</type>
-                            <value>1.0e-3</value>
+                            <value>1</value>
                         </property>
                     </properties>
                 </phase>
@@ -76,17 +72,12 @@
                         <property>
                             <name>permeability</name>
                             <type>Constant</type>
-                            <value>1.e-14 0 0 1.e-14</value>
+                            <value>1</value>
                         </property>
                         <property>
                             <name>porosity</name>
                             <type>Constant</type>
-                            <value>0.001</value>
-                        </property>
-                        <property>
-                            <name>storage</name>
-                            <type>Constant</type>
-                            <value>4.3e-4</value>
+                            <value>0.6</value>
                         </property>
                         <property>
                             <name>specific_heat_capacity</name>
@@ -163,29 +154,14 @@
     </time_loop>
     <parameters>
         <parameter>
-            <name>rho_solid</name>
-            <type>Constant</type>
-            <value>0.0</value>
-        </parameter>
-        <parameter>
             <name>rho_fluid</name>
             <type>Constant</type>
             <value>1000</value>
         </parameter>
         <parameter>
-            <name>lambda_solid</name>
-            <type>Constant</type>
-            <value>3.0</value>
-        </parameter>
-        <parameter>
             <name>lambda_fluid</name>
             <type>Constant</type>
             <value>0.65</value>
-        </parameter>
-        <parameter>
-            <name>c_solid</name>
-            <type>Constant</type>
-            <value>0</value>
         </parameter>
         <parameter>
             <name>T0</name>
@@ -200,12 +176,12 @@
         <parameter>
             <name>p_Dirichlet_left</name>
             <type>Constant</type>
-            <value>1</value>
+            <value>1e4</value>
         </parameter>
         <parameter>
             <name>p_Dirichlet_right</name>
             <type>Constant</type>
-            <value>-1</value>
+            <value>0</value>
         </parameter>
         <parameter>
             <name>t_Dirichlet_bottom</name>
@@ -216,16 +192,6 @@
             <name>t_Dirichlet_top</name>
             <type>Constant</type>
             <value>1</value>
-        </parameter>
-        <parameter>
-            <name>constant_porosity_parameter</name>
-            <type>Constant</type>
-            <value>0.001</value>
-        </parameter>
-        <parameter>
-            <name>kappa1</name>
-            <type>Constant</type>
-            <values>1.e-14 0 0 1.e-14</values>
         </parameter>
     </parameters>
     <process_variables>
