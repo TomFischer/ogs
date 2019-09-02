@@ -292,6 +292,11 @@ public:
                 solid_phase
                     .property(MaterialPropertyLib::PropertyType::permeability)
                     .value(vars, pos, t));
+            auto const dK_dp = MaterialPropertyLib::formEigenTensor<GlobalDim>(
+                solid_phase
+                    .property(MaterialPropertyLib::PropertyType::permeability)
+                    .dValue(vars,
+                            MaterialPropertyLib::Variable::phase_pressure));
             auto const mu =
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::viscosity)
@@ -447,8 +452,9 @@ public:
             // equation (4.31)
             K_pp_jac.noalias() +=
                 dNdx.transpose() * drho_dp * K_over_mu * dNdx * p * N * w;
-            K_pp_jac.noalias() -=
-                dNdx.transpose() * rho * K_over_mu2 * dmu_dp * dNdx * p * N * w;
+            K_pp_jac.noalias() += dNdx.transpose() * rho /
+                                  boost::math::pow<2>(mu) *
+                                  (dK_dp * mu - K * dmu_dp) * dNdx * p * N * w;
             K_pp_jac.noalias() += dNdx.transpose() * rho * K_over_mu * dNdx * w;
             if (process_data.has_gravity)
             {
