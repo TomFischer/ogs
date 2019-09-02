@@ -14,8 +14,8 @@
                     <component_magnitudes>1 1</component_magnitudes>
                     <relative_epsilons>1e-6 1e-6</relative_epsilons>
                 </reference_jacobian_assembler>
-                <abs_tol>1e-15</abs_tol>
-                <rel_tol>1e-11</rel_tol>
+                <abs_tol>1e-10</abs_tol>
+                <rel_tol>1e-9</rel_tol>
                 <fail_on_error>true</fail_on_error>
                 <log_file>/tmp/jacobians_g=-9.81.log</log_file>
             </jacobian_assembler>
@@ -26,8 +26,8 @@
                 <temperature>T</temperature>
                 <pressure>p</pressure>
             </process_variables>
-            <specific_body_force>0 -9.81</specific_body_force>
-            <!--specific_body_force>0 0</specific_body_force-->
+            <!--specific_body_force>0 -9.81</specific_body_force-->
+            <specific_body_force>0 0</specific_body_force>
             <secondary_variables>
                 <secondary_variable type="static" internal_name="darcy_velocity" output_name="darcy_velocity"/>
             </secondary_variables>
@@ -51,6 +51,8 @@
                         </property>
                         <property>
                             <name>density</name>
+                            <!--type>Constant</type>
+                            <value>1000</value-->
                             <type>Linear</type>
                             <reference_value>1.0e+3</reference_value>
                             <independent_variable>
@@ -77,7 +79,7 @@
                         <property>
                             <name>porosity</name>
                             <type>Constant</type>
-                            <value>0.6</value>
+                            <value>0.0</value>
                         </property>
                         <property>
                             <name>specific_heat_capacity</name>
