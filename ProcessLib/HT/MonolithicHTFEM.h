@@ -458,9 +458,10 @@ public:
             K_pp_jac.noalias() += dNdx.transpose() * rho * K_over_mu * dNdx * w;
             if (process_data.has_gravity)
             {
-                K_pp_jac.noalias() +=
-                    dNdx.transpose() * drho_dp * K_over_mu * b * N * w;
-                K_pp_jac.noalias() -= dNdx.transpose() * rho * K_over_mu2 *
+                K_pp_jac.noalias() += dNdx.transpose() * 2 * rho * drho_dp *
+                                      K_over_mu * b * N * w;
+                K_pp_jac.noalias() -= dNdx.transpose() *
+                                      boost::math::pow<2>(rho) * K_over_mu2 *
                                       dmu_dp * b * N * w;
             }
 
