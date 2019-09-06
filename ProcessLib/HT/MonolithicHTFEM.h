@@ -354,7 +354,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   specific_heat_capacity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
 
             // fluid density and derivations
             auto const rho =
