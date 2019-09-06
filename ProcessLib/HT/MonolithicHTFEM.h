@@ -479,7 +479,8 @@ public:
                     .property(
                         MaterialPropertyLib::PropertyType::thermal_conductivity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             auto const dlambda_solid_dp =
                 solid_phase
                     .property(
