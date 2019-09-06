@@ -512,7 +512,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   thermal_transversal_dispersivity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             double const darcy_norm = darcy_velocity.norm();
             auto const dlambda_disp_dp =
                 darcy_norm == 0
