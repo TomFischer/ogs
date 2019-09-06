@@ -400,10 +400,11 @@ public:
                     .template dValue<double>(
                         vars, MaterialPropertyLib::Variable::phase_pressure,
                         pos, t);
-            auto const drho_solid_dT = solid_phase
-                    .property(MaterialPropertyLib::PropertyType::density)
+            auto const drho_solid_dT =
+                solid_phase.property(MaterialPropertyLib::PropertyType::density)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
             auto const C_p =
                 porosity * rho * specific_heat_capacity_fluid +
                 rho_solid * (1 - porosity) * specific_heat_capacity_solid;
