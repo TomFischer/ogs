@@ -329,7 +329,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   specific_heat_capacity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
             auto const specific_heat_capacity_fluid =
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::
