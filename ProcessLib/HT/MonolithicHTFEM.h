@@ -295,8 +295,8 @@ public:
             auto const dK_dp = MaterialPropertyLib::formEigenTensor<GlobalDim>(
                 solid_phase
                     .property(MaterialPropertyLib::PropertyType::permeability)
-                    .dValue(vars,
-                            MaterialPropertyLib::Variable::phase_pressure));
+                    .dValue(vars, MaterialPropertyLib::Variable::phase_pressure,
+                            pos, t));
             auto const mu =
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::viscosity)
