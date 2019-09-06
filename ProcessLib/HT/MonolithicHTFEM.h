@@ -505,7 +505,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   thermal_longitudinal_dispersivity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             auto const dalpha_T_dp =
                 medium
                     .property(MaterialPropertyLib::PropertyType::
