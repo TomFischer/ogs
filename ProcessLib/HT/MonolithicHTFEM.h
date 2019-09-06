@@ -565,7 +565,8 @@ public:
                     .property(
                         MaterialPropertyLib::PropertyType::thermal_conductivity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
             auto const dlambda_cond_dT =
                 porosity * dlambda_fluid_dT + (1 - porosity) * dlambda_solid_dT;
 
