@@ -305,7 +305,8 @@ public:
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::viscosity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             auto const dmu_dT =
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::viscosity)
