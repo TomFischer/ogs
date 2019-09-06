@@ -398,7 +398,8 @@ public:
             auto const drho_solid_dp =
                 solid_phase.property(MaterialPropertyLib::PropertyType::density)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             auto const drho_solid_dT = solid_phase
                     .property(MaterialPropertyLib::PropertyType::density)
                     .template dValue<double>(
