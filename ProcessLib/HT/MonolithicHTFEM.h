@@ -347,7 +347,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   specific_heat_capacity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::phase_pressure);
+                        vars, MaterialPropertyLib::Variable::phase_pressure,
+                        pos, t);
             auto const dspecific_heat_capacity_solid_dT =
                 solid_phase
                     .property(MaterialPropertyLib::PropertyType::
