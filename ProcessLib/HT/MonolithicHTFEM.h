@@ -390,7 +390,7 @@ public:
                     .property(MaterialPropertyLib::PropertyType::density)
                     .template d2Value<double>(
                         vars, MaterialPropertyLib::Variable::temperature,
-                        MaterialPropertyLib::Variable::temperature);
+                        MaterialPropertyLib::Variable::temperature, pos, t);
 
             auto const rho_solid =
                 solid_phase.property(MaterialPropertyLib::PropertyType::density)
