@@ -311,7 +311,8 @@ public:
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::viscosity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
 
             GlobalDimMatrixType const K_over_mu = K / mu;
             GlobalDimMatrixType const K_over_mu2 = K / boost::math::pow<2>(mu);
