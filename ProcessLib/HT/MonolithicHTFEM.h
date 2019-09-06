@@ -581,7 +581,8 @@ public:
                     .property(MaterialPropertyLib::PropertyType::
                                   thermal_transversal_dispersivity)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
             GlobalDimMatrixType const dlambda_disp_dT =
                 darcy_norm == 0.0
                     ? Zero
