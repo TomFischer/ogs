@@ -370,7 +370,8 @@ public:
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::density)
                     .template dValue<double>(
-                        vars, MaterialPropertyLib::Variable::temperature);
+                        vars, MaterialPropertyLib::Variable::temperature, pos,
+                        t);
 
             auto const d2rho_dp2 =
                 liquid_phase
