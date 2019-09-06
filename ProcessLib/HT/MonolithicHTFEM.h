@@ -378,7 +378,7 @@ public:
                     .property(MaterialPropertyLib::PropertyType::density)
                     .template d2Value<double>(
                         vars, MaterialPropertyLib::Variable::phase_pressure,
-                        MaterialPropertyLib::Variable::phase_pressure);
+                        MaterialPropertyLib::Variable::phase_pressure, pos, t);
             auto const d2rho_dp_dT =
                 liquid_phase
                     .property(MaterialPropertyLib::PropertyType::density)
