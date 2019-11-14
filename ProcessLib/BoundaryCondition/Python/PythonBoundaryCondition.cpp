@@ -133,6 +133,9 @@ void PythonBoundaryCondition::getEssentialBCValues(
                         bulk_node_id, var, comp);
                 }
 
+#ifdef USE_PETSC
+                MathLib::LinAlg::setLocalAccessibleVector(x);
+#endif // USE_PETSC
                 primary_variables.push_back(x[dof_idx]);
             }
         }
