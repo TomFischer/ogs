@@ -347,10 +347,12 @@ void checkMPLProperties(MeshLib::Mesh const& mesh,
         {
             OGS_FATAL("The density for the Solid phase isn't specified.");
         }
-        if (!solid_phase.hasProperty(
-                MaterialPropertyLib::PropertyType::storage))
+        if (solid_phase.hasProperty(MaterialPropertyLib::PropertyType::storage))
         {
-            OGS_FATAL("The storage for the Solid phase isn't specified.");
+            OGS_FATAL(
+                "Storage for the Solid phase is specified in the project file "
+                "- please use a linear density-pressure relationship to obtain "
+                "the same effect.");
         }
     }
     DBUG("Media properties verified.");
