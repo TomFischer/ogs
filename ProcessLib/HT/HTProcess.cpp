@@ -53,8 +53,6 @@ void HTProcess::initializeConcreteProcess(
     MeshLib::Mesh const& mesh,
     unsigned const integration_order)
 {
-    checkMPLProperties(mesh, _process_data);
-
     // For the staggered scheme, both processes are assumed to use the same
     // element order. Therefore the order of shape function can be fetched from
     // any set of the sets of process variables of the coupled processes. Here,
@@ -64,6 +62,8 @@ void HTProcess::initializeConcreteProcess(
 
     if (_use_monolithic_scheme)
     {
+        checkMPLProperties(mesh, _process_data);
+
         ProcessLib::createLocalAssemblers<MonolithicHTFEM>(
             mesh.getDimension(), mesh.getElements(), dof_table,
             pv.getShapeFunctionOrder(), _local_assemblers,
