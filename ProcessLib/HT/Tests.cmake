@@ -365,7 +365,7 @@ AddTest(
     TESTER vtkdiff
     REQUIREMENTS NOT OGS_USE_MPI
     DIFF_DATA
-    GLOB constraint_bc_1e3_pcs_0_ts_*.vtu T T 1e-14 1e-13
+    GLOB constraint_bc_1e3_pcs_0_ts_*.vtu T T 1e-11 1e-11
     GLOB constraint_bc_1e3_pcs_0_ts_*.vtu p p 1e-15 1e-14
 )
 
