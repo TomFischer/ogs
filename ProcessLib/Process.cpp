@@ -200,6 +200,7 @@ void Process::assemble(const double t, double const dt,
 
     assembleConcreteProcess(t, dt, x, xdot, process_id, M, K, b);
 
+    MathLib::LinAlg::setLocalAccessibleVector(*x[process_id]);
     // the last argument is for the jacobian, nullptr is for a unused jacobian
     _boundary_conditions[process_id].applyNaturalBC(t, x, process_id, K, b,
                                                     nullptr);
