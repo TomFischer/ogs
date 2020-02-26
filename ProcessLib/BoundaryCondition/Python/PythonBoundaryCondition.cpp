@@ -121,6 +121,8 @@ void PythonBoundaryCondition::getEssentialBCValues(
                 auto const dof_idx =
                     _bc_data.dof_table_bulk.getGlobalIndex(loc, var, comp);
 
+                DBUG("getEssentialBCValues: bulk_mesh_id: %d, bulk_node_id %d, dof_idx: %d", _bc_data.bulk_mesh_id, bulk_node_id, dof_idx);
+
                 if (dof_idx == NumLib::MeshComponentMap::nop)
                 {
                     // TODO extend Python BC to mixed FEM ansatz functions
@@ -133,9 +135,6 @@ void PythonBoundaryCondition::getEssentialBCValues(
                         bulk_node_id, var, comp);
                 }
 
-#ifdef USE_PETSC
-                MathLib::LinAlg::setLocalAccessibleVector(x);
-#endif // USE_PETSC
                 primary_variables.push_back(x[dof_idx]);
             }
         }
