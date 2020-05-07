@@ -13,6 +13,7 @@
 #include <cassert>
 #include <functional>  // for std::reference_wrapper.
 
+#include "BaseLib/RunTime.h"
 #include "NumLib/DOF/DOFTableUtil.h"
 #include "MathLib/LinAlg/Eigen/EigenMapTools.h"
 #include "LocalAssemblerInterface.h"
@@ -48,6 +49,8 @@ void VectorMatrixAssembler::assemble(
     GlobalMatrix& M, GlobalMatrix& K, GlobalVector& b,
     CoupledSolutionsForStaggeredScheme const* const cpl_xs)
 {
+    BaseLib::RunTime timer;
+    timer.start();
     std::vector<std::vector<GlobalIndexType>> indices_of_processes;
     indices_of_processes.reserve(dof_tables.size());
     for (auto dof_table : dof_tables)
@@ -57,10 +60,13 @@ void VectorMatrixAssembler::assemble(
     }
 
     auto const& indices = indices_of_processes[process_id];
+    time_dof_table_lookup += timer.elapsed();
+
     _local_M_data.clear();
     _local_K_data.clear();
     _local_b_data.clear();
 
+    timer.start();
     if (cpl_xs == nullptr)
     {
         auto const local_x = x[process_id]->get(indices);
@@ -85,11 +91,15 @@ void VectorMatrixAssembler::assemble(
             t, dt, local_x, process_id, _local_M_data, _local_K_data,
             _local_b_data, local_coupled_solutions);
     }
+    time_pure_assembly += timer.elapsed();
 
+    timer.start();
     auto const num_r_c = indices.size();
     auto const r_c_indices =
         NumLib::LocalToGlobalIndexMap::RowColumnIndices(indices, indices);
+    time_dof_table_lookup += timer.elapsed();
 
+    timer.start();
     if (!_local_M_data.empty())
     {
         auto const local_M = MathLib::toMatrix(_local_M_data, num_r_c, num_r_c);
@@ -105,6 +115,7 @@ void VectorMatrixAssembler::assemble(
         assert(_local_b_data.size() == num_r_c);
         b.add(indices, _local_b_data);
     }
+    time_insert_in_matrix += timer.elapsed();
 }
 
 void VectorMatrixAssembler::assembleWithJacobian(

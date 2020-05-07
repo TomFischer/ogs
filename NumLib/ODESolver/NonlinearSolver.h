@@ -18,6 +18,10 @@
 #include "NonlinearSystem.h"
 #include "Types.h"
 
+extern double time_pure_assembly;
+extern double time_insert_in_matrix;
+extern double time_dof_table_lookup;
+
 namespace BaseLib
 {
 class ConfigTree;
