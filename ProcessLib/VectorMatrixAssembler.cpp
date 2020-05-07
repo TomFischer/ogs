@@ -11,6 +11,15 @@
 #include "VectorMatrixAssembler.h"
 
 #include <cassert>
+<<<<<<< HEAD
+=======
+#include <functional>  // for std::reference_wrapper.
+
+#include "BaseLib/RunTime.h"
+#include "NumLib/DOF/DOFTableUtil.h"
+#include "MathLib/LinAlg/Eigen/EigenMapTools.h"
+#include "LocalAssemblerInterface.h"
+>>>>>>> 82be5ea4a3 (Add detailed time measurements for assembly.)
 
 #include "CoupledSolutionsForStaggeredScheme.h"
 #include "LocalAssemblerInterface.h"
@@ -43,6 +52,8 @@ void VectorMatrixAssembler::assemble(
     std::vector<GlobalVector*> const& x_prev, int const process_id,
     GlobalMatrix* M, GlobalMatrix* K, GlobalVector* b)
 {
+    BaseLib::RunTime timer;
+    timer.start();
     std::vector<std::vector<GlobalIndexType>> indices_of_processes;
     indices_of_processes.reserve(dof_tables.size());
     transform(cbegin(dof_tables), cend(dof_tables),
@@ -51,12 +62,15 @@ void VectorMatrixAssembler::assemble(
               { return NumLib::getIndices(mesh_item_id, *dof_table); });
 
     auto const& indices = indices_of_processes[process_id];
+    time_dof_table_lookup += timer.elapsed();
+
     _local_M_data.clear();
     _local_K_data.clear();
     _local_b_data.clear();
 
     std::size_t const number_of_processes = x.size();
     // Monolithic scheme
+    timer.start();
     if (number_of_processes == 1)
     {
         auto const local_x = x[process_id]->get(indices);
@@ -78,11 +92,15 @@ void VectorMatrixAssembler::assemble(
             t, dt, local_x, local_x_prev, process_id, _local_M_data,
             _local_K_data, _local_b_data);
     }
+    time_pure_assembly += timer.elapsed();
 
+    timer.start();
     auto const num_r_c = indices.size();
     auto const r_c_indices =
         NumLib::LocalToGlobalIndexMap::RowColumnIndices(indices, indices);
+    time_dof_table_lookup += timer.elapsed();
 
+    timer.start();
     if (M && !_local_M_data.empty())
     {
         auto const local_M = MathLib::toMatrix(_local_M_data, num_r_c, num_r_c);
@@ -99,6 +117,7 @@ void VectorMatrixAssembler::assemble(
         b->add(indices, _local_b_data);
     }
 
+    time_insert_in_matrix += timer.elapsed();
     _local_output(t, process_id, mesh_item_id, _local_M_data, _local_K_data,
                   _local_b_data);
 }
