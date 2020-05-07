@@ -20,6 +20,10 @@
 #include "NumLib/DOF/GlobalMatrixProviders.h"
 #include "NumLib/Exceptions.h"
 
+double time_pure_assembly {};
+double time_insert_in_matrix {};
+double time_dof_table_lookup {};
+
 namespace NumLib
 {
 void NonlinearSolver<NonlinearSolverTag::Picard>::
@@ -85,12 +89,23 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Picard>::solve(
 
         sys.preIteration(iteration, *x_new[process_id]);
 
+        // reset the time variables
+        time_pure_assembly = 0;
+        time_insert_in_matrix = 0;
+        time_dof_table_lookup = 0;
+
         BaseLib::RunTime time_assembly;
         time_assembly.start();
         sys.assemble(x_new, x_prev, process_id);
+        double asm_time_elapsed = time_assembly.elapsed();
         sys.getA(A);
         sys.getRhs(*x_prev[process_id], rhs);
-        INFO("[time] Assembly took {:g} s.", time_assembly.elapsed());
+        INFO(
+            "[time] Pure assembly took {:g} s, insert in matrix took {:g} s, "
+            "dof table lookup took {:g} s.",
+            time_pure_assembly, time_insert_in_matrix, time_dof_table_lookup);
+        INFO("[time] Assembly took {:g} s, getA + getRhs took {:g} s.",
+             asm_time_elapsed, time_assembly.elapsed() - asm_time_elapsed);
 
         // Subract non-equilibrium initial residuum if set
         if (_r_neq != nullptr)
@@ -265,6 +280,11 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Newton>::solve(
 
         sys.preIteration(iteration, *x[process_id]);
 
+        // reset the time variables
+        time_pure_assembly = 0;
+        time_insert_in_matrix = 0;
+        time_dof_table_lookup = 0;
+
         BaseLib::RunTime time_assembly;
         time_assembly.start();
         try
@@ -279,9 +299,13 @@ NonlinearSolverStatus NonlinearSolver<NonlinearSolverTag::Newton>::solve(
             iteration = _maxiter;
             break;
         }
+        INFO(
+            "[time] Pure assembly took {:g} s, insert in matrix took {:g} s, "
+            "dof table lookup took {:g} s.",
+            time_pure_assembly, time_insert_in_matrix, time_dof_table_lookup);
+        INFO("[time] Assembly took {:g} s.", time_assembly.elapsed());
         sys.getResidual(*x[process_id], *x_prev[process_id], res);
         sys.getJacobian(J);
-        INFO("[time] Assembly took {:g} s.", time_assembly.elapsed());
 
         // Subract non-equilibrium initial residuum if set
         if (_r_neq != nullptr)
