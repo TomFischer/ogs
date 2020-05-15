@@ -96,7 +96,7 @@
                 <convergence_criterion>
                     <type>DeltaX</type>
                     <norm_type>NORM2</norm_type>
-                    <reltol>1e-8</reltol>
+                    <reltol>1e-14</reltol>
                 </convergence_criterion>
                 <time_discretization>
                     <type>BackwardEuler</type>
@@ -120,7 +120,7 @@
             <timesteps>
                 <pair>
                     <repeat>1</repeat>
-                    <each_steps>50</each_steps>
+                    <each_steps>35</each_steps>
                 </pair>
             </timesteps>
             <variables>
