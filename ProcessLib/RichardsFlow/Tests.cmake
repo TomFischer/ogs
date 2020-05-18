@@ -125,33 +125,33 @@ AddTest(
     EXECUTABLE_ARGS 1d-infiltration.prj
     TESTER vtkdiff
     DIFF_DATA
-    out_ex1_pcs_0_ts_0_t_0.000000_expected.vtu out_ex1_pcs_0_ts_0_t_0.000000.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_105_t_7803.496783_expected.vtu out_ex1_pcs_0_ts_105_t_7803.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_140_t_11303.496783_expected.vtu out_ex1_pcs_0_ts_140_t_11303.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_175_t_14803.496783_expected.vtu out_ex1_pcs_0_ts_175_t_14803.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_210_t_18303.496783_expected.vtu out_ex1_pcs_0_ts_210_t_18303.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_245_t_21803.496783_expected.vtu out_ex1_pcs_0_ts_245_t_21803.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_280_t_25303.496783_expected.vtu out_ex1_pcs_0_ts_280_t_25303.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_315_t_28803.496783_expected.vtu out_ex1_pcs_0_ts_315_t_28803.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_350_t_32191.778033_expected.vtu out_ex1_pcs_0_ts_350_t_32191.778033.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_35_t_803.496783_expected.vtu out_ex1_pcs_0_ts_35_t_803.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_385_t_35468.340533_expected.vtu out_ex1_pcs_0_ts_385_t_35468.340533.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_420_t_38856.621783_expected.vtu out_ex1_pcs_0_ts_420_t_38856.621783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_455_t_42356.621783_expected.vtu out_ex1_pcs_0_ts_455_t_42356.621783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_490_t_45856.621783_expected.vtu out_ex1_pcs_0_ts_490_t_45856.621783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_525_t_49023.809283_expected.vtu out_ex1_pcs_0_ts_525_t_49023.809283.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_560_t_52359.746783_expected.vtu out_ex1_pcs_0_ts_560_t_52359.746783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_595_t_55686.309283_expected.vtu out_ex1_pcs_0_ts_595_t_55686.309283.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_630_t_58914.043658_expected.vtu out_ex1_pcs_0_ts_630_t_58914.043658.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_665_t_61754.588979_expected.vtu out_ex1_pcs_0_ts_665_t_61754.588979.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_700_t_65142.870229_expected.vtu out_ex1_pcs_0_ts_700_t_65142.870229.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_70_t_4303.496783_expected.vtu out_ex1_pcs_0_ts_70_t_4303.496783.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_735_t_68419.432729_expected.vtu out_ex1_pcs_0_ts_735_t_68419.432729.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_770_t_71286.148472_expected.vtu out_ex1_pcs_0_ts_770_t_71286.148472.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_805_t_74466.160442_expected.vtu out_ex1_pcs_0_ts_805_t_74466.160442.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_840_t_77826.316692_expected.vtu out_ex1_pcs_0_ts_840_t_77826.316692.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_875_t_81102.879192_expected.vtu out_ex1_pcs_0_ts_875_t_81102.879192.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_910_t_84379.441692_expected.vtu out_ex1_pcs_0_ts_910_t_84379.441692.vtu pressure pressure 1e-6 1e-6
-    out_ex1_pcs_0_ts_968_t_86400.000000_expected.vtu out_ex1_pcs_0_ts_968_t_86400.000000.vtu pressure pressure 1e-6 1e-6
+    out_ex1_pcs_0_ts_0_t_0.000000_expected.vtu out_ex1_ts_0.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_105_t_7803.496783_expected.vtu out_ex1_ts_105.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_140_t_11303.496783_expected.vtu out_ex1_ts_140.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_175_t_14803.496783_expected.vtu out_ex1_ts_175.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_210_t_18303.496783_expected.vtu out_ex1_ts_210.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_245_t_21803.496783_expected.vtu out_ex1_ts_245.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_280_t_25303.496783_expected.vtu out_ex1_ts_280.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_315_t_28803.496783_expected.vtu out_ex1_ts_315.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_350_t_32191.778033_expected.vtu out_ex1_ts_350.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_35_t_803.496783_expected.vtu out_ex1_ts_35.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_385_t_35468.340533_expected.vtu out_ex1_ts_385.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_420_t_38856.621783_expected.vtu out_ex1_ts_420.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_455_t_42356.621783_expected.vtu out_ex1_ts_455.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_490_t_45856.621783_expected.vtu out_ex1_ts_490.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_525_t_49023.809283_expected.vtu out_ex1_ts_525.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_560_t_52359.746783_expected.vtu out_ex1_ts_560.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_595_t_55686.309283_expected.vtu out_ex1_ts_595.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_630_t_58914.043658_expected.vtu out_ex1_ts_630.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_665_t_61754.588979_expected.vtu out_ex1_ts_665.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_700_t_65142.870229_expected.vtu out_ex1_ts_700.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_70_t_4303.496783_expected.vtu out_ex1_ts_70.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_735_t_68419.432729_expected.vtu out_ex1_ts_735.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_770_t_71286.148472_expected.vtu out_ex1_ts_770.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_805_t_74466.160442_expected.vtu out_ex1_ts_805.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_840_t_77826.316692_expected.vtu out_ex1_ts_840.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_875_t_81102.879192_expected.vtu out_ex1_ts_875.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_910_t_84379.441692_expected.vtu out_ex1_ts_910.vtu pressure pressure 1e-10 1e-10
+    out_ex1_pcs_0_ts_968_t_86400.000000_expected.vtu out_ex1_ts_968.vtu pressure pressure 1e-10 1e-10
     REQUIREMENTS NOT OGS_USE_MPI
 )
