@@ -1,0 +1,12 @@
++++
+date = "2018-02-27T11:00:13+01:00"
+title = "AddTopLayer"
+author = "Thomas Fischer"
+
+[menu]
+  [menu.tools]
+    parent = "meshing"
++++
+
+The tool `AddTopLayer` is substituted by the tool
+[AddLayer]({{< ref "addlayer" >}}).
